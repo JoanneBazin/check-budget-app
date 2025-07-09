@@ -1,26 +1,26 @@
 import { createSession, hashPassword, verifyPassword } from "../lib/auth";
+import { HttpError } from "../lib/HttpError";
 import { prisma } from "../lib/prismaClient";
 import { LoginBody, SignupBody } from "../types";
 import { NextFunction, Request, Response } from "express";
 
 export const signup = async (
   req: Request<{}, {}, SignupBody>,
-  res: Response
+  res: Response,
+  next: NextFunction
 ) => {
   try {
     const { email, password, name } = req.body;
 
     if (!email || !password || !name) {
-      return res
-        .status(400)
-        .json({ error: "Name, email and password are required" });
+      return next(new HttpError(400, "Tous les champs sont requis"));
     }
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
     });
     if (existingUser) {
-      return res.status(400).json({ error: "User already exists" });
+      return next(new HttpError(400, "Email déjà utilisé"));
     }
 
     const hashedPassword = await hashPassword(password);
@@ -38,23 +38,27 @@ export const signup = async (
     });
     res.json({ user: { id: user.id, email: user.email, name: user.name } });
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    return next(error);
   }
 };
 
-export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
+export const login = async (
+  req: Request<{}, {}, LoginBody>,
+  res: Response,
+  next: NextFunction
+) => {
   try {
     const { email, password } = req.body;
 
     if (!email || !password) {
-      return res.status(400).json({ error: "Email and password are required" });
+      return next(new HttpError(400, "Tous les champs sont requis"));
     }
 
     const user = await prisma.user.findUnique({
       where: { email },
     });
     if (!user || !(await verifyPassword(password, user.password))) {
-      return res.status(401).json({ error: "Invalid email or password" });
+      return next(new HttpError(401, "Email ou mot de passe incorrect"));
     }
 
     const sessionToken = await createSession(user.id);
@@ -67,7 +71,7 @@ export const login = async (req: Request<{}, {}, LoginBody>, res: Response) => {
     });
     res.json({ user: { id: user.id, email: user.email, name: user.name } });
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    return next(error);
   }
 };
 
@@ -89,6 +93,6 @@ export const logout = async (
       res.json({ message: "Déconnexion réussie" });
     }
   } catch (error) {
-    res.status(500).json({ error: "Internal server error" });
+    return next(error);
   }
 };

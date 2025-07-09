@@ -1,6 +1,7 @@
 import { validateSession } from "../lib/auth";
 import { Request, Response, NextFunction } from "express";
 import { User } from "../types";
+import { HttpError } from "../lib/HttpError";
 
 declare global {
   namespace Express {
@@ -19,14 +20,14 @@ export async function requireAuth(
   const sessionId = req.cookies.session;
 
   if (!sessionId) {
-    return res.status(401).json({ error: "Unauthorized" });
+    return next(new HttpError(401, "Unauthorized"));
   }
 
   const result = await validateSession(sessionId);
 
   if (!result) {
     res.clearCookie("session");
-    return res.status(401).json({ error: "Invalid session" });
+    return next(new HttpError(401, "Session invalide"));
   }
 
   req.user = result.user;
