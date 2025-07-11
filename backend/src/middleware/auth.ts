@@ -1,16 +1,6 @@
 import { validateSession } from "../lib/auth";
 import { Request, Response, NextFunction } from "express";
-import { User } from "@shared/types";
 import { HttpError } from "../lib/HttpError";
-
-declare global {
-  namespace Express {
-    interface Request {
-      user?: User;
-      session?: string;
-    }
-  }
-}
 
 export async function requireAuth(
   req: Request,

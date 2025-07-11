@@ -1,6 +1,7 @@
 import { z } from "zod";
 
 export * from "./auth";
+export * from "./budget";
 
 export const validateWithSchema = <T>(
   schema: z.ZodSchema<T>,
