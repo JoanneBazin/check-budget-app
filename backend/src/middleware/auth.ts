@@ -1,6 +1,6 @@
 import { validateSession } from "../lib/auth";
 import { Request, Response, NextFunction } from "express";
-import { User } from "../types";
+import { User } from "@shared/types";
 import { HttpError } from "../lib/HttpError";
 
 declare global {

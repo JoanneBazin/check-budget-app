@@ -1,7 +1,7 @@
 import { createSession, hashPassword, verifyPassword } from "../lib/auth";
 import { HttpError } from "../lib/HttpError";
 import { prisma } from "../lib/prismaClient";
-import { LoginBody, SignupBody } from "../types";
+import { LoginBody, SignupBody } from "@shared/types";
 import { NextFunction, Request, Response } from "express";
 
 export const signup = async (
@@ -11,10 +11,6 @@ export const signup = async (
 ) => {
   try {
     const { email, password, name } = req.body;
-
-    if (!email || !password || !name) {
-      return next(new HttpError(400, "Tous les champs sont requis"));
-    }
 
     const existingUser = await prisma.user.findUnique({
       where: { email },
@@ -49,10 +45,6 @@ export const login = async (
 ) => {
   try {
     const { email, password } = req.body;
-
-    if (!email || !password) {
-      return next(new HttpError(400, "Tous les champs sont requis"));
-    }
 
     const user = await prisma.user.findUnique({
       where: { email },
