@@ -1,14 +1,14 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../lib/prismaClient";
-import { HttpError } from "../lib/HttpError";
+import { getParamsId, getUserId } from "../lib/req-helpers";
 
 export const addFixedIncomes = async (
   req: Request,
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.user?.id;
-  if (!userId) return next(new HttpError(401, "Utilisateur non authentifié"));
+  const userId = getUserId(req, next);
+  if (!userId) return;
 
   const data = req.body;
   const incomesArray = Array.isArray(data) ? data : [data];
@@ -41,8 +41,8 @@ export const getFixedIncomes = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.user?.id;
-  if (!userId) return next(new HttpError(401, "Utilisateur non authentifié"));
+  const userId = getUserId(req, next);
+  if (!userId) return;
 
   try {
     const allFixedIncomes = await prisma.fixedIncome.findMany({
@@ -70,11 +70,11 @@ export const updateFixedIncome = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.user?.id;
-  if (!userId) return next(new HttpError(401, "Utilisateur non authentifié"));
+  const userId = getUserId(req, next);
+  if (!userId) return;
 
-  const incomeId = req.params.id;
-  if (!incomeId) return next(new HttpError(400, "Id manquant"));
+  const incomeId = getParamsId(req, next);
+  if (!incomeId) return;
 
   const { name, amount } = req.body;
 
@@ -106,11 +106,11 @@ export const deleteFixedIncome = async (
   res: Response,
   next: NextFunction
 ) => {
-  const userId = req.user?.id;
-  if (!userId) return next(new HttpError(401, "Utilisateur non authentifié"));
+  const userId = getUserId(req, next);
+  if (!userId) return;
 
-  const incomeId = req.params.id;
-  if (!incomeId) return next(new HttpError(400, "Id manquant"));
+  const incomeId = getParamsId(req, next);
+  if (!incomeId) return;
 
   try {
     await prisma.fixedIncome.delete({
