@@ -1,6 +1,10 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../lib/prismaClient";
+import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { getParamsId, getUserId } from "../lib/req-helpers";
+import { HttpError } from "../lib/HttpError";
+import { prisma } from "../lib/prismaClient";
+import { unknown } from "zod";
+import { isPrismaRecordNotFound } from "../lib/prismaErrorHelpers";
 
 export const addFixedIncomes = async (
   req: Request,
@@ -97,6 +101,14 @@ export const updateFixedIncome = async (
 
     return res.status(200).json(updatedFixedIncome);
   } catch (error) {
+    if (isPrismaRecordNotFound(error)) {
+      return next(
+        new HttpError(
+          404,
+          "Revenu non trouvé ou vous n'avez pas les droits d'accès."
+        )
+      );
+    }
     return next(error);
   }
 };
@@ -122,6 +134,14 @@ export const deleteFixedIncome = async (
 
     return res.status(200).json({ message: "Revenu supprimé avec succès !" });
   } catch (error) {
+    if (isPrismaRecordNotFound(error)) {
+      return next(
+        new HttpError(
+          404,
+          "Revenu non trouvé ou vous n'avez pas les droits d'accès."
+        )
+      );
+    }
     return next(error);
   }
 };

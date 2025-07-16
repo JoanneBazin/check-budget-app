@@ -1,6 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import { prisma } from "../lib/prismaClient";
 import { getParamsId, getUserId } from "../lib/req-helpers";
+import { isPrismaRecordNotFound } from "../lib/prismaErrorHelpers";
+import { HttpError } from "../lib/HttpError";
 
 export const addFixedCharges = async (
   req: Request,
@@ -97,6 +99,14 @@ export const updateFixedCharge = async (
 
     return res.status(200).json(updatedFixedCharge);
   } catch (error) {
+    if (isPrismaRecordNotFound(error)) {
+      return next(
+        new HttpError(
+          404,
+          "Revenu non trouvé ou vous n'avez pas les droits d'accès."
+        )
+      );
+    }
     return next(error);
   }
 };
@@ -122,6 +132,14 @@ export const deleteFixedCharge = async (
 
     return res.status(200).json({ message: "Charge supprimée avec succès !" });
   } catch (error) {
+    if (isPrismaRecordNotFound(error)) {
+      return next(
+        new HttpError(
+          404,
+          "Revenu non trouvé ou vous n'avez pas les droits d'accès."
+        )
+      );
+    }
     return next(error);
   }
 };

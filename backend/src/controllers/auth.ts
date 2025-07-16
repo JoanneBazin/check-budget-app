@@ -3,6 +3,7 @@ import { HttpError } from "../lib/HttpError";
 import { prisma } from "../lib/prismaClient";
 import { LoginBody, SignupBody } from "@shared/types";
 import { NextFunction, Request, Response } from "express";
+import { isPrismaUniqueConstraint } from "../lib/prismaErrorHelpers";
 
 export const signup = async (
   req: Request<{}, {}, SignupBody>,
@@ -11,13 +12,6 @@ export const signup = async (
 ) => {
   try {
     const { email, password, name } = req.body;
-
-    const existingUser = await prisma.user.findUnique({
-      where: { email },
-    });
-    if (existingUser) {
-      return next(new HttpError(400, "Email déjà utilisé"));
-    }
 
     const hashedPassword = await hashPassword(password);
     const user = await prisma.user.create({
@@ -32,8 +26,14 @@ export const signup = async (
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({ user: { id: user.id, email: user.email, name: user.name } });
+
+    res
+      .status(201)
+      .json({ user: { id: user.id, email: user.email, name: user.name } });
   } catch (error) {
+    if (isPrismaUniqueConstraint(error)) {
+      return next(new HttpError(400, "Email déjà utilisé"));
+    }
     return next(error);
   }
 };
