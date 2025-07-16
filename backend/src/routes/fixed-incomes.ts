@@ -7,17 +7,12 @@ import {
   updateFixedIncome,
 } from "../controllers/fixed-incomes";
 import { validateBody } from "../middleware/validateBody";
-import { budgetEntryInputSchema, budgetEntrySchema } from "@shared/schemas";
+import { budgetEntrySchema } from "@shared/schemas";
 
 const router = express.Router();
 
 router.get("/", requireAuth, getFixedIncomes);
-router.post(
-  "/",
-  requireAuth,
-  validateBody(budgetEntryInputSchema),
-  addFixedIncomes
-);
+router.post("/", requireAuth, validateBody(budgetEntrySchema), addFixedIncomes);
 router.put(
   "/:id",
   requireAuth,

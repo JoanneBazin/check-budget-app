@@ -9,11 +9,6 @@ export const budgetEntrySchema = z.object({
   amount: z.coerce.number().min(0, "Le montant doit être positif"),
 });
 
-export const budgetEntryInputSchema = z.union([
-  budgetEntrySchema,
-  z.array(budgetEntrySchema).min(1, "Au moins une charge est requise"),
-]);
-
 export const monthlyBudgetSchema = z.object({
   month: z
     .number()
@@ -46,10 +41,4 @@ export const expenseEntrySchema = z.object({
     .optional(),
 });
 
-export const expensesEntryInputSchema = z.union([
-  expenseEntrySchema,
-  z.array(expenseEntrySchema).min(1, "Au moins une charge est requise"),
-]);
-
-export type BudgetEntryInput = z.infer<typeof budgetEntryInputSchema>;
 export type BudgetEntry = z.infer<typeof budgetEntrySchema>;

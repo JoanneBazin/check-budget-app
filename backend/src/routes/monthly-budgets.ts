@@ -7,10 +7,8 @@ import {
   getMonthlyBudget,
 } from "../controllers/monthly-budgets";
 import {
-  budgetEntryInputSchema,
   budgetEntrySchema,
   expenseEntrySchema,
-  expensesEntryInputSchema,
   monthlyBudgetSchema,
   queryDateSchema,
 } from "@shared/schemas";
@@ -49,7 +47,7 @@ router.post(
   "/:id/incomes",
   requireAuth,
   checkBudgetAccess,
-  validateBody(budgetEntryInputSchema),
+  validateBody(budgetEntrySchema),
   addMonthlyIncomes
 );
 router.put(
@@ -71,7 +69,7 @@ router.post(
   "/:id/charges",
   requireAuth,
   checkBudgetAccess,
-  validateBody(budgetEntryInputSchema),
+  validateBody(budgetEntrySchema),
   addMonthlyCharges
 );
 router.put(
@@ -93,7 +91,7 @@ router.post(
   "/:id/expenses",
   requireAuth,
   checkBudgetAccess,
-  validateBody(expensesEntryInputSchema),
+  validateBody(expenseEntrySchema),
   addMonthlyExpenses
 );
 router.put(
