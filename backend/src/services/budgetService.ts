@@ -31,5 +31,8 @@ export const updateMonthlyBudgetRemaining = async (monthlyBudgetId: string) => {
   return await prisma.monthlyBudget.update({
     where: { id: monthlyBudgetId },
     data: { remainingBudget },
+    select: {
+      remainingBudget: true,
+    },
   });
 };

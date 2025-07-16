@@ -16,3 +16,21 @@ export const getParamsId = (req: Request, next: NextFunction) => {
   }
   return paramsId;
 };
+
+export const getMultipleParamsIds = (
+  req: Request,
+  keys: string[],
+  next: NextFunction
+): void | Record<string, string> => {
+  const ids: Record<string, string> = {};
+
+  for (const key of keys) {
+    const value = req.params[key];
+    if (!value) {
+      return next(new HttpError(400, "Id manquant dans la requête"));
+    }
+    ids[key] = value;
+  }
+
+  return ids;
+};

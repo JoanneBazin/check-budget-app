@@ -7,7 +7,7 @@ import {
   updateFixedCharge,
 } from "../controllers/fixed-charges";
 import { validateBody } from "../middleware/validateBody";
-import { budgetEntryInputSchema } from "@shared/schemas";
+import { budgetEntryInputSchema, budgetEntrySchema } from "@shared/schemas";
 
 const router = express.Router();
 
@@ -21,7 +21,7 @@ router.post(
 router.put(
   "/:id",
   requireAuth,
-  validateBody(budgetEntryInputSchema),
+  validateBody(budgetEntrySchema),
   updateFixedCharge
 );
 router.delete("/:id", requireAuth, deleteFixedCharge);
