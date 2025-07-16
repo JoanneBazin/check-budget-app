@@ -1,9 +1,7 @@
 import { NextFunction, Request, Response } from "express";
-import { PrismaClientKnownRequestError } from "@prisma/client/runtime/library";
 import { getParamsId, getUserId } from "../lib/req-helpers";
 import { HttpError } from "../lib/HttpError";
 import { prisma } from "../lib/prismaClient";
-import { unknown } from "zod";
 import { isPrismaRecordNotFound } from "../lib/prismaErrorHelpers";
 
 export const addFixedIncomes = async (
