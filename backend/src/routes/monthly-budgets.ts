@@ -9,6 +9,8 @@ import {
 import {
   budgetEntryInputSchema,
   budgetEntrySchema,
+  expenseEntrySchema,
+  expensesEntryInputSchema,
   monthlyBudgetSchema,
   queryDateSchema,
 } from "@shared/schemas";
@@ -24,6 +26,11 @@ import {
   deleteMonthlyCharge,
   updateMonthlyCharge,
 } from "../controllers/monthly-charges";
+import {
+  addMonthlyExpenses,
+  deleteMonthlyExpense,
+  updateMonthlyExpense,
+} from "../controllers/monthly-expenses";
 
 const router = express.Router();
 
@@ -79,6 +86,28 @@ router.delete(
   requireAuth,
   checkBudgetAccess,
   deleteMonthlyCharge
+);
+
+// Monthly Expenses
+router.post(
+  "/:id/expenses",
+  requireAuth,
+  checkBudgetAccess,
+  validateBody(expensesEntryInputSchema),
+  addMonthlyExpenses
+);
+router.put(
+  "/:id/expenses/:expenseId",
+  requireAuth,
+  checkBudgetAccess,
+  validateBody(expenseEntrySchema),
+  updateMonthlyExpense
+);
+router.delete(
+  "/:id/expenses/:expenseId",
+  requireAuth,
+  checkBudgetAccess,
+  deleteMonthlyExpense
 );
 
 export default router;

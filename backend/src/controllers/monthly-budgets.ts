@@ -68,6 +68,7 @@ export const getMonthlyBudget = async (
       include: {
         incomes: true,
         charges: true,
+        expenses: true,
       },
     });
 

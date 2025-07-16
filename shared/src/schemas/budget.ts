@@ -30,5 +30,26 @@ export const queryDateSchema = z.object({
   year: z.coerce.number().min(2025),
 });
 
+export const expenseEntrySchema = z.object({
+  name: z
+    .string()
+    .min(2, "Le nom est trop court")
+    .max(50, "Le nom est trop long")
+    .trim(),
+  amount: z.coerce.number().min(0, "Le montant doit être positif"),
+  weekNumber: z.coerce.number().min(1).max(5),
+  category: z
+    .string()
+    .min(2, "Le nom de catégorie est trop court")
+    .max(20, "Le nom de catégorie est trop long")
+    .trim()
+    .optional(),
+});
+
+export const expensesEntryInputSchema = z.union([
+  expenseEntrySchema,
+  z.array(expenseEntrySchema).min(1, "Au moins une charge est requise"),
+]);
+
 export type BudgetEntryInput = z.infer<typeof budgetEntryInputSchema>;
 export type BudgetEntry = z.infer<typeof budgetEntrySchema>;
