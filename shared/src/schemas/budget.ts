@@ -15,6 +15,7 @@ export const monthlyBudgetSchema = z.object({
     .min(1, "Le mois doit être compris entre 1 et 12")
     .max(12, "Le mois doit être compris entre 1 et 12"),
   year: z.number().min(2025, "L'année doit être supérieure ou égale à 2025"),
+  isCurrent: z.boolean(),
   remainingBudget: z.number().optional(),
   incomes: z.array(budgetEntrySchema).optional(),
   charges: z.array(budgetEntrySchema).optional(),

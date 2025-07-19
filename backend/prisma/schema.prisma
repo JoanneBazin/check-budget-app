@@ -60,6 +60,7 @@ model MonthlyBudget {
   id  String  @id @default(cuid())
   month Int
   year  Int
+  isCurrent Boolean @default(false)
   remainingBudget Decimal @db.Decimal(10, 2)
   userId  String
   createdAt DateTime  @default(now())

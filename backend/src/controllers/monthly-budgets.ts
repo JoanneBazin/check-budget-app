@@ -46,6 +46,37 @@ export const addMonthlyBudget = async (
   }
 };
 
+export const getCurrentMonthlyBudget = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = getUserId(req, next);
+  if (!userId) return;
+
+  try {
+    const currentMonthlyBudget = await prisma.monthlyBudget.findFirst({
+      where: {
+        userId,
+        isCurrent: true,
+      },
+      include: {
+        incomes: true,
+        charges: true,
+        expenses: true,
+      },
+    });
+
+    if (!currentMonthlyBudget) {
+      return next(new HttpError(404, "Budget mensuel actif non trouvé"));
+    }
+
+    return res.status(200).json(currentMonthlyBudget);
+  } catch (error) {
+    return next(error);
+  }
+};
+
 export const getMonthlyBudget = async (
   req: Request,
   res: Response,
@@ -77,6 +108,40 @@ export const getMonthlyBudget = async (
     }
 
     return res.status(200).json(monthlyBudget);
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getLastBudgets = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = getUserId(req, next);
+  if (!userId) return;
+
+  try {
+    const history = await prisma.monthlyBudget.findMany({
+      where: {
+        userId,
+        isCurrent: false,
+      },
+      orderBy: { createdAt: "desc" },
+      take: 3,
+      select: {
+        id: true,
+        year: true,
+        month: true,
+        remainingBudget: true,
+      },
+    });
+
+    if (!history) {
+      return next(new HttpError(404, "Ancien budgets mensuels non trouvés"));
+    }
+
+    return res.status(200).json(history);
   } catch (error) {
     return next(error);
   }

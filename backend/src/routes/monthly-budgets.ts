@@ -4,6 +4,8 @@ import { validateBody } from "../middleware/validateBody";
 import {
   addMonthlyBudget,
   deleteMonthlyBudget,
+  getCurrentMonthlyBudget,
+  getLastBudgets,
   getMonthlyBudget,
 } from "../controllers/monthly-budgets";
 import {
@@ -40,6 +42,8 @@ router.post(
   addMonthlyBudget
 );
 router.get("/", requireAuth, validateQuery(queryDateSchema), getMonthlyBudget);
+router.get("/current", requireAuth, getCurrentMonthlyBudget);
+router.get("/history", requireAuth, getLastBudgets);
 router.delete("/:id", requireAuth, deleteMonthlyBudget);
 
 // Monthly incomes
