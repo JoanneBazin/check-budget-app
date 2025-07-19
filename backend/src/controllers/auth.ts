@@ -67,6 +67,12 @@ export const login = async (
   }
 };
 
+export const getSession = (req: Request, res: Response, next: NextFunction) => {
+  const user = req.user;
+  if (!user) return next(new HttpError(401, "Unauthorized"));
+  return res.status(200).json(user);
+};
+
 export const logout = async (
   req: Request,
   res: Response,
