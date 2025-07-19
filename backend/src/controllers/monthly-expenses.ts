@@ -6,6 +6,7 @@ import {
   isPrismaRecordNotFound,
 } from "../lib/prismaErrorHelpers";
 import { HttpError } from "../lib/HttpError";
+import { updateMonthlyBudgetRemaining } from "../services/budgetService";
 
 export const addMonthlyExpenses = async (
   req: Request,
@@ -36,7 +37,11 @@ export const addMonthlyExpenses = async (
       )
     );
 
-    return res.status(201).json(monthlyExpenses);
+    const { remainingBudget } = await updateMonthlyBudgetRemaining(
+      monthlyBudgetId
+    );
+
+    return res.status(201).json({ expenses: monthlyExpenses, remainingBudget });
   } catch (error) {
     if (isPrismaForeignKeyConstraint(error)) {
       return next(new HttpError(404, "Référence à un budget inexistant"));
@@ -52,7 +57,7 @@ export const updateMonthlyExpense = async (
 ) => {
   const params = getMultipleParamsIds(req, ["id", "expenseId"], next);
   if (!params) return;
-  const { expenseId } = params;
+  const { id: monthlyBudgetId, expenseId } = params;
 
   const { name, amount, weekNumber } = req.body;
 
@@ -74,7 +79,13 @@ export const updateMonthlyExpense = async (
       },
     });
 
-    return res.status(200).json(updatedExpense);
+    const { remainingBudget } = await updateMonthlyBudgetRemaining(
+      monthlyBudgetId
+    );
+
+    return res
+      .status(200)
+      .json({ updatedExpense: updatedExpense, remainingBudget });
   } catch (error) {
     if (isPrismaRecordNotFound(error)) {
       return next(
@@ -95,7 +106,7 @@ export const deleteMonthlyExpense = async (
 ) => {
   const params = getMultipleParamsIds(req, ["id", "expenseId"], next);
   if (!params) return;
-  const { expenseId } = params;
+  const { id: monthlyBudgetId, expenseId } = params;
 
   try {
     await prisma.weeklyExpense.delete({
@@ -104,7 +115,13 @@ export const deleteMonthlyExpense = async (
       },
     });
 
-    return res.status(200).json({ message: "Dépense supprimée avec succès !" });
+    const { remainingBudget } = await updateMonthlyBudgetRemaining(
+      monthlyBudgetId
+    );
+
+    return res
+      .status(200)
+      .json({ message: "Dépense supprimée avec succès !", remainingBudget });
   } catch (error) {
     if (isPrismaRecordNotFound(error)) {
       return next(
