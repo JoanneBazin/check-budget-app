@@ -1,5 +1,4 @@
 import { Route, Routes } from "react-router-dom";
-import { Home } from "../pages/public/Home";
 import { PrivateAppLayout } from "../layouts/PrivateAppLayout";
 import { Dashboard } from "../pages/app/Dashboard";
 import { CreateBudget } from "../pages/app/CreateBudget";
@@ -8,12 +7,21 @@ import { ProfileLayout } from "../layouts/ProfileLayout";
 import { Profile } from "../pages/profile/Profile";
 import { NotFound } from "../pages/NotFound";
 import { RequireAuth } from "../components/auth/RequireAuth";
+import { HomeRedirect } from "@/components/auth/HomeRedirect";
+import { RequireGuest } from "@/components/auth/RequireGuest";
+import { LoginPage } from "@/pages/public/LoginPage";
+import { SignupPage } from "@/pages/public/SignupPage";
 
 export default function AppRoutes() {
   return (
     <Routes>
       {/* Public route */}
-      <Route path="/" element={<Home />} />
+      <Route path="/" element={<HomeRedirect />} />
+
+      <Route element={<RequireGuest />}>
+        <Route path="/login" element={<LoginPage />} />
+        <Route path="/signup" element={<SignupPage />} />
+      </Route>
 
       {/* Protected routes */}
       <Route element={<RequireAuth />}>
