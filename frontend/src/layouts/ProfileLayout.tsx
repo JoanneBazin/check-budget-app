@@ -1,9 +1,10 @@
+import { Header } from "@/components/layout/Header";
 import { Outlet } from "react-router-dom";
 
 export const ProfileLayout = () => {
   return (
     <>
-      <div>Header à faire</div>
+      <Header />
       <main>
         <Outlet />
       </main>

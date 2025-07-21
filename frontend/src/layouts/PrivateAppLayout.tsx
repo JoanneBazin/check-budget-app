@@ -1,13 +1,15 @@
+import { Bottombar } from "@/components/layout/Bottombar";
+import { Header } from "@/components/layout/Header";
 import { Outlet } from "react-router-dom";
 
 export const PrivateAppLayout = () => {
   return (
     <>
-      <div>Header à faire</div>
+      <Header />
       <main>
         <Outlet />
       </main>
-      <div>Bottombar à faire</div>
+      <Bottombar />
     </>
   );
 };

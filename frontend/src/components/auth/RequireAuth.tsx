@@ -1,10 +1,13 @@
+import { useSessionQuery } from "@/hooks/queries/useSessionQuery";
+import { useUserStore } from "@/stores/userStore";
 import { Navigate, Outlet } from "react-router-dom";
-import { useSession } from "../../hooks/useSession";
 
 export const RequireAuth = () => {
-  const { user, isLoading } = useSession();
+  const user = useUserStore((s) => s.user);
+  const { isLoading, error } = useSessionQuery({ enabled: !user });
 
   if (isLoading) return <div>Loading...</div>;
+  if (error || !user) return <Navigate to="/" replace />;
 
-  return user ? <Outlet /> : <Navigate to="/" />;
+  return <Outlet />;
 };
