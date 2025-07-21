@@ -10,6 +10,7 @@ export const Bottombar = () => {
           <NavLink
             to="/app"
             className={({ isActive }) => (isActive ? "active" : "")}
+            end
           >
             <LayoutDashboard />
             <p>Dashboard</p>
@@ -17,7 +18,7 @@ export const Bottombar = () => {
         </li>
         <li>
           <NavLink
-            to="/create"
+            to="/app/create"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             <CalendarPlus />
@@ -26,7 +27,7 @@ export const Bottombar = () => {
         </li>
         <li>
           <NavLink
-            to="/history"
+            to="/app/history"
             className={({ isActive }) => (isActive ? "active" : "")}
           >
             <History />

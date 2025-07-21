@@ -1,3 +1,9 @@
+import { Banner } from "@/components/ui/Banner";
+
 export const CreateBudget = () => {
-  return <div>Créer nouveau budget mensuel</div>;
+  return (
+    <section>
+      <Banner title="Ajouter un budget mensuel" />
+    </section>
+  );
 };

@@ -1,0 +1,27 @@
+.banner-container {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+
+  .avatar {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: $primary-color;
+    font-size: 26px;
+    font-weight: 800;
+  }
+
+  .user-name {
+    font-size: 18px;
+    font-weight: 600;
+  }
+
+  .title {
+    font-size: 12px;
+    color: $gray;
+  }
+}
