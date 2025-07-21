@@ -1,33 +1,64 @@
 import { useLoginMutation } from "@/hooks/queries/mutations/useAuth";
+import { loginSchema, validateWithSchema } from "@shared/schemas";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 export const LoginForm = () => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+  const [user, setUser] = useState({ email: "", password: "" });
+  const [errorMessages, setErrorMessages] = useState<Record<string, string>>(
+    {}
+  );
   const { mutate, isPending, error } = useLoginMutation();
   const navigate = useNavigate();
 
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const { name, value } = e.target;
+    setUser({ ...user, [name]: value });
+    setErrorMessages({ ...errorMessages, [name]: "" });
+  };
+
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    mutate({ email, password }, { onSuccess: () => navigate("/app") });
+    setErrorMessages({});
+
+    const validation = validateWithSchema(loginSchema, user);
+    if (!validation.success) {
+      setErrorMessages(validation.errors);
+      return;
+    }
+
+    mutate(user, { onSuccess: () => navigate("/app") });
   };
   return (
     <form onSubmit={handleSubmit}>
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-        placeholder="email"
-      />
-      <input
-        type="text"
-        value={password}
-        onChange={(e) => setPassword(e.target.value)}
-        placeholder="password"
-      />
-      <button type="submit" disabled={isPending}>
-        Login
+      <div>
+        <input
+          type="email"
+          name="email"
+          value={user.email}
+          onChange={(e) => handleChange(e)}
+          placeholder="email"
+        />
+        {errorMessages.email && (
+          <p className="form-error">{errorMessages.email}</p>
+        )}
+      </div>
+
+      <div>
+        <input
+          type="password"
+          name="password"
+          value={user.password}
+          onChange={(e) => handleChange(e)}
+          placeholder="password"
+        />
+        {errorMessages.password && (
+          <p className="form-error">{errorMessages.password}</p>
+        )}
+      </div>
+
+      <button type="submit" disabled={isPending} className="submit-btn">
+        Se connecter
       </button>
       {error && <p>{error.message}</p>}
     </form>

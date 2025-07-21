@@ -1,12 +1,7 @@
 import { z } from "zod";
 
 export const signupSchema = z.object({
-  email: z
-    .email("Format d'email invalide")
-    .min(5)
-    .max(100)
-    .toLowerCase()
-    .trim(),
+  email: z.email("Format d'email invalide").toLowerCase().trim(),
   password: z
     .string()
     .min(8, "Le mot de passe doit contenir au moins 8 caractères")
@@ -17,10 +12,13 @@ export const signupSchema = z.object({
     ),
   name: z
     .string()
-    .min(1, "Le nom est requis")
-    .max(100, "Le nom est trop long")
     .trim()
-    .regex(/^[a-zA-ZÀ-ÿ\s'-]+$/, "Le nom contient des caractères invalides"),
+    .nonempty("Le nom est requis")
+    .max(100, "Le nom est trop long")
+    .refine(
+      (val) => /^[a-zA-ZÀ-ÿ\s'-]*$/.test(val),
+      "Le nom contient des caractères invalides"
+    ),
 });
 
 export const loginSchema = z.object({

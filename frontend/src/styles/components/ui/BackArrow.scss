@@ -1,0 +1,11 @@
+.arrow-container {
+  position: absolute;
+  left: 10px;
+  width: 30px;
+  height: 30px;
+  background: $light-gray;
+  border-radius: 50px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

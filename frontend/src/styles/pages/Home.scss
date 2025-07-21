@@ -1,0 +1,19 @@
+.auth-btn {
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+
+  a {
+    padding: 10px 20px;
+    border-radius: 15px;
+  }
+
+  &__login {
+    background: $primary-color;
+  }
+  &__signup {
+    border: 1px solid $primary-color;
+    color: $primary-color;
+  }
+}
