@@ -1,0 +1,33 @@
+header {
+  padding: 15px 10px;
+  display: flex;
+  justify-content: end;
+}
+
+.header-nav {
+  position: fixed;
+  top: 0;
+  right: 0;
+  border-radius: 15px 0 15px 15px;
+  border: 1px solid #000000;
+  padding: 15px 10px;
+
+  .close-btn {
+    display: flex;
+    justify-content: end;
+  }
+
+  .nav-items {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+    padding: 10px 20px 0 0;
+
+    li {
+      font-size: 14px;
+      .active {
+        font-weight: 700;
+      }
+    }
+  }
+}
