@@ -1,9 +1,11 @@
-import { Banner } from "@/components/ui/Banner";
+import { useBudgetStore } from "@/stores/budgetStore";
+import { useEffect } from "react";
 
 export const History = () => {
-  return (
-    <section>
-      <Banner title="Historique des budgets mensuels" />
-    </section>
-  );
+  const setPageTitle = useBudgetStore((s) => s.setPageTitle);
+
+  useEffect(() => {
+    setPageTitle("Historique des budgets mensuels");
+  }, []);
+  return <section>Historique </section>;
 };

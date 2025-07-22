@@ -1,4 +1,5 @@
 import { login, logout, signup } from "@/lib/api/auth";
+import { resetAppState } from "@/lib/resetAppState";
 import { useUserStore } from "@/stores/userStore";
 import { LoginBody, SignupBody } from "@shared/types";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
@@ -32,14 +33,11 @@ export const useSignupMutation = () => {
 
 export const useLogoutMutation = () => {
   const queryClient = useQueryClient();
-  const setUser = useUserStore((s) => s.setUser);
 
   return useMutation({
     mutationFn: logout,
     onSuccess: () => {
-      setUser(null);
-      queryClient.setQueryData(["session"], null);
-      queryClient.invalidateQueries({ queryKey: ["session"] });
+      resetAppState(queryClient);
     },
   });
 };

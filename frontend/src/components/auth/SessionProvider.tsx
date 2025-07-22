@@ -1,5 +1,7 @@
 import { useSessionQuery } from "@/hooks/queries/useSessionQuery";
+import { resetAppState } from "@/lib/resetAppState";
 import { useUserStore } from "@/stores/userStore";
+import { useQueryClient } from "@tanstack/react-query";
 import { useEffect } from "react";
 
 export const SessionProvider = ({
@@ -7,11 +9,17 @@ export const SessionProvider = ({
 }: {
   children: React.ReactNode;
 }) => {
-  const { data, isSuccess } = useSessionQuery();
+  const { data, isSuccess, error } = useSessionQuery();
   const user = useUserStore((state) => state.user);
   const setUser = useUserStore((state) => state.setUser);
 
   useEffect(() => {
+    if (error?.message === "Unauthorized" || data === null) {
+      const queryClient = useQueryClient();
+      resetAppState(queryClient);
+      return;
+    }
+
     if (isSuccess && !user) {
       setUser(data);
     }

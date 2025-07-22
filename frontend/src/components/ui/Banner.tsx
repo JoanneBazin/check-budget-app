@@ -1,8 +1,11 @@
-import { useSessionQuery } from "@/hooks/queries/useSessionQuery";
+import { useBudgetStore } from "@/stores/budgetStore";
+import { useUserStore } from "@/stores/userStore";
 import "@/styles/components/ui/Banner.scss";
 
-export const Banner = ({ title }: { title: string }) => {
-  const { data: user } = useSessionQuery();
+export const Banner = () => {
+  const pageTitle = useBudgetStore((s) => s.pageTitle);
+  const user = useUserStore((s) => s.user);
+
   const avatarLetter = user?.name.split("")[0];
 
   return (
@@ -12,7 +15,7 @@ export const Banner = ({ title }: { title: string }) => {
       </div>
       <div>
         <p className="user-name">{user?.name}</p>
-        <p className="title">{title}</p>
+        <p className="title">{pageTitle}</p>
       </div>
     </div>
   );

@@ -16,6 +16,11 @@ export const signup = async (
     const hashedPassword = await hashPassword(password);
     const user = await prisma.user.create({
       data: { email, name, password: hashedPassword },
+      select: {
+        id: true,
+        name: true,
+        email: true,
+      },
     });
 
     const sessionToken = await createSession(user.id);
@@ -27,9 +32,7 @@ export const signup = async (
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
 
-    res
-      .status(201)
-      .json({ user: { id: user.id, email: user.email, name: user.name } });
+    res.status(201).json(user);
   } catch (error) {
     if (isPrismaUniqueConstraint(error)) {
       return next(new HttpError(400, "Email déjà utilisé"));
@@ -61,7 +64,7 @@ export const login = async (
       sameSite: "strict",
       maxAge: 7 * 24 * 60 * 60 * 1000,
     });
-    res.json({ user: { id: user.id, email: user.email, name: user.name } });
+    res.json({ id: user.id, email: user.email, name: user.name });
   } catch (error) {
     return next(error);
   }

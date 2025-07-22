@@ -1,9 +1,12 @@
-import { Banner } from "@/components/ui/Banner";
+import { useBudgetStore } from "@/stores/budgetStore";
+import { useEffect } from "react";
 
 export const CreateBudget = () => {
-  return (
-    <section>
-      <Banner title="Ajouter un budget mensuel" />
-    </section>
-  );
+  const setPageTitle = useBudgetStore((s) => s.setPageTitle);
+
+  useEffect(() => {
+    setPageTitle("Ajouter un budget mensuel");
+  }, []);
+
+  return <section>Nouveau budget</section>;
 };
