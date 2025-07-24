@@ -17,3 +17,13 @@ export interface BudgetStore {
   setFixedIncomes: (incomes: fixedEntry[]) => void;
   reset: () => void;
 }
+
+export interface Entry {
+  name: string;
+  amount: string;
+}
+
+export interface EntriesFormProps {
+  initialData?: Entry[];
+  onChange: (entries: Entry[]) => void;
+}

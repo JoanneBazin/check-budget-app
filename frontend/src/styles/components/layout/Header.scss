@@ -6,6 +6,8 @@ header {
 
 .header-nav {
   position: fixed;
+  background: $white;
+  z-index: 10;
   top: 0;
   right: 0;
   border-radius: 15px 0 15px 15px;

@@ -15,7 +15,7 @@ export const Banner = () => {
       </div>
       <div>
         <p className="user-name">{user?.name}</p>
-        <p className="title">{pageTitle}</p>
+        <h1 className="title">{pageTitle}</h1>
       </div>
     </div>
   );

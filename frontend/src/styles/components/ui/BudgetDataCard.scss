@@ -1,0 +1,16 @@
+.data-card {
+  margin: 20px 0;
+  border: 1px solid $black;
+  border-radius: 20px;
+
+  &-title {
+    padding: 10px 15px;
+    border-bottom: 1px solid $black;
+    font-size: 15px;
+    font-weight: 600;
+  }
+
+  &-content {
+    padding: 10px 15px;
+  }
+}

@@ -61,10 +61,8 @@ button {
 
 form {
   display: flex;
-  width: 50%;
   margin: 20px auto;
   flex-direction: column;
-  gap: 16px;
 
   input {
     border: 1px solid $light-gray;
@@ -79,12 +77,28 @@ form {
     margin-top: 5px;
   }
 
-  .submit-btn {
-    padding: 8px 12px;
-    background: $primary-color;
+  .add-btn {
+    padding: 4px 12px;
+    border: 1px solid $light-gray;
     border-radius: 10px;
+    font-size: 20px;
     width: fit-content;
-    font-size: 15px;
     align-self: end;
   }
+
+  .delete-btn {
+    padding: 0 10px;
+    font-size: 18px;
+    font-weight: 700;
+    width: fit-content;
+    color: red;
+  }
+}
+
+.submit-btn {
+  padding: 8px 12px;
+  background: $primary-color;
+  border-radius: 10px;
+  width: fit-content;
+  font-size: 15px;
 }
