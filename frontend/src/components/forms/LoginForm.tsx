@@ -27,7 +27,7 @@ export const LoginForm = () => {
       return;
     }
 
-    mutate(user, { onSuccess: () => navigate("/app") });
+    mutate(validation.data, { onSuccess: () => navigate("/app") });
   };
   return (
     <form onSubmit={handleSubmit}>

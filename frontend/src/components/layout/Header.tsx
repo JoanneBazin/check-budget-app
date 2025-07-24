@@ -53,7 +53,11 @@ export const Header = () => {
           </nav>
         </div>
       ) : (
-        <button aria-label="Ouvrir le menu" onClick={() => setIsOpen(!isOpen)}>
+        <button
+          className="burger-menu-icon"
+          aria-label="Ouvrir le menu"
+          onClick={() => setIsOpen(!isOpen)}
+        >
           <AlignJustify />
         </button>
       )}

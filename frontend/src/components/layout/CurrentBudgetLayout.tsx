@@ -12,9 +12,36 @@ export const CurrentBudgetLayout = ({
   const dateTitle = formatDateTitle(budget.year, budget.month);
   const title = dateTitle.charAt(0).toUpperCase() + dateTitle.slice(1);
 
+  const totalCharges = budget.charges.reduce(
+    (acc, entry) => acc + parseFloat(entry.amount),
+    0
+  );
+  const totalIncomes = budget.incomes.reduce(
+    (acc, entry) => acc + parseFloat(entry.amount),
+    0
+  );
+
   useEffect(() => {
     setPageTitle(title);
   }, []);
 
-  return <div>CurrentBudgetLayout</div>;
+  return (
+    <section>
+      <div>
+        <p>Total budget</p>
+        <p>{budget.remainingBudget}</p>
+      </div>
+
+      <div>
+        <div>
+          <p>Charges</p>
+          <span>{totalCharges}</span>
+        </div>
+        <div>
+          <p>Revenus</p>
+          <span>{totalIncomes}</span>
+        </div>
+      </div>
+    </section>
+  );
 };

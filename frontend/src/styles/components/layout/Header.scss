@@ -1,15 +1,19 @@
 header {
-  padding: 15px 10px;
+  position: fixed;
+  width: 100%;
+  top: 0;
+  z-index: 100;
   display: flex;
-  justify-content: end;
+  justify-content: flex-end;
+}
+
+.burger-menu-icon {
+  padding: 15px 10px 0 0;
+  background: $white;
 }
 
 .header-nav {
-  position: fixed;
   background: $white;
-  z-index: 10;
-  top: 0;
-  right: 0;
   border-radius: 15px 0 15px 15px;
   border: 1px solid #000000;
   padding: 15px 10px;

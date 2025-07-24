@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { fr } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
@@ -9,6 +9,10 @@ export const MonthYearPicker = ({
   onChange: (month: number, year: number) => void;
 }) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
+
+  useEffect(() => {
+    onChange(selectedDate.getMonth() + 1, selectedDate.getFullYear());
+  });
 
   const handleChange = (date: Date | null) => {
     if (date) {

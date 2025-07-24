@@ -25,5 +25,6 @@ export interface Entry {
 
 export interface EntriesFormProps {
   initialData?: Entry[];
+  errors: string[];
   onChange: (entries: Entry[]) => void;
 }

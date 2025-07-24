@@ -16,25 +16,48 @@ export const addMonthlyBudget = async (
   const userId = getUserId(req, next);
   if (!userId) return;
 
-  const { month, year, incomes, charges } = req.body;
+  const { month, year, isCurrent, incomes, charges } = req.body;
 
   const remainingBudget = calculateRemainingBudget(incomes, charges);
 
   try {
-    const monthlyBudget = await prisma.monthlyBudget.create({
-      data: {
-        userId,
-        month,
-        year,
-        remainingBudget,
-        incomes: {
-          create: incomes,
-        },
-        charges: {
-          create: charges,
-        },
-      },
-    });
+    const monthlyBudget = await prisma.$transaction(
+      async (tx): Promise<any> => {
+        const newBudget = await tx.monthlyBudget.create({
+          data: {
+            userId,
+            month,
+            year,
+            isCurrent,
+            remainingBudget,
+            incomes: {
+              create: incomes,
+            },
+            charges: {
+              create: charges,
+            },
+          },
+          include: {
+            incomes: true,
+            charges: true,
+            expenses: true,
+          },
+        });
+
+        if (isCurrent) {
+          await tx.monthlyBudget.updateMany({
+            where: {
+              userId,
+              id: { not: newBudget.id },
+            },
+            data: { isCurrent: false },
+          });
+        }
+
+        return newBudget;
+      }
+    );
+
     return res.status(201).json(monthlyBudget);
   } catch (error) {
     if (isPrismaUniqueConstraint(error)) {

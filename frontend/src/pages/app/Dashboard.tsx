@@ -9,7 +9,7 @@ export const Dashboard = () => {
   const currentBudget = useBudgetStore((s) => s.currentBudget);
 
   if (isLoading) return <div>Loading...</div>;
-
+  console.log(currentBudget);
   return currentBudget ? (
     <CurrentBudgetLayout budget={currentBudget} />
   ) : (
