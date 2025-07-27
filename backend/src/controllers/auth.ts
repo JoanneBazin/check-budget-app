@@ -1,12 +1,12 @@
 import { createSession, hashPassword, verifyPassword } from "../lib/auth";
 import { HttpError } from "../lib/HttpError";
 import { prisma } from "../lib/prismaClient";
-import { LoginBody, SignupBody } from "@shared/types";
 import { NextFunction, Request, Response } from "express";
 import { isPrismaUniqueConstraint } from "../lib/prismaErrorHelpers";
+import { LoginInput, SignupInput } from "@shared/schemas";
 
 export const signup = async (
-  req: Request<{}, {}, SignupBody>,
+  req: Request<{}, {}, SignupInput>,
   res: Response,
   next: NextFunction
 ) => {
@@ -42,7 +42,7 @@ export const signup = async (
 };
 
 export const login = async (
-  req: Request<{}, {}, LoginBody>,
+  req: Request<{}, {}, LoginInput>,
   res: Response,
   next: NextFunction
 ) => {

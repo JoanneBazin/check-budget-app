@@ -5,13 +5,18 @@ import { calculateRemainingBudget } from "./budgetCalculations";
 export const updateMonthlyBudgetRemaining = async (monthlyBudgetId: string) => {
   const monthlyBudget = await prisma.monthlyBudget.findUnique({
     where: { id: monthlyBudgetId },
-    include: {
+    select: {
       incomes: {
         select: {
           amount: true,
         },
       },
       charges: {
+        select: {
+          amount: true,
+        },
+      },
+      expenses: {
         select: {
           amount: true,
         },
@@ -25,7 +30,8 @@ export const updateMonthlyBudgetRemaining = async (monthlyBudgetId: string) => {
 
   const remainingBudget = calculateRemainingBudget(
     monthlyBudget.incomes,
-    monthlyBudget.charges
+    monthlyBudget.charges,
+    monthlyBudget.expenses
   );
 
   return await prisma.monthlyBudget.update({

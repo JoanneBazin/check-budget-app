@@ -2,7 +2,8 @@ import { Decimal } from "@prisma/client/runtime/library";
 
 export const calculateRemainingBudget = (
   incomes: { amount: Decimal | number }[],
-  charges: { amount: Decimal | number }[]
+  charges: { amount: Decimal | number }[],
+  expenses?: { amount: Decimal | number }[]
 ): number => {
   const getAmount = (amount: number | Decimal): number => {
     return typeof amount === "number" ? amount : amount.toNumber();
@@ -19,6 +20,16 @@ export const calculateRemainingBudget = (
       sum + getAmount(charge.amount),
     0
   );
+
+  if (expenses) {
+    const totalExpenses = expenses.reduce(
+      (sum: number, expense: { amount: Decimal | number }) =>
+        sum + getAmount(expense.amount),
+      0
+    );
+
+    return totalIncomes - totalCharges - totalExpenses;
+  }
 
   return totalIncomes - totalCharges;
 };

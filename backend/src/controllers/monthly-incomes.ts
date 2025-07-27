@@ -7,6 +7,8 @@ import {
   isPrismaRecordNotFound,
 } from "../lib/prismaErrorHelpers";
 import { updateMonthlyBudgetRemaining } from "../services/budgetService";
+import { budgetEntrySelect } from "src/lib/selects";
+import { normalizeDecimalFields } from "src/lib/normalizeDecimalFields";
 
 export const addMonthlyIncomes = async (
   req: Request,
@@ -27,11 +29,7 @@ export const addMonthlyIncomes = async (
             ...income,
             monthlyBudgetId,
           },
-          select: {
-            id: true,
-            name: true,
-            amount: true,
-          },
+          select: budgetEntrySelect,
         })
       )
     );
@@ -41,8 +39,8 @@ export const addMonthlyIncomes = async (
     );
 
     return res.status(201).json({
-      incomes: monthlyIncomes,
-      remainingBudget,
+      incomes: normalizeDecimalFields(monthlyIncomes),
+      remainingBudget: normalizeDecimalFields(remainingBudget),
     });
   } catch (error) {
     if (isPrismaForeignKeyConstraint(error)) {
@@ -72,11 +70,7 @@ export const updateMonthlyIncome = async (
         name,
         amount,
       },
-      select: {
-        id: true,
-        name: true,
-        amount: true,
-      },
+      select: budgetEntrySelect,
     });
 
     const { remainingBudget } = await updateMonthlyBudgetRemaining(
@@ -85,7 +79,10 @@ export const updateMonthlyIncome = async (
 
     return res
       .status(200)
-      .json({ updatedIncome: updatedIncome, remainingBudget });
+      .json({
+        updatedIncome: normalizeDecimalFields(updatedIncome),
+        remainingBudget: normalizeDecimalFields(remainingBudget),
+      });
   } catch (error) {
     if (isPrismaRecordNotFound(error)) {
       return next(
@@ -121,7 +118,10 @@ export const deleteMonthlyIncome = async (
 
     return res
       .status(200)
-      .json({ message: "Revenu supprimé avec succès !", remainingBudget });
+      .json({
+        message: "Revenu supprimé avec succès !",
+        remainingBudget: normalizeDecimalFields(remainingBudget),
+      });
   } catch (error) {
     if (isPrismaRecordNotFound(error)) {
       return next(

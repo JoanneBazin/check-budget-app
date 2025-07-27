@@ -1,5 +1,5 @@
 import { useBudgetStore } from "@/stores/budgetStore";
-import { fixedEntry } from "@shared/types";
+import { BudgetEntryFromDB } from "@/types/budgets";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
@@ -16,7 +16,7 @@ export const fetchFixedIncomes = async () => {
 export const useFixedIncomesQuery = () => {
   const setFixedIncomes = useBudgetStore((s) => s.setFixedIncomes);
 
-  const query = useQuery<fixedEntry[]>({
+  const query = useQuery<BudgetEntryFromDB[]>({
     queryKey: ["fixedIncomes"],
     queryFn: fetchFixedIncomes,
     retry: false,

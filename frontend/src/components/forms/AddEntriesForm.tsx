@@ -1,4 +1,4 @@
-import { EntriesFormProps, Entry } from "@/types/budgets";
+import { EntriesFormProps, FormBudgetEntry } from "@/types/budgets";
 import { useEffect, useState } from "react";
 import "@/styles/components/forms/AddEntriesForm.scss";
 
@@ -6,14 +6,23 @@ export const AddEntriesForm = ({
   initialData,
   errors,
   onChange,
+  defaultInput = true,
 }: EntriesFormProps) => {
-  const [entries, setEntries] = useState<Entry[]>(initialData || []);
+  const [entries, setEntries] = useState<FormBudgetEntry[]>(initialData || []);
 
   useEffect(() => {
-    if (entries.length < 1) addEntry();
+    setEntries(initialData || []);
+  }, [initialData]);
+
+  useEffect(() => {
+    if (entries.length < 1 && defaultInput) addEntry();
   }, []);
 
-  const handleUpdate = (index: number, field: keyof Entry, value: string) => {
+  const handleUpdate = (
+    index: number,
+    field: keyof FormBudgetEntry,
+    value: string
+  ) => {
     const updatedEntries = entries.map((entry, i) =>
       i === index
         ? {
@@ -45,35 +54,46 @@ export const AddEntriesForm = ({
       {entries.map((entry, index) => (
         <div key={index}>
           <div className="inputs-container">
-            <input
-              type="text"
-              placeholder="Nom"
-              name="name"
-              className="name-input"
-              value={entry.name}
-              onChange={(e) => handleUpdate(index, "name", e.target.value)}
-            />
-            <div className="amount-container">
-              <span className="currency-symbol">€</span>
+            <div>
               <input
-                type="number"
-                placeholder="Montant"
-                name="amount"
-                className="amount-input"
-                value={entry.amount}
-                onChange={(e) => handleUpdate(index, "amount", e.target.value)}
+                type="text"
+                placeholder="Nom"
+                name="name"
+                className="name-input"
+                value={entry.name}
+                onChange={(e) => handleUpdate(index, "name", e.target.value)}
               />
-              <button
-                type="button"
-                className="delete-btn"
-                onClick={() => removeEntry(index)}
-                aria-label="Supprimer cette ligne"
-              >
-                x
-              </button>
+              {errors.length > 0 && errors[index].name ? (
+                <p className="form-error">{errors[index].name}</p>
+              ) : null}
+            </div>
+            <div className="amount-content">
+              <div className="amount-container">
+                <span className="currency-symbol">€</span>
+                <input
+                  type="number"
+                  placeholder="Montant"
+                  name="amount"
+                  className="amount-input"
+                  value={entry.amount}
+                  onChange={(e) =>
+                    handleUpdate(index, "amount", e.target.value)
+                  }
+                />
+                <button
+                  type="button"
+                  className="delete-btn"
+                  onClick={() => removeEntry(index)}
+                  aria-label="Supprimer cette ligne"
+                >
+                  x
+                </button>
+              </div>
+              {errors.length > 0 && errors[index].amount ? (
+                <p className="form-error">Montant invalide</p>
+              ) : null}
             </div>
           </div>
-          {errors[index] && <p className="form-error">{errors[index]}</p>}
         </div>
       ))}
       <button

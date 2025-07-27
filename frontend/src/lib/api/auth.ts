@@ -1,6 +1,7 @@
-import { LoginBody, SignupBody, User } from "@shared/types";
+import { LoginInput, SignupInput } from "@shared/schemas";
+import { User } from "@shared/types";
 
-export const login = async ({ email, password }: LoginBody): Promise<User> => {
+export const login = async ({ email, password }: LoginInput): Promise<User> => {
   const response = await fetch("http://localhost:4000/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -20,7 +21,7 @@ export const signup = async ({
   name,
   email,
   password,
-}: SignupBody): Promise<User> => {
+}: SignupInput): Promise<User> => {
   const response = await fetch("http://localhost:4000/api/auth/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },

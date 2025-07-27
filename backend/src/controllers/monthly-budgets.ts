@@ -7,6 +7,8 @@ import {
 } from "../lib/prismaErrorHelpers";
 import { HttpError } from "../lib/HttpError";
 import { calculateRemainingBudget } from "../services/budgetCalculations";
+import { monthlyBudgetSelect } from "src/lib/selects";
+import { normalizeDecimalFields } from "src/lib/normalizeDecimalFields";
 
 export const addMonthlyBudget = async (
   req: Request,
@@ -37,11 +39,7 @@ export const addMonthlyBudget = async (
               create: charges,
             },
           },
-          include: {
-            incomes: true,
-            charges: true,
-            expenses: true,
-          },
+          select: monthlyBudgetSelect,
         });
 
         if (isCurrent) {
@@ -58,7 +56,7 @@ export const addMonthlyBudget = async (
       }
     );
 
-    return res.status(201).json(monthlyBudget);
+    return res.status(201).json(normalizeDecimalFields(monthlyBudget));
   } catch (error) {
     if (isPrismaUniqueConstraint(error)) {
       return next(
@@ -83,18 +81,14 @@ export const getCurrentMonthlyBudget = async (
         userId,
         isCurrent: true,
       },
-      include: {
-        incomes: true,
-        charges: true,
-        expenses: true,
-      },
+      select: monthlyBudgetSelect,
     });
 
     if (!currentMonthlyBudget) {
       return next(new HttpError(404, "Budget mensuel actif non trouvé"));
     }
 
-    return res.status(200).json(currentMonthlyBudget);
+    return res.status(200).json(normalizeDecimalFields(currentMonthlyBudget));
   } catch (error) {
     return next(error);
   }
@@ -119,18 +113,14 @@ export const getMonthlyBudget = async (
           year: Number(year),
         },
       },
-      include: {
-        incomes: true,
-        charges: true,
-        expenses: true,
-      },
+      select: monthlyBudgetSelect,
     });
 
     if (!monthlyBudget) {
       return next(new HttpError(404, "Budget mensuel non trouvé"));
     }
 
-    return res.status(200).json(monthlyBudget);
+    return res.status(200).json(normalizeDecimalFields(monthlyBudget));
   } catch (error) {
     return next(error);
   }
@@ -164,7 +154,7 @@ export const getLastBudgets = async (
       return next(new HttpError(404, "Ancien budgets mensuels non trouvés"));
     }
 
-    return res.status(200).json(history);
+    return res.status(200).json(normalizeDecimalFields(history));
   } catch (error) {
     return next(error);
   }

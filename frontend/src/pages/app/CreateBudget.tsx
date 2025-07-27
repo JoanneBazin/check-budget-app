@@ -6,11 +6,11 @@ import { BudgetDataCard } from "@/components/ui/BudgetDataCard";
 import { AddEntriesForm } from "@/components/forms/AddEntriesForm";
 import { useFixedChargesQuery } from "@/hooks/queries/useFixedChargesQuery";
 import { useFixedIncomesQuery } from "@/hooks/queries/useFixedIncomesQuery";
-import { Entry } from "@/types/budgets";
-import { frontBudgetSchema, validateWithSchema } from "@shared/schemas";
+import { monthlyBudgetSchema, validateWithSchema } from "@shared/schemas";
 import { extractArrayErrors } from "@/lib/extractArrayErrors";
 import { useCreateBudgetMutation } from "@/hooks/queries/mutations/useMonthlyBudgets";
 import { useNavigate } from "react-router-dom";
+import { FormBudgetEntry } from "@/types/budgets";
 
 export const CreateBudget = () => {
   const {
@@ -26,13 +26,15 @@ export const CreateBudget = () => {
   const setPageTitle = useBudgetStore((s) => s.setPageTitle);
   const [month, setMonth] = useState<number | null>(null);
   const [year, setYear] = useState<number | null>(null);
-  const initialCharges = charges?.map(({ id, ...rest }) => rest);
-  const initialIncomes = incomes?.map(({ id, ...rest }) => rest);
-  const [monthlyCharges, setMonthlyCharges] = useState<Entry[]>([]);
-  const [monthlyIncomes, setMonthlyIncomes] = useState<Entry[]>([]);
+  const [monthlyCharges, setMonthlyCharges] = useState<FormBudgetEntry[]>([]);
+  const [monthlyIncomes, setMonthlyIncomes] = useState<FormBudgetEntry[]>([]);
   const [isCurrent, setIsCurrent] = useState(true);
-  const [incomesErrors, setIncomesErrors] = useState<string[]>([]);
-  const [chargesErrors, setChargesErrors] = useState<string[]>([]);
+  const [incomesErrors, setIncomesErrors] = useState<Record<string, string>[]>(
+    []
+  );
+  const [chargesErrors, setChargesErrors] = useState<Record<string, string>[]>(
+    []
+  );
   const { mutate, isPending, error: requestError } = useCreateBudgetMutation();
   const navigate = useNavigate();
 
@@ -60,10 +62,11 @@ export const CreateBudget = () => {
       charges: monthlyCharges,
     };
 
-    const validation = validateWithSchema(frontBudgetSchema, newBudget);
+    const validation = validateWithSchema(monthlyBudgetSchema, newBudget);
     if (!validation.success) {
       setIncomesErrors(extractArrayErrors(validation.errors, "incomes"));
       setChargesErrors(extractArrayErrors(validation.errors, "charges"));
+
       return;
     }
 
@@ -79,14 +82,14 @@ export const CreateBudget = () => {
       {requestError && <p className="form-error">{requestError.message}</p>}
       <BudgetDataCard title="Revenus">
         <AddEntriesForm
-          initialData={initialIncomes}
+          initialData={incomes}
           errors={incomesErrors}
           onChange={setMonthlyIncomes}
         />
       </BudgetDataCard>
       <BudgetDataCard title="Charges">
         <AddEntriesForm
-          initialData={initialCharges}
+          initialData={charges}
           errors={chargesErrors}
           onChange={setMonthlyCharges}
         />

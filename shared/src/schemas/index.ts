@@ -47,6 +47,7 @@ export const validateArrayWithSchema = <T>(
       hasError = true;
     } else {
       validateItems.push(result.data);
+      itemErrors[index] = {};
     }
   });
 

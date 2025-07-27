@@ -3,6 +3,8 @@ import { prisma } from "../lib/prismaClient";
 import { getParamsId, getUserId } from "../lib/req-helpers";
 import { isPrismaRecordNotFound } from "../lib/prismaErrorHelpers";
 import { HttpError } from "../lib/HttpError";
+import { budgetEntrySelect } from "src/lib/selects";
+import { normalizeDecimalFields } from "src/lib/normalizeDecimalFields";
 
 export const addFixedCharges = async (
   req: Request,
@@ -23,16 +25,12 @@ export const addFixedCharges = async (
             ...charge,
             userId,
           },
-          select: {
-            id: true,
-            name: true,
-            amount: true,
-          },
+          select: budgetEntrySelect,
         })
       )
     );
 
-    return res.status(201).json(fixedCharges);
+    return res.status(201).json(normalizeDecimalFields(fixedCharges));
   } catch (error) {
     return next(error);
   }
@@ -51,17 +49,13 @@ export const getFixedCharges = async (
       where: {
         userId,
       },
-      select: {
-        id: true,
-        name: true,
-        amount: true,
-      },
+      select: budgetEntrySelect,
       orderBy: {
         createdAt: "asc",
       },
     });
 
-    return res.status(200).json(allFixedCharges);
+    return res.status(200).json(normalizeDecimalFields(allFixedCharges));
   } catch (error) {
     return next(error);
   }
@@ -90,14 +84,10 @@ export const updateFixedCharge = async (
         name,
         amount,
       },
-      select: {
-        id: true,
-        name: true,
-        amount: true,
-      },
+      select: budgetEntrySelect,
     });
 
-    return res.status(200).json(updatedFixedCharge);
+    return res.status(200).json(normalizeDecimalFields(updatedFixedCharge));
   } catch (error) {
     if (isPrismaRecordNotFound(error)) {
       return next(

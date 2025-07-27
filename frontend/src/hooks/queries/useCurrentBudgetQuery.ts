@@ -1,5 +1,5 @@
 import { useBudgetStore } from "@/stores/budgetStore";
-import { CurrentMonthlyBudget } from "@shared/types";
+import { MonthlyBudget } from "@shared/schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 
@@ -19,7 +19,7 @@ export const fetchCurrentBudget = async () => {
 export const useCurrentBudgetQuery = () => {
   const setCurrentMonthlyBudget = useBudgetStore((s) => s.setCurrentBudget);
 
-  const query = useQuery<CurrentMonthlyBudget>({
+  const query = useQuery<MonthlyBudget>({
     queryKey: ["currentBudget"],
     queryFn: fetchCurrentBudget,
     retry: false,
