@@ -6,8 +6,7 @@ import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { WeeklyExpensesDisplay } from "./WeeklyExpensesDisplay";
 import { MonthlyBudget } from "@shared/schemas";
 import { TotalEntriesDisplay } from "../ui/TotalEntriesDisplay";
-import { MonthlyCharges } from "./MonthlyCharges";
-import { MonthlyIncomes } from "./MonthlyIncomes";
+import { MonthlyEntries } from "./MonthlyEntries";
 
 type View = "app" | "charges" | "incomes";
 
@@ -32,11 +31,23 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
 
   if (view === "charges")
     return (
-      <MonthlyCharges onBack={() => setView("app")} data={budget.charges} />
+      <MonthlyEntries
+        type="charges"
+        onBack={() => setView("app")}
+        data={budget.charges}
+        dateTitle={dateTitle}
+        budgetId={budget.id ?? ""}
+      />
     );
   if (view === "incomes")
     return (
-      <MonthlyIncomes onBack={() => setView("app")} data={budget.incomes} />
+      <MonthlyEntries
+        type="revenus"
+        onBack={() => setView("app")}
+        data={budget.incomes}
+        dateTitle={dateTitle}
+        budgetId={budget.id ?? ""}
+      />
     );
 
   return (

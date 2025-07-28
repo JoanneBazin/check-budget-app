@@ -7,8 +7,6 @@ export const BackArrow = ({ destination, onBack }: BackArrowProps) => {
   const navigate = useNavigate();
 
   const handleClick = () => {
-    console.log("Click");
-
     if (destination) {
       navigate(destination);
     } else if (onBack) {

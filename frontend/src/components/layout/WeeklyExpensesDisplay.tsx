@@ -1,12 +1,12 @@
 import { BudgetDataCard } from "../ui/BudgetDataCard";
 import { useEffect, useState } from "react";
 import { FormBudgetEntry, WeeklyExpensesDisplayProps } from "@/types/budgets";
-import { ChevronRight } from "lucide-react";
-import "@/styles/components/layout/WeeklyExpensesDisplay.scss";
 import { AddEntriesForm } from "../forms/AddEntriesForm";
 import { expenseEntrySchema, validateArrayWithSchema } from "@shared/schemas";
 import { useAddExpensesMutation } from "@/hooks/queries/mutations/useExpenses";
 import { DateDisplay } from "../ui/DateDisplay";
+import { DataList } from "@/components/ui/DataList";
+import { TotalDataDisplay } from "../ui/TotalDataDisplay";
 
 export const WeeklyExpensesDisplay = ({
   budgetId,
@@ -45,6 +45,7 @@ export const WeeklyExpensesDisplay = ({
     );
     if (!validation.success) {
       setExpensesError(Object.values(validation.errors));
+      return;
     }
 
     mutate(
@@ -58,26 +59,7 @@ export const WeeklyExpensesDisplay = ({
       <DateDisplay weekIndex={weekIndex} setIndex={setWeekIndex} />
 
       <div>
-        {weeklyExpenses.length > 0 ? (
-          weeklyExpenses.map((expense, index) => (
-            <div key={index} className="current-expenses">
-              <div className="expense-name">
-                <ChevronRight size={16} />
-                <p>{expense.name}</p>
-              </div>
-              <div className="expense-amount">
-                <p>
-                  <span>€</span>
-                  {expense.amount}
-                </p>
-              </div>
-            </div>
-          ))
-        ) : (
-          <p className="empty-expenses-info">
-            Pas encore de dépenses pour cette semaine
-          </p>
-        )}
+        <DataList data={weeklyExpenses} />
         <AddEntriesForm
           initialData={newExpenses}
           errors={expensesError}
@@ -91,13 +73,10 @@ export const WeeklyExpensesDisplay = ({
         )}
       </div>
 
-      <div className="total-expenses">
-        <p>Budget hebdomadaire</p>
-        <p className="total-expenses-amount">
-          <span>€</span>
-          {remainingWeeklyBudget}
-        </p>
-      </div>
+      <TotalDataDisplay
+        total={remainingWeeklyBudget}
+        title="Budget hebdomadaire"
+      />
     </BudgetDataCard>
   );
 };

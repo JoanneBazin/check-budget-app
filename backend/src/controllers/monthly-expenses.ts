@@ -37,14 +37,12 @@ export const addMonthlyExpenses = async (
       )
     );
 
-    const { weeklyBudget } = await updateWeeklyBudget(monthlyBudgetId);
     const { remainingBudget } = await updateMonthlyBudgetRemaining(
       monthlyBudgetId
     );
 
     return res.status(201).json({
       expenses: normalizeDecimalFields(monthlyExpenses),
-      weeklyBudget: normalizeDecimalFields(weeklyBudget),
       remainingBudget: normalizeDecimalFields(remainingBudget),
     });
   } catch (error) {
@@ -79,14 +77,12 @@ export const updateMonthlyExpense = async (
       select: expenseEntrySelect,
     });
 
-    const { weeklyBudget } = await updateWeeklyBudget(monthlyBudgetId);
     const { remainingBudget } = await updateMonthlyBudgetRemaining(
       monthlyBudgetId
     );
 
     return res.status(200).json({
       updatedExpense: normalizeDecimalFields(updatedExpense),
-      weeklyBudget: normalizeDecimalFields(weeklyBudget),
       remainingBudget: normalizeDecimalFields(remainingBudget),
     });
   } catch (error) {
@@ -118,14 +114,12 @@ export const deleteMonthlyExpense = async (
       },
     });
 
-    const { weeklyBudget } = await updateWeeklyBudget(monthlyBudgetId);
     const { remainingBudget } = await updateMonthlyBudgetRemaining(
       monthlyBudgetId
     );
 
     return res.status(200).json({
       message: "Dépense supprimée avec succès !",
-      weeklyBudget: normalizeDecimalFields(weeklyBudget),
       remainingBudget: normalizeDecimalFields(remainingBudget),
     });
   } catch (error) {

@@ -1,26 +1,4 @@
-.empty-expenses-info {
-  font-size: 12px;
-}
-
-.current-expenses {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  font-size: 14px;
-  margin-bottom: 4px;
-
-  .expense-name {
-    display: flex;
-    align-items: center;
-    font-weight: 500;
-  }
-
-  .expense-amount {
-    color: $gray;
-  }
-}
-
-.total-expenses {
+.total-data {
   display: flex;
   justify-content: space-between;
   padding: 16px 10px 6px 10px;
@@ -32,7 +10,7 @@
   }
 }
 
-.total-expenses::before {
+.total-data::before {
   content: "";
   position: absolute;
   top: 0;

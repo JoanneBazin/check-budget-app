@@ -1,0 +1,31 @@
+.empty-data-info {
+  font-size: 12px;
+}
+
+.current-data {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  font-size: 14px;
+  margin-bottom: 4px;
+
+  .entry-name {
+    display: flex;
+    align-items: center;
+    font-weight: 500;
+  }
+
+  .amount {
+    display: flex;
+    gap: 16px;
+
+    &-entry {
+      color: $gray;
+    }
+
+    &-update {
+      color: $primary-color;
+      font-size: 12px;
+    }
+  }
+}

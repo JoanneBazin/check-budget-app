@@ -61,6 +61,16 @@ export interface AddExpensesProps {
   budgetId: string;
   expenses: ExpenseEntry[];
 }
+export interface AddMonthlyEntriesProps {
+  type: "charges" | "incomes";
+  budgetId: string;
+  entries: BudgetEntry[];
+}
+export interface UpdateMonthlyEntryProps {
+  type: "charges" | "incomes";
+  budgetId: string;
+  entry: BudgetEntry;
+}
 
 export interface CreateBudgetMutation {
   budget: MonthlyBudget;
@@ -78,11 +88,30 @@ export interface DateDisplayProps {
 }
 
 export interface MonthlyEntriesView {
+  type: string;
   onBack: () => void;
   data: BudgetEntry[];
+  dateTitle: string;
+  budgetId: string;
 }
 
 export interface BackArrowProps {
   destination?: string;
   onBack?: () => void;
+}
+
+export interface DataListProps {
+  data: BudgetEntry[];
+}
+
+export interface TotalDataDisplayProps {
+  total: number;
+  title?: string;
+}
+
+export interface ModalProps {
+  isOpen: boolean;
+  onClose: () => void;
+  title: string;
+  children: React.ReactNode;
 }
