@@ -6,7 +6,10 @@ import {
   isPrismaUniqueConstraint,
 } from "../lib/prismaErrorHelpers";
 import { HttpError } from "../lib/HttpError";
-import { calculateRemainingBudget } from "../services/budgetCalculations";
+import {
+  calculateRemainingBudget,
+  calculateWeeklyBudget,
+} from "../services/budgetCalculations";
 import { monthlyBudgetSelect } from "src/lib/selects";
 import { normalizeDecimalFields } from "src/lib/normalizeDecimalFields";
 
@@ -18,9 +21,10 @@ export const addMonthlyBudget = async (
   const userId = getUserId(req, next);
   if (!userId) return;
 
-  const { month, year, isCurrent, incomes, charges } = req.body;
+  const { month, year, isCurrent, incomes, charges, numberOfWeeks } = req.body;
 
   const remainingBudget = calculateRemainingBudget(incomes, charges);
+  const weeklyBudget = calculateWeeklyBudget(remainingBudget, numberOfWeeks);
 
   try {
     const monthlyBudget = await prisma.$transaction(
@@ -32,6 +36,8 @@ export const addMonthlyBudget = async (
             year,
             isCurrent,
             remainingBudget,
+            weeklyBudget,
+            numberOfWeeks,
             incomes: {
               create: incomes,
             },

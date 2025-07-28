@@ -1,13 +1,28 @@
 import { ChevronLeft } from "lucide-react";
 import "@/styles/components/ui/BackArrow.scss";
-import { Link } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { BackArrowProps } from "@/types/budgets";
 
-export const BackArrow = ({ destination }: { destination: string }) => {
+export const BackArrow = ({ destination, onBack }: BackArrowProps) => {
+  const navigate = useNavigate();
+
+  const handleClick = () => {
+    console.log("Click");
+
+    if (destination) {
+      navigate(destination);
+    } else if (onBack) {
+      onBack();
+    }
+  };
+
   return (
-    <Link to={destination} aria-label="Retourner à la page précécente">
-      <div className="arrow-container">
-        <ChevronLeft />
-      </div>
-    </Link>
+    <button
+      className="arrow-container"
+      aria-label="Retour"
+      onClick={handleClick}
+    >
+      <ChevronLeft />
+    </button>
   );
 };

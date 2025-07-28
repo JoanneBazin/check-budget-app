@@ -12,7 +12,7 @@ export const budgetEntrySchema = z.object({
     (val) => {
       if (typeof val === "string") {
         const cleaned = val.trim().replace(/\s+/g, "").replace(",", ".");
-        return parseFloat(cleaned);
+        return Math.round(Number(cleaned) * 100) / 100;
       }
       return val;
     },
@@ -36,7 +36,7 @@ export const expenseEntrySchema = z.object({
     (val) => {
       if (typeof val === "string") {
         const cleaned = val.trim().replace(/\s+/g, "").replace(",", ".");
-        return parseFloat(cleaned);
+        return Math.round(Number(cleaned) * 100) / 100;
       }
       return val;
     },
@@ -57,29 +57,16 @@ export const expenseEntrySchema = z.object({
 });
 
 export const monthlyBudgetSchema = z.object({
-  id: z.string(),
+  id: z.string().optional(),
   month: z
     .number()
     .min(1, "Le mois doit être compris entre 1 et 12")
     .max(12, "Le mois doit être compris entre 1 et 12"),
   year: z.number().min(2025, "L'année doit être supérieure ou égale à 2025"),
   isCurrent: z.boolean(),
-  remainingBudget: z.preprocess(
-    (val) => {
-      if (typeof val === "string") {
-        const cleaned = val.trim().replace(/\s+/g, "").replace(",", ".");
-        return parseFloat(cleaned);
-      }
-      return val;
-    },
-    z
-      .number()
-      .refine(
-        (val) => !isNaN(val) && val > 0,
-        "Veuillez saisir un montant positif valide"
-      )
-      .optional()
-  ),
+  remainingBudget: z.number().optional(),
+  weeklyBudget: z.number().optional(),
+  numberOfWeeks: z.number().min(4).max(5),
   incomes: z.array(budgetEntrySchema).default([]),
   charges: z.array(budgetEntrySchema).default([]),
   expenses: z.array(expenseEntrySchema).default([]),

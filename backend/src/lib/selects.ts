@@ -17,6 +17,8 @@ export const monthlyBudgetSelect = {
   year: true,
   isCurrent: true,
   remainingBudget: true,
+  weeklyBudget: true,
+  numberOfWeeks: true,
   incomes: {
     select: {
       ...budgetEntrySelect,

@@ -42,9 +42,7 @@ export const AddEntriesForm = ({
   };
 
   const removeEntry = (entryIndex: number) => {
-    const updatedEntries = entries.filter(
-      (entry, index) => index !== entryIndex
-    );
+    const updatedEntries = entries.filter((_, index) => index !== entryIndex);
     setEntries(updatedEntries);
     onChange(updatedEntries);
   };

@@ -11,6 +11,7 @@ import { extractArrayErrors } from "@/lib/extractArrayErrors";
 import { useCreateBudgetMutation } from "@/hooks/queries/mutations/useMonthlyBudgets";
 import { useNavigate } from "react-router-dom";
 import { FormBudgetEntry } from "@/types/budgets";
+import { getWeeksInMonth } from "@/lib/getWeeksInMonth";
 
 export const CreateBudget = () => {
   const {
@@ -54,12 +55,15 @@ export const CreateBudget = () => {
     setIncomesErrors([]);
     setChargesErrors([]);
 
+    if (!year || !month) return;
+
     const newBudget = {
       month,
       year,
       isCurrent,
       incomes: monthlyIncomes,
       charges: monthlyCharges,
+      numberOfWeeks: getWeeksInMonth(year, month).length,
     };
 
     const validation = validateWithSchema(monthlyBudgetSchema, newBudget);
@@ -70,7 +74,9 @@ export const CreateBudget = () => {
       return;
     }
 
-    mutate(validation.data, { onSuccess: () => navigate("/app") });
+    mutate(validation.data, {
+      onSuccess: () => navigate("/app"),
+    });
   };
 
   return (

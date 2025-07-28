@@ -9,6 +9,18 @@
     border-bottom: 1px solid $black;
     font-size: 14px;
     font-weight: 600;
+    border-radius: 20px 20px 0 0;
+
+    &.black {
+      background: $black;
+      color: $white;
+      font-weight: 400;
+    }
+
+    &.primary {
+      background: $primary-color;
+      font-weight: 400;
+    }
   }
 
   &-content {

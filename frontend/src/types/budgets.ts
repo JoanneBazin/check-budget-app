@@ -1,13 +1,15 @@
-import { ExpenseEntry, MonthlyBudget } from "@shared/schemas";
+import { BudgetEntry, ExpenseEntry, MonthlyBudget } from "@shared/schemas";
 
 export interface BudgetStore {
   pageTitle: string;
   currentBudget: MonthlyBudget | null;
+  weeksInMonth: WeekProps[];
   fixedIncomes: BudgetEntryFromDB[] | null;
   fixedCharges: BudgetEntryFromDB[] | null;
   lastBudgets: LastMonthlyBudget[] | null;
   setPageTitle: (title: string) => void;
   setCurrentBudget: (budget: MonthlyBudget | null) => void;
+  setWeeksInMonth: (weeks: WeekProps[]) => void;
   setLastBudgets: (budgets: LastMonthlyBudget[]) => void;
   setFixedCharges: (charges: BudgetEntryFromDB[]) => void;
   setFixedIncomes: (incomes: BudgetEntryFromDB[]) => void;
@@ -50,13 +52,37 @@ export interface WeekProps {
 }
 
 export interface WeeklyExpensesDisplayProps {
-  year: number;
-  month: number;
   budgetId: string;
+  weeklyBudget: number;
   expenses: ExpenseEntry[];
 }
 
 export interface AddExpensesProps {
   budgetId: string;
   expenses: ExpenseEntry[];
+}
+
+export interface CreateBudgetMutation {
+  budget: MonthlyBudget;
+  weeksInMonth: WeekProps[];
+}
+
+export interface TotalEntriesProps {
+  data: string;
+  total: number;
+}
+
+export interface DateDisplayProps {
+  weekIndex: number;
+  setIndex: (index: number) => void;
+}
+
+export interface MonthlyEntriesView {
+  onBack: () => void;
+  data: BudgetEntry[];
+}
+
+export interface BackArrowProps {
+  destination?: string;
+  onBack?: () => void;
 }

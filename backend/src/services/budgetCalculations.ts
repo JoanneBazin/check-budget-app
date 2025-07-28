@@ -33,3 +33,10 @@ export const calculateRemainingBudget = (
 
   return totalIncomes - totalCharges;
 };
+
+export const calculateWeeklyBudget = (
+  remainingBudget: number,
+  numberOfWeeks: number
+) => {
+  return Math.round(remainingBudget / numberOfWeeks);
+};

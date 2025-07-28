@@ -6,7 +6,10 @@ import {
   isPrismaForeignKeyConstraint,
   isPrismaRecordNotFound,
 } from "../lib/prismaErrorHelpers";
-import { updateMonthlyBudgetRemaining } from "../services/budgetService";
+import {
+  updateMonthlyBudgetRemaining,
+  updateWeeklyBudget,
+} from "../services/budgetService";
 import { budgetEntrySelect } from "src/lib/selects";
 import { normalizeDecimalFields } from "src/lib/normalizeDecimalFields";
 
@@ -34,12 +37,14 @@ export const addMonthlyCharges = async (
       )
     );
 
+    const { weeklyBudget } = await updateWeeklyBudget(monthlyBudgetId);
     const { remainingBudget } = await updateMonthlyBudgetRemaining(
       monthlyBudgetId
     );
 
     return res.status(201).json({
       charges: normalizeDecimalFields(monthlyCharges),
+      weeklyBudget: normalizeDecimalFields(weeklyBudget),
       remainingBudget: normalizeDecimalFields(remainingBudget),
     });
   } catch (error) {
@@ -73,16 +78,16 @@ export const updateMonthlyCharge = async (
       select: budgetEntrySelect,
     });
 
+    const { weeklyBudget } = await updateWeeklyBudget(monthlyBudgetId);
     const { remainingBudget } = await updateMonthlyBudgetRemaining(
       monthlyBudgetId
     );
 
-    return res
-      .status(200)
-      .json({
-        updatedCharge: normalizeDecimalFields(updatedCharge),
-        remainingBudget: normalizeDecimalFields(remainingBudget),
-      });
+    return res.status(200).json({
+      updatedCharge: normalizeDecimalFields(updatedCharge),
+      weeklyBudget: normalizeDecimalFields(weeklyBudget),
+      remainingBudget: normalizeDecimalFields(remainingBudget),
+    });
   } catch (error) {
     if (isPrismaRecordNotFound(error)) {
       return next(
@@ -112,16 +117,16 @@ export const deleteMonthlyCharge = async (
       },
     });
 
+    const { weeklyBudget } = await updateWeeklyBudget(monthlyBudgetId);
     const { remainingBudget } = await updateMonthlyBudgetRemaining(
       monthlyBudgetId
     );
 
-    return res
-      .status(200)
-      .json({
-        message: "Charge supprimée avec succès !",
-        remainingBudget: normalizeDecimalFields(remainingBudget),
-      });
+    return res.status(200).json({
+      message: "Charge supprimée avec succès !",
+      weeklyBudget: normalizeDecimalFields(weeklyBudget),
+      remainingBudget: normalizeDecimalFields(remainingBudget),
+    });
   } catch (error) {
     if (isPrismaRecordNotFound(error)) {
       return next(

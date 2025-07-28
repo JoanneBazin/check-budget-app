@@ -1,26 +1,26 @@
-import { getWeeksInMonth } from "@/lib/getWeeksInMonth";
 import { BudgetDataCard } from "../ui/BudgetDataCard";
 import { useEffect, useState } from "react";
 import { FormBudgetEntry, WeeklyExpensesDisplayProps } from "@/types/budgets";
-import { ChevronLeft, ChevronRight } from "lucide-react";
+import { ChevronRight } from "lucide-react";
 import "@/styles/components/layout/WeeklyExpensesDisplay.scss";
 import { AddEntriesForm } from "../forms/AddEntriesForm";
 import { expenseEntrySchema, validateArrayWithSchema } from "@shared/schemas";
 import { useAddExpensesMutation } from "@/hooks/queries/mutations/useExpenses";
+import { DateDisplay } from "../ui/DateDisplay";
 
 export const WeeklyExpensesDisplay = ({
-  year,
-  month,
   budgetId,
+  weeklyBudget,
   expenses,
 }: WeeklyExpensesDisplayProps) => {
-  const weeks = getWeeksInMonth(year, month);
   const [newExpenses, setNewExpenses] = useState<FormBudgetEntry[]>([]);
   const [weekIndex, setWeekIndex] = useState(0);
   const currentWeekNumber = weekIndex + 1;
   const weeklyExpenses = expenses.filter(
     (expense) => expense.weekNumber === currentWeekNumber
   );
+  const remainingWeeklyBudget =
+    weeklyBudget - weeklyExpenses.reduce((acc, entry) => acc + entry.amount, 0);
 
   const [expensesError, setExpensesError] = useState<Record<string, string>[]>(
     []
@@ -55,36 +55,7 @@ export const WeeklyExpensesDisplay = ({
 
   return (
     <BudgetDataCard title="Dépenses">
-      <div className="date-selector">
-        <button
-          onClick={() => setWeekIndex((i) => Math.max(i - 1, 0))}
-          disabled={weekIndex === 0}
-          aria-label="Afficher la semaine précédente"
-          className="icon-btn"
-        >
-          <ChevronLeft className="icon" />
-        </button>
-        <span>
-          du{" "}
-          {weeks[weekIndex].start.toLocaleDateString("fr-FR", {
-            day: "2-digit",
-            month: "2-digit",
-          })}{" "}
-          au{" "}
-          {weeks[weekIndex].end.toLocaleDateString("fr-FR", {
-            day: "2-digit",
-            month: "2-digit",
-          })}
-        </span>
-        <button
-          onClick={() => setWeekIndex((i) => Math.min(i + 1, weeks.length - 1))}
-          disabled={weekIndex === weeks.length - 1}
-          aria-label="Afficher la semaine suivante"
-          className="icon-btn"
-        >
-          <ChevronRight className="icon" />
-        </button>
-      </div>
+      <DateDisplay weekIndex={weekIndex} setIndex={setWeekIndex} />
 
       <div>
         {weeklyExpenses.length > 0 ? (
@@ -124,6 +95,7 @@ export const WeeklyExpensesDisplay = ({
         <p>Budget hebdomadaire</p>
         <p className="total-expenses-amount">
           <span>€</span>
+          {remainingWeeklyBudget}
         </p>
       </div>
     </BudgetDataCard>

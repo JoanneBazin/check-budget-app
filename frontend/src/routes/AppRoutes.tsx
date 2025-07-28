@@ -11,6 +11,8 @@ import { HomeRedirect } from "@/components/auth/HomeRedirect";
 import { RequireGuest } from "@/components/auth/RequireGuest";
 import { LoginPage } from "@/pages/public/LoginPage";
 import { SignupPage } from "@/pages/public/SignupPage";
+import { MonthlyIncomes } from "@/components/layout/MonthlyIncomes";
+import { MonthlyCharges } from "@/components/layout/MonthlyCharges";
 
 export default function AppRoutes() {
   return (
