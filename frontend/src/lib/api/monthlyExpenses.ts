@@ -1,4 +1,8 @@
-import { AddExpensesProps } from "@/types/budgets";
+import {
+  AddExpensesProps,
+  DeleteExpenseProps,
+  UpdateExpenseProps,
+} from "@/types/budgets";
 
 export const addExpenses = async ({ expenses, budgetId }: AddExpensesProps) => {
   const response = await fetch(
@@ -17,4 +21,55 @@ export const addExpenses = async ({ expenses, budgetId }: AddExpensesProps) => {
   }
 
   return response.json();
+};
+
+export const updateExpense = async ({
+  expense,
+  budgetId,
+}: UpdateExpenseProps) => {
+  const response = await fetch(
+    `http://localhost:4000/api/monthly-budgets/${budgetId}/expenses/${expense.id}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({
+        name: expense.name,
+        amount: expense.amount,
+        weekNumber: expense.weekNumber,
+      }),
+    }
+  );
+
+  if (!response.ok) {
+    const { error } = await response.json();
+    throw new Error(error || "Echec de la connexion");
+  }
+
+  return response.json();
+};
+
+export const deleteExpense = async ({
+  expenseId,
+  budgetId,
+}: DeleteExpenseProps) => {
+  const response = await fetch(
+    `http://localhost:4000/api/monthly-budgets/${budgetId}/expenses/${expenseId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) {
+    const { error } = await response.json();
+    throw new Error(error || "Echec de la connexion");
+  }
+
+  const result = await response.json();
+
+  return {
+    expenseId,
+    remainingBudget: result.remainingBudget,
+  };
 };

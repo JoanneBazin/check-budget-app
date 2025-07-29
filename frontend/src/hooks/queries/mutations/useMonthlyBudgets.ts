@@ -10,6 +10,7 @@ import {
 import { getWeeksInMonth } from "@/lib/getWeeksInMonth";
 import {
   AddMonthlyEntriesProps,
+  DeleteMonthlyEntryProps,
   UpdateMonthlyEntryProps,
 } from "@/types/budgets";
 
@@ -24,8 +25,8 @@ export const useCreateBudgetMutation = () => {
       if (budget.isCurrent) {
         setCurrentBudget(budget);
         setCurrentWeeks(getWeeksInMonth(budget.year, budget.month));
+        queryClient.setQueryData(["currentBudget"], budget);
       }
-      queryClient.setQueryData(["currentBudget"], budget);
     },
   });
 };
@@ -73,11 +74,15 @@ export const useUpdateMonthlyEntriesMutation = () => {
       const updatedBudget = {
         ...currentBudget,
         charges: updated.charge
-          ? [...currentBudget.charges, updated.charge]
-          : [...currentBudget.charges],
+          ? currentBudget.charges.map((charge) =>
+              charge.id === updated.charge.id ? updated.charge : charge
+            )
+          : currentBudget.charges,
         incomes: updated.income
-          ? [...currentBudget.incomes, updated.income]
-          : [...currentBudget.incomes],
+          ? currentBudget.incomes.map((income) =>
+              income.id === updated.income.id ? updated.income : income
+            )
+          : currentBudget.incomes,
         remainingBudget,
         weeklyBudget,
       };
@@ -94,8 +99,8 @@ export const useDeleteMonthlyEntriesMutation = () => {
   const currentBudget = useBudgetStore((s) => s.currentBudget);
 
   return useMutation({
-    mutationFn: ({ type, entry, budgetId }: UpdateMonthlyEntryProps) =>
-      deleteMonthlyEntry({ type, entry, budgetId }),
+    mutationFn: ({ type, entryId, budgetId }: DeleteMonthlyEntryProps) =>
+      deleteMonthlyEntry({ type, entryId, budgetId }),
     onSuccess: ({ updated, remainingBudget, weeklyBudget }) => {
       if (!currentBudget) return;
 
@@ -105,12 +110,12 @@ export const useDeleteMonthlyEntriesMutation = () => {
           ? currentBudget.charges.filter(
               (entry) => entry.id !== updated.chargeId
             )
-          : [...currentBudget.charges],
+          : currentBudget.charges,
         incomes: updated.incomeId
           ? currentBudget.incomes.filter(
               (entry) => entry.id !== updated.incomeId
             )
-          : [...currentBudget.incomes],
+          : currentBudget.incomes,
         remainingBudget,
         weeklyBudget,
       };

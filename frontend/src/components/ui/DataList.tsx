@@ -1,8 +1,12 @@
 import { DataListProps } from "@/types/budgets";
 import { ChevronRight } from "lucide-react";
 import "@/styles/components/ui/DataList.scss";
+import { BudgetEntry } from "@shared/schemas";
 
-export const DataList = ({ data }: DataListProps) => {
+export const DataList = <T extends BudgetEntry>({
+  data,
+  setSelectedEntry,
+}: DataListProps<T>) => {
   return (
     <>
       <div>
@@ -18,7 +22,12 @@ export const DataList = ({ data }: DataListProps) => {
                   <span>€</span>
                   {entry.amount}
                 </p>
-                <button className="amount-update">modifier</button>
+                <button
+                  className="amount-update"
+                  onClick={() => setSelectedEntry(entry)}
+                >
+                  modifier
+                </button>
               </div>
             </div>
           ))

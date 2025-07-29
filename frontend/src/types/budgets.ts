@@ -44,6 +44,13 @@ export interface EntriesFormProps {
   defaultInput?: boolean;
 }
 
+export interface UpdateEntryFormProps<T extends BudgetEntry> {
+  initialData: T;
+  errors: Record<string, string>;
+  onSubmit: (entry: T) => void;
+  onDelete: (entry: T) => void;
+}
+
 // Expenses display
 
 export interface WeekProps {
@@ -70,6 +77,11 @@ export interface UpdateMonthlyEntryProps {
   type: "charges" | "incomes";
   budgetId: string;
   entry: BudgetEntry;
+}
+export interface DeleteMonthlyEntryProps {
+  type: "charges" | "incomes";
+  budgetId: string;
+  entryId: string;
 }
 
 export interface CreateBudgetMutation {
@@ -100,8 +112,9 @@ export interface BackArrowProps {
   onBack?: () => void;
 }
 
-export interface DataListProps {
-  data: BudgetEntry[];
+export interface DataListProps<T extends BudgetEntry> {
+  data: T[];
+  setSelectedEntry: (entry: T) => void;
 }
 
 export interface TotalDataDisplayProps {
@@ -114,4 +127,13 @@ export interface ModalProps {
   onClose: () => void;
   title: string;
   children: React.ReactNode;
+}
+
+export interface UpdateExpenseProps {
+  expense: ExpenseEntry;
+  budgetId: string;
+}
+export interface DeleteExpenseProps {
+  expenseId: string;
+  budgetId: string;
 }

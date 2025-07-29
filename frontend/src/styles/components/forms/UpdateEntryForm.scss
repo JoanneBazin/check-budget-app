@@ -1,0 +1,23 @@
+.delete-container {
+  display: flex;
+  align-items: center;
+  font-size: 13px;
+  gap: 8px;
+
+  .btn {
+    padding: 2px 6px;
+    border-radius: 5px;
+    border: 1px solid $black;
+    display: flex;
+    align-items: center;
+
+    &.valid {
+      background: $primary-color;
+      border-color: transparent;
+    }
+
+    &.cancel {
+      border: 1px solid $black;
+    }
+  }
+}

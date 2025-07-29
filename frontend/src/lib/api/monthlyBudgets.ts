@@ -1,5 +1,6 @@
 import {
   AddMonthlyEntriesProps,
+  DeleteMonthlyEntryProps,
   UpdateMonthlyEntryProps,
 } from "@/types/budgets";
 import { MonthlyBudget } from "@shared/schemas";
@@ -86,11 +87,11 @@ export const updateMonthlyEntry = async ({
 
 export const deleteMonthlyEntry = async ({
   type,
-  entry,
+  entryId,
   budgetId,
-}: UpdateMonthlyEntryProps) => {
+}: DeleteMonthlyEntryProps) => {
   const response = await fetch(
-    `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}/${entry.id}`,
+    `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}/${entryId}`,
     {
       method: "DELETE",
       credentials: "include",
@@ -105,8 +106,7 @@ export const deleteMonthlyEntry = async ({
   const result = await response.json();
 
   return {
-    updated:
-      type === "charges" ? { chargeId: entry.id } : { incomeId: entry.id },
+    updated: type === "charges" ? { chargeId: entryId } : { incomeId: entryId },
     remainingBudget: result.remainingBudget,
     weeklyBudget: result.weeklyBudget,
   };

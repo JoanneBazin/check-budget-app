@@ -69,6 +69,7 @@ form {
     border-radius: 5px;
     box-shadow: 2px 2px 5px $light-gray;
     height: 30px;
+    font-family: "Manrope", sans-serif;
   }
 
   .add-btn {
@@ -100,5 +101,6 @@ form {
   background: $primary-color;
   border-radius: 10px;
   width: fit-content;
-  font-size: 15px;
+  font-size: 14px;
+  font-weight: 500;
 }
