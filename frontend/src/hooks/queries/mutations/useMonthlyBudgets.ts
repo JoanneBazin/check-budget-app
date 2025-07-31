@@ -13,18 +13,16 @@ import {
   DeleteMonthlyEntryProps,
   UpdateMonthlyEntryProps,
 } from "@/types/budgets";
+import { hydrateBudgetStore } from "@/lib/hydrateBudgetStore";
 
 export const useCreateBudgetMutation = () => {
   const queryClient = useQueryClient();
-  const setCurrentBudget = useBudgetStore((s) => s.setCurrentBudget);
-  const setCurrentWeeks = useBudgetStore((s) => s.setWeeksInMonth);
 
   return useMutation({
     mutationFn: (budget: MonthlyBudget) => createMonthlyBudget(budget),
     onSuccess: (budget) => {
       if (budget.isCurrent) {
-        setCurrentBudget(budget);
-        setCurrentWeeks(getWeeksInMonth(budget.year, budget.month));
+        hydrateBudgetStore(budget);
         queryClient.setQueryData(["currentBudget"], budget);
       }
     },
@@ -33,8 +31,7 @@ export const useCreateBudgetMutation = () => {
 
 export const useAddMonthlyEntriesMutation = () => {
   const queryClient = useQueryClient();
-  const setCurrentBudget = useBudgetStore((s) => s.setCurrentBudget);
-  const currentBudget = useBudgetStore((s) => s.currentBudget);
+  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
 
   return useMutation({
     mutationFn: ({ type, entries, budgetId }: AddMonthlyEntriesProps) =>
@@ -62,8 +59,7 @@ export const useAddMonthlyEntriesMutation = () => {
 
 export const useUpdateMonthlyEntriesMutation = () => {
   const queryClient = useQueryClient();
-  const setCurrentBudget = useBudgetStore((s) => s.setCurrentBudget);
-  const currentBudget = useBudgetStore((s) => s.currentBudget);
+  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
 
   return useMutation({
     mutationFn: ({ type, entry, budgetId }: UpdateMonthlyEntryProps) =>
@@ -95,8 +91,7 @@ export const useUpdateMonthlyEntriesMutation = () => {
 
 export const useDeleteMonthlyEntriesMutation = () => {
   const queryClient = useQueryClient();
-  const setCurrentBudget = useBudgetStore((s) => s.setCurrentBudget);
-  const currentBudget = useBudgetStore((s) => s.currentBudget);
+  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
 
   return useMutation({
     mutationFn: ({ type, entryId, budgetId }: DeleteMonthlyEntryProps) =>

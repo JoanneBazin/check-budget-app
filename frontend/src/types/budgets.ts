@@ -4,15 +4,17 @@ export interface BudgetStore {
   pageTitle: string;
   currentBudget: MonthlyBudget | null;
   weeksInMonth: WeekProps[];
-  fixedIncomes: BudgetEntryFromDB[] | null;
-  fixedCharges: BudgetEntryFromDB[] | null;
-  lastBudgets: LastMonthlyBudget[] | null;
+  fixedIncomes: BudgetEntry[];
+  fixedCharges: BudgetEntry[];
+  lastBudgets: LastMonthlyBudget[];
+  isBudgetHydrated: boolean;
   setPageTitle: (title: string) => void;
   setCurrentBudget: (budget: MonthlyBudget | null) => void;
   setWeeksInMonth: (weeks: WeekProps[]) => void;
   setLastBudgets: (budgets: LastMonthlyBudget[]) => void;
-  setFixedCharges: (charges: BudgetEntryFromDB[]) => void;
-  setFixedIncomes: (incomes: BudgetEntryFromDB[]) => void;
+  setFixedCharges: (charges: BudgetEntry[]) => void;
+  setFixedIncomes: (incomes: BudgetEntry[]) => void;
+  setIsBudgetHydrated: (val: boolean) => void;
   reset: () => void;
 }
 

@@ -6,7 +6,7 @@ import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useLoginMutation = () => {
   const queryClient = useQueryClient();
-  const setUser = useUserStore((s) => s.setUser);
+  const { setUser } = useUserStore.getState();
 
   return useMutation({
     mutationFn: ({ email, password }: LoginInput) => login({ email, password }),
@@ -19,7 +19,7 @@ export const useLoginMutation = () => {
 
 export const useSignupMutation = () => {
   const queryClient = useQueryClient();
-  const setUser = useUserStore((s) => s.setUser);
+  const { setUser } = useUserStore.getState();
 
   return useMutation({
     mutationFn: ({ name, email, password }: SignupInput) =>

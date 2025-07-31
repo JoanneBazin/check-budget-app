@@ -5,6 +5,7 @@ import "@/styles/components/ui/DateDisplay.scss";
 
 export const DateDisplay = ({ weekIndex, setIndex }: DateDisplayProps) => {
   const weeks = useBudgetStore((s) => s.weeksInMonth);
+
   return (
     <div className="date-selector">
       <button

@@ -13,8 +13,7 @@ import {
 
 export const useAddExpensesMutation = () => {
   const queryClient = useQueryClient();
-  const setCurrentBudget = useBudgetStore((s) => s.setCurrentBudget);
-  const currentBudget = useBudgetStore((s) => s.currentBudget);
+  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
 
   return useMutation({
     mutationFn: ({ expenses, budgetId }: AddExpensesProps) =>
@@ -35,8 +34,7 @@ export const useAddExpensesMutation = () => {
 
 export const useUpdateExpenseMutation = () => {
   const queryClient = useQueryClient();
-  const setCurrentBudget = useBudgetStore((s) => s.setCurrentBudget);
-  const currentBudget = useBudgetStore((s) => s.currentBudget);
+  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
 
   return useMutation({
     mutationFn: ({ expense, budgetId }: UpdateExpenseProps) =>
@@ -59,8 +57,7 @@ export const useUpdateExpenseMutation = () => {
 
 export const useDeleteExpenseMutation = () => {
   const queryClient = useQueryClient();
-  const setCurrentBudget = useBudgetStore((s) => s.setCurrentBudget);
-  const currentBudget = useBudgetStore((s) => s.currentBudget);
+  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
 
   return useMutation({
     mutationFn: ({ expenseId, budgetId }: DeleteExpenseProps) =>

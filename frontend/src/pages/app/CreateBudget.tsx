@@ -14,16 +14,8 @@ import { FormBudgetEntry } from "@/types/budgets";
 import { getWeeksInMonth } from "@/lib/getWeeksInMonth";
 
 export const CreateBudget = () => {
-  const {
-    data: charges,
-    isLoading: chargesLoading,
-    error: chargesError,
-  } = useFixedChargesQuery();
-  const {
-    data: incomes,
-    isLoading: incomesLoading,
-    error: incomesError,
-  } = useFixedIncomesQuery();
+  const charges = useBudgetStore((s) => s.fixedCharges);
+  const incomes = useBudgetStore((s) => s.fixedIncomes);
   const setPageTitle = useBudgetStore((s) => s.setPageTitle);
   const [month, setMonth] = useState<number | null>(null);
   const [year, setYear] = useState<number | null>(null);
@@ -42,9 +34,6 @@ export const CreateBudget = () => {
   useEffect(() => {
     setPageTitle("Ajouter un budget mensuel");
   }, []);
-
-  if (chargesLoading || incomesLoading) return <div>Loading</div>;
-  if (chargesError || incomesError) return <div>Erreur data</div>;
 
   const handleDateChange = (month: number, year: number) => {
     setMonth(month);

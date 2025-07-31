@@ -11,12 +11,14 @@ export const useBudgetStore = create<BudgetStore>()(
       lastBudgets: [],
       fixedCharges: [],
       fixedIncomes: [],
+      isBudgetHydrated: false,
       setPageTitle: (title) => set({ pageTitle: title }),
       setCurrentBudget: (budget) => set({ currentBudget: budget }),
       setWeeksInMonth: (weeks) => set({ weeksInMonth: weeks }),
       setLastBudgets: (budgets) => set({ lastBudgets: budgets }),
       setFixedCharges: (charges) => set({ fixedCharges: charges }),
       setFixedIncomes: (incomes) => set({ fixedIncomes: incomes }),
+      setIsBudgetHydrated: (val) => set({ isBudgetHydrated: val }),
       reset: () =>
         set({
           pageTitle: "Gérer mes budgets",

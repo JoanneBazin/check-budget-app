@@ -1,4 +1,4 @@
-import { useBudgetStore } from "@/stores/budgetStore";
+import { hydrateBudgetStore } from "@/lib/hydrateBudgetStore";
 import { MonthlyBudget } from "@shared/schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -17,8 +17,6 @@ export const fetchCurrentBudget = async () => {
 };
 
 export const useCurrentBudgetQuery = () => {
-  const setCurrentMonthlyBudget = useBudgetStore((s) => s.setCurrentBudget);
-
   const query = useQuery<MonthlyBudget>({
     queryKey: ["currentBudget"],
     queryFn: fetchCurrentBudget,
@@ -28,9 +26,9 @@ export const useCurrentBudgetQuery = () => {
 
   useEffect(() => {
     if (query.data) {
-      setCurrentMonthlyBudget(query.data);
+      hydrateBudgetStore(query.data);
     }
-  }, [query.data, setCurrentMonthlyBudget]);
+  }, [query.data]);
 
   return query;
 };
