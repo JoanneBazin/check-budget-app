@@ -1,5 +1,5 @@
 import { BudgetDataCard } from "@/components/ui/BudgetDataCard";
-import { TotalEntriesDisplay } from "@/components/ui/TotalEntriesDisplay";
+import { TotalMonthlyEntriesDisplay } from "@/components/ui/TotalMonthlyEntriesDisplay";
 import { FormBudgetEntry, MonthlyEntriesView } from "@/types/budgets";
 import { BackArrow } from "../ui/BackArrow";
 import "@/styles/components/layout/MonthlyEntries.scss";
@@ -96,7 +96,7 @@ export const MonthlyEntries = ({
   return (
     <section>
       <BackArrow onBack={onBack} />
-      <TotalEntriesDisplay data={type} total={totalData} />
+      <TotalMonthlyEntriesDisplay data={type} total={totalData} />
 
       <div className="monthly-entries-container">
         <BudgetDataCard title={title} color="black">

@@ -1,0 +1,42 @@
+.collapse-container {
+  padding: 10px;
+  border-radius: 10px;
+  width: 100%;
+  font-size: 14px;
+  margin-bottom: 8px;
+
+  &.black {
+    background: $black;
+    color: $white;
+
+    button {
+      color: $white;
+    }
+  }
+
+  &.primary {
+    background: $primary-color;
+  }
+
+  .collapse-title {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+  }
+
+  .entries-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding-top: 6px;
+    font-size: 12px;
+
+    .amount.black {
+      color: $gray;
+    }
+    .amount.primary {
+      color: $dark-gray;
+    }
+  }
+}

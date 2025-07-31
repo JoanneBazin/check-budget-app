@@ -7,7 +7,6 @@ import {
   deleteMonthlyEntry,
   updateMonthlyEntry,
 } from "@/lib/api/monthlyBudgets";
-import { getWeeksInMonth } from "@/lib/getWeeksInMonth";
 import {
   AddMonthlyEntriesProps,
   DeleteMonthlyEntryProps,
@@ -25,6 +24,7 @@ export const useCreateBudgetMutation = () => {
         hydrateBudgetStore(budget);
         queryClient.setQueryData(["currentBudget"], budget);
       }
+      queryClient.invalidateQueries({ queryKey: ["history"] });
     },
   });
 };

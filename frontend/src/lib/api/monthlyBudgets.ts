@@ -111,3 +111,29 @@ export const deleteMonthlyEntry = async ({
     weeklyBudget: result.weeklyBudget,
   };
 };
+
+export const getBudgetByDate = async (year: number, month: number) => {
+  const response = await fetch(
+    `http://localhost:4000/api/monthly-budgets?month=${month}&year=${year}`,
+    {
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) throw new Error("Budget introuvable");
+
+  return response.json();
+};
+
+export const getBudgetById = async (budgetId: string) => {
+  const response = await fetch(
+    `http://localhost:4000/api/monthly-budgets/${budgetId}`,
+    {
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) throw new Error("Budget introuvable");
+
+  return response.json();
+};

@@ -4,8 +4,6 @@ import { useEffect, useState } from "react";
 import "@/styles/pages/CreateBudget.scss";
 import { BudgetDataCard } from "@/components/ui/BudgetDataCard";
 import { AddEntriesForm } from "@/components/forms/AddEntriesForm";
-import { useFixedChargesQuery } from "@/hooks/queries/useFixedChargesQuery";
-import { useFixedIncomesQuery } from "@/hooks/queries/useFixedIncomesQuery";
 import { monthlyBudgetSchema, validateWithSchema } from "@shared/schemas";
 import { extractArrayErrors } from "@/lib/extractArrayErrors";
 import { useCreateBudgetMutation } from "@/hooks/queries/mutations/useMonthlyBudgets";
@@ -19,8 +17,11 @@ export const CreateBudget = () => {
   const setPageTitle = useBudgetStore((s) => s.setPageTitle);
   const [month, setMonth] = useState<number | null>(null);
   const [year, setYear] = useState<number | null>(null);
-  const [monthlyCharges, setMonthlyCharges] = useState<FormBudgetEntry[]>([]);
-  const [monthlyIncomes, setMonthlyIncomes] = useState<FormBudgetEntry[]>([]);
+
+  const [monthlyCharges, setMonthlyCharges] =
+    useState<FormBudgetEntry[]>(charges);
+  const [monthlyIncomes, setMonthlyIncomes] =
+    useState<FormBudgetEntry[]>(incomes);
   const [isCurrent, setIsCurrent] = useState(true);
   const [incomesErrors, setIncomesErrors] = useState<Record<string, string>[]>(
     []
@@ -77,14 +78,14 @@ export const CreateBudget = () => {
       {requestError && <p className="form-error">{requestError.message}</p>}
       <BudgetDataCard title="Revenus">
         <AddEntriesForm
-          initialData={incomes}
+          initialData={monthlyIncomes}
           errors={incomesErrors}
           onChange={setMonthlyIncomes}
         />
       </BudgetDataCard>
       <BudgetDataCard title="Charges">
         <AddEntriesForm
-          initialData={charges}
+          initialData={monthlyCharges}
           errors={chargesErrors}
           onChange={setMonthlyCharges}
         />

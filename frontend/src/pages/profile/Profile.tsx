@@ -8,8 +8,6 @@ export const Profile = () => {
   const user = useUserStore((s) => s.user);
   const setPageTitle = useBudgetStore((s) => s.setPageTitle);
 
-  const fixedIncomes = useBudgetStore((s) => s.fixedIncomes);
-
   useEffect(() => {
     if (user) {
       setPageTitle(user?.email);

@@ -2,17 +2,19 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { fr } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
+import { MonthYearPickerProps } from "@/types/budgets";
 
 export const MonthYearPicker = ({
   onChange,
-}: {
-  onChange: (month: number, year: number) => void;
-}) => {
+  defaultInput = true,
+}: MonthYearPickerProps) => {
   const [selectedDate, setSelectedDate] = useState(new Date());
 
   useEffect(() => {
-    onChange(selectedDate.getMonth() + 1, selectedDate.getFullYear());
-  });
+    if (defaultInput) {
+      onChange(selectedDate.getMonth() + 1, selectedDate.getFullYear());
+    }
+  }, []);
 
   const handleChange = (date: Date | null) => {
     if (date) {

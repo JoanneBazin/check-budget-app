@@ -6,12 +6,10 @@ export interface BudgetStore {
   weeksInMonth: WeekProps[];
   fixedIncomes: BudgetEntry[];
   fixedCharges: BudgetEntry[];
-  lastBudgets: LastMonthlyBudget[];
   isBudgetHydrated: boolean;
   setPageTitle: (title: string) => void;
   setCurrentBudget: (budget: MonthlyBudget | null) => void;
   setWeeksInMonth: (weeks: WeekProps[]) => void;
-  setLastBudgets: (budgets: LastMonthlyBudget[]) => void;
   setFixedCharges: (charges: BudgetEntry[]) => void;
   setFixedIncomes: (incomes: BudgetEntry[]) => void;
   setIsBudgetHydrated: (val: boolean) => void;
@@ -64,6 +62,7 @@ export interface WeeklyExpensesDisplayProps {
   budgetId: string;
   weeklyBudget: number;
   expenses: ExpenseEntry[];
+  edit?: boolean;
 }
 
 export interface AddExpensesProps {
@@ -116,7 +115,8 @@ export interface BackArrowProps {
 
 export interface DataListProps<T extends BudgetEntry> {
   data: T[];
-  setSelectedEntry: (entry: T) => void;
+  setSelectedEntry?: (entry: T) => void;
+  edit?: boolean;
 }
 
 export interface TotalDataDisplayProps {
@@ -138,4 +138,32 @@ export interface UpdateExpenseProps {
 export interface DeleteExpenseProps {
   expenseId: string;
   budgetId: string;
+}
+
+export interface HistoryDataProps {
+  id: string;
+  year: number;
+  month: number;
+  remainingBudget: number;
+}
+
+export interface MonthYearPickerProps {
+  onChange: (month: number, year: number) => void;
+  defaultInput?: boolean;
+}
+
+export interface LastBudgetLayoutProps {
+  budgetId: string;
+  onBack: () => void;
+}
+
+export interface HistoryCardProps {
+  data: HistoryDataProps;
+  onSelect: (budgetId: string) => void;
+}
+
+export interface CollapseProps {
+  data: BudgetEntry[];
+  title: string;
+  color: string;
 }

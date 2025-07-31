@@ -73,8 +73,8 @@ export const monthlyBudgetSchema = z.object({
 });
 
 export const queryDateSchema = z.object({
-  month: z.number().min(1).max(12),
-  year: z.number().min(2025),
+  month: z.coerce.number().min(1).max(12),
+  year: z.coerce.number().min(2025),
 });
 
 export type BudgetEntry = z.infer<typeof budgetEntrySchema>;

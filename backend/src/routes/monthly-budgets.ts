@@ -7,6 +7,7 @@ import {
   getCurrentMonthlyBudget,
   getLastBudgets,
   getMonthlyBudget,
+  getMonthlyBudgetById,
 } from "../controllers/monthly-budgets";
 import {
   budgetEntrySchema,
@@ -44,6 +45,7 @@ router.post(
 router.get("/", requireAuth, validateQuery(queryDateSchema), getMonthlyBudget);
 router.get("/current", requireAuth, getCurrentMonthlyBudget);
 router.get("/history", requireAuth, getLastBudgets);
+router.get("/:id", requireAuth, getMonthlyBudgetById);
 router.delete("/:id", requireAuth, deleteMonthlyBudget);
 
 // Monthly incomes

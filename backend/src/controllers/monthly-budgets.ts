@@ -119,7 +119,12 @@ export const getMonthlyBudget = async (
           year: Number(year),
         },
       },
-      select: monthlyBudgetSelect,
+      select: {
+        id: true,
+        year: true,
+        month: true,
+        remainingBudget: true,
+      },
     });
 
     if (!monthlyBudget) {
@@ -147,7 +152,7 @@ export const getLastBudgets = async (
         isCurrent: false,
       },
       orderBy: { createdAt: "desc" },
-      take: 3,
+      take: 6,
       select: {
         id: true,
         year: true,
@@ -161,6 +166,36 @@ export const getLastBudgets = async (
     }
 
     return res.status(200).json(normalizeDecimalFields(history));
+  } catch (error) {
+    return next(error);
+  }
+};
+
+export const getMonthlyBudgetById = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = getUserId(req, next);
+  if (!userId) return;
+
+  const monthlyBudgetId = getParamsId(req, next);
+  if (!monthlyBudgetId) return;
+
+  try {
+    const monthlyBudget = await prisma.monthlyBudget.findFirst({
+      where: {
+        userId,
+        id: monthlyBudgetId,
+      },
+      select: monthlyBudgetSelect,
+    });
+
+    if (!monthlyBudget) {
+      return next(new HttpError(404, "Budget mensuel non trouvé"));
+    }
+
+    return res.status(200).json(normalizeDecimalFields(monthlyBudget));
   } catch (error) {
     return next(error);
   }

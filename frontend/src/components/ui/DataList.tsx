@@ -6,6 +6,7 @@ import { BudgetEntry } from "@shared/schemas";
 export const DataList = <T extends BudgetEntry>({
   data,
   setSelectedEntry,
+  edit = true,
 }: DataListProps<T>) => {
   return (
     <>
@@ -22,12 +23,14 @@ export const DataList = <T extends BudgetEntry>({
                   <span>€</span>
                   {entry.amount}
                 </p>
-                <button
-                  className="amount-update"
-                  onClick={() => setSelectedEntry(entry)}
-                >
-                  modifier
-                </button>
+                {setSelectedEntry && edit && (
+                  <button
+                    className="amount-update"
+                    onClick={() => setSelectedEntry(entry)}
+                  >
+                    modifier
+                  </button>
+                )}
               </div>
             </div>
           ))

@@ -5,7 +5,7 @@ import "@/styles/components/layout/CurrentBudgetLayout.scss";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { WeeklyExpensesDisplay } from "./WeeklyExpensesDisplay";
 import { MonthlyBudget } from "@shared/schemas";
-import { TotalEntriesDisplay } from "../ui/TotalEntriesDisplay";
+import { TotalMonthlyEntriesDisplay } from "../ui/TotalMonthlyEntriesDisplay";
 import { MonthlyEntries } from "./MonthlyEntries";
 
 type View = "app" | "charges" | "incomes";
@@ -52,7 +52,10 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
 
   return (
     <section>
-      <TotalEntriesDisplay data="budget" total={budget.remainingBudget ?? 0} />
+      <TotalMonthlyEntriesDisplay
+        data="budget"
+        total={budget.remainingBudget ?? 0}
+      />
 
       <div className="total-entries-container">
         <div

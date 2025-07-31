@@ -23,6 +23,7 @@ export const WeeklyExpensesDisplay = ({
   budgetId,
   weeklyBudget,
   expenses,
+  edit = true,
 }: WeeklyExpensesDisplayProps) => {
   const [newExpenses, setNewExpenses] = useState<FormBudgetEntry[]>([]);
   const [weekIndex, setWeekIndex] = useState(0);
@@ -98,20 +99,24 @@ export const WeeklyExpensesDisplay = ({
     <BudgetDataCard title="Dépenses">
       <DateDisplay weekIndex={weekIndex} setIndex={setWeekIndex} />
 
-      <div>
-        <DataList data={weeklyExpenses} setSelectedEntry={setSelectedEntry} />
-        <AddEntriesForm
-          initialData={newExpenses}
-          errors={expensesError}
-          onChange={setNewExpenses}
-          defaultInput={false}
-        />
-        {newExpenses.length > 0 && (
-          <button onClick={handleAddExpenses} className="submit-btn">
-            Enregistrer
-          </button>
-        )}
-      </div>
+      {edit ? (
+        <div>
+          <DataList data={weeklyExpenses} setSelectedEntry={setSelectedEntry} />
+          <AddEntriesForm
+            initialData={newExpenses}
+            errors={expensesError}
+            onChange={setNewExpenses}
+            defaultInput={false}
+          />
+          {newExpenses.length > 0 && (
+            <button onClick={handleAddExpenses} className="submit-btn">
+              Enregistrer
+            </button>
+          )}
+        </div>
+      ) : (
+        <DataList data={weeklyExpenses} edit={false} />
+      )}
 
       <TotalDataDisplay
         total={remainingWeeklyBudget}
