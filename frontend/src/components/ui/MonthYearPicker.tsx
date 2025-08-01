@@ -2,7 +2,7 @@ import { useEffect, useState } from "react";
 import DatePicker from "react-datepicker";
 import { fr } from "date-fns/locale";
 import "react-datepicker/dist/react-datepicker.css";
-import { MonthYearPickerProps } from "@/types/budgets";
+import { MonthYearPickerProps } from "@/types";
 
 export const MonthYearPicker = ({
   onChange,

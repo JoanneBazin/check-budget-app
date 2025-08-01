@@ -1,13 +1,13 @@
-import { TotalEntriesProps } from "@/types/budgets";
 import "@/styles/components/ui/TotalMonthlyEntriesDisplay.scss";
+import { TotalMonthlyEntriesProps } from "@/types";
 
 export const TotalMonthlyEntriesDisplay = ({
-  data,
+  type,
   total,
-}: TotalEntriesProps) => {
+}: TotalMonthlyEntriesProps) => {
   return (
     <div>
-      <p>Total {data}</p>
+      <p>Total {type}</p>
       <p className="total-budget">
         <span>€</span>
         {total.toFixed(2)}

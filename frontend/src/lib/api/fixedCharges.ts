@@ -1,4 +1,4 @@
-import { BudgetEntry } from "@shared/schemas";
+import { BudgetEntry, BudgetEntryForm } from "@shared/schemas";
 
 export const fetchFixedCharges = async () => {
   const response = await fetch("http://localhost:4000/api/fixed-charges", {
@@ -10,7 +10,7 @@ export const fetchFixedCharges = async () => {
   return response.json();
 };
 
-export const addFixedCharges = async (charges: BudgetEntry[]) => {
+export const addFixedCharges = async (charges: BudgetEntryForm[]) => {
   const response = await fetch(`http://localhost:4000/api/fixed-charges`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@ export const updateFixedCharge = async (charge: BudgetEntry) => {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ name: charge.name, amount: charge.amount }),
+      body: JSON.stringify(charge),
     }
   );
 

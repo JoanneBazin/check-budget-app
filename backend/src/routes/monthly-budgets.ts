@@ -1,6 +1,9 @@
 import express from "express";
 import {
   budgetEntrySchema,
+  createBudgetEntrySchema,
+  createExpenseEntrySchema,
+  createMonthlyBudgetSchema,
   expenseEntrySchema,
   monthlyBudgetSchema,
   queryDateSchema,
@@ -35,7 +38,7 @@ const router = express.Router();
 router.post(
   "/",
   requireAuth,
-  validateBody(monthlyBudgetSchema),
+  validateBody(createMonthlyBudgetSchema),
   addMonthlyBudget
 );
 router.get("/", requireAuth, validateQuery(queryDateSchema), getMonthlyBudget);
@@ -49,7 +52,7 @@ router.post(
   "/:id/incomes",
   requireAuth,
   checkBudgetAccess,
-  validateBody(budgetEntrySchema),
+  validateBody(createBudgetEntrySchema),
   addMonthlyIncomes
 );
 router.put(
@@ -71,7 +74,7 @@ router.post(
   "/:id/charges",
   requireAuth,
   checkBudgetAccess,
-  validateBody(budgetEntrySchema),
+  validateBody(createBudgetEntrySchema),
   addMonthlyCharges
 );
 router.put(
@@ -93,7 +96,7 @@ router.post(
   "/:id/expenses",
   requireAuth,
   checkBudgetAccess,
-  validateBody(expenseEntrySchema),
+  validateBody(createExpenseEntrySchema),
   addMonthlyExpenses
 );
 router.put(

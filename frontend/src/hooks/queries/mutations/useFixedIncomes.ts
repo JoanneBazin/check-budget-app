@@ -4,14 +4,14 @@ import {
   updateFixedIncome,
 } from "@/lib/api/fixedIncomes";
 import { useBudgetStore } from "@/stores/budgetStore";
-import { BudgetEntry } from "@shared/schemas";
+import { BudgetEntry, BudgetEntryForm } from "@shared/schemas";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useAddFixedIncomesMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (incomes: BudgetEntry[]) => addFixedIncomes(incomes),
+    mutationFn: (incomes: BudgetEntryForm[]) => addFixedIncomes(incomes),
     onSuccess: (incomes) => {
       const { fixedIncomes, setFixedIncomes } = useBudgetStore.getState();
 

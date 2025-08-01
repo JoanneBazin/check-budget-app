@@ -11,10 +11,11 @@ import {
   useUpdateFixedChargeMutation,
 } from "@/hooks/queries/mutations";
 import { useBudgetStore } from "@/stores/budgetStore";
-import { FormBudgetEntry } from "@/types/budgets";
+import { NewBudgetEntry, UpdatedBudgetEntry } from "@/types";
 import {
   BudgetEntry,
   budgetEntrySchema,
+  createBudgetEntrySchema,
   validateArrayWithSchema,
   validateWithSchema,
 } from "@shared/schemas";
@@ -26,7 +27,7 @@ export const FixedChargesDisplay = () => {
     (acc, entry) => acc + entry.amount,
     0
   );
-  const [newCharges, setNewCharges] = useState<FormBudgetEntry[]>([]);
+  const [newCharges, setNewCharges] = useState<NewBudgetEntry[]>([]);
 
   const [selectedEntry, setSelectedEntry] = useState<BudgetEntry | null>(null);
   const [chargesError, setChargesError] = useState<Record<string, string>[]>(
@@ -41,7 +42,10 @@ export const FixedChargesDisplay = () => {
   const handleAddCharges = () => {
     setChargesError([]);
 
-    const validation = validateArrayWithSchema(budgetEntrySchema, newCharges);
+    const validation = validateArrayWithSchema(
+      createBudgetEntrySchema,
+      newCharges
+    );
 
     if (!validation.success) {
       setChargesError(Object.values(validation.errors));
@@ -53,7 +57,7 @@ export const FixedChargesDisplay = () => {
     });
   };
 
-  const handleUpdateCharge = (updatedCharge: FormBudgetEntry) => {
+  const handleUpdateCharge = (updatedCharge: UpdatedBudgetEntry) => {
     setUpdatedError({});
 
     const validation = validateWithSchema(budgetEntrySchema, updatedCharge);
@@ -68,10 +72,10 @@ export const FixedChargesDisplay = () => {
     });
   };
 
-  const handleDeleteCharge = (deletedCharge: FormBudgetEntry) => {
+  const handleDeleteCharge = (deletedCharge: BudgetEntry) => {
     setUpdatedError({});
 
-    deleteFixedCharge.mutate(deletedCharge.id ?? "", {
+    deleteFixedCharge.mutate(deletedCharge.id, {
       onSuccess: () => setSelectedEntry(null),
     });
   };

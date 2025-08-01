@@ -1,4 +1,4 @@
-import { WeekProps } from "@/types/budgets";
+import { WeekProps } from "@/types";
 import {
   addDays,
   endOfMonth,

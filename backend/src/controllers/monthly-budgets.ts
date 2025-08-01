@@ -150,7 +150,7 @@ export const getLastBudgets = async (
         userId,
         isCurrent: false,
       },
-      orderBy: { createdAt: "desc" },
+      orderBy: [{ year: "desc" }, { month: "desc" }],
       take: 6,
       select: {
         id: true,

@@ -1,6 +1,6 @@
 import { formatDateTitle } from "@/lib/formatDateTitle";
-import { HistoryCardProps } from "@/types/budgets";
 import "@/styles/components/ui/HistoryCard.scss";
+import { HistoryCardProps } from "@/types";
 
 export const HistoryCard = ({ data, onSelect }: HistoryCardProps) => {
   const dateTitle = formatDateTitle(data.year, data.month);

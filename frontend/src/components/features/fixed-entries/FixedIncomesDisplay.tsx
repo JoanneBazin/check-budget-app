@@ -11,10 +11,11 @@ import {
   useUpdateFixedIncomeMutation,
 } from "@/hooks/queries/mutations";
 import { useBudgetStore } from "@/stores/budgetStore";
-import { FormBudgetEntry } from "@/types/budgets";
+import { NewBudgetEntry, UpdatedBudgetEntry } from "@/types";
 import {
   BudgetEntry,
   budgetEntrySchema,
+  createBudgetEntrySchema,
   validateArrayWithSchema,
   validateWithSchema,
 } from "@shared/schemas";
@@ -26,7 +27,7 @@ export const FixedIncomesDisplay = () => {
     (acc, entry) => acc + entry.amount,
     0
   );
-  const [newIncomes, setNewIncomes] = useState<FormBudgetEntry[]>([]);
+  const [newIncomes, setNewIncomes] = useState<NewBudgetEntry[]>([]);
 
   const [selectedEntry, setSelectedEntry] = useState<BudgetEntry | null>(null);
   const [incomesError, setIncomesError] = useState<Record<string, string>[]>(
@@ -41,7 +42,10 @@ export const FixedIncomesDisplay = () => {
   const handleAddIncomes = () => {
     setIncomesError([]);
 
-    const validation = validateArrayWithSchema(budgetEntrySchema, newIncomes);
+    const validation = validateArrayWithSchema(
+      createBudgetEntrySchema,
+      newIncomes
+    );
 
     if (!validation.success) {
       setIncomesError(Object.values(validation.errors));
@@ -53,7 +57,7 @@ export const FixedIncomesDisplay = () => {
     });
   };
 
-  const handleUpdateIncome = (updatedIncome: FormBudgetEntry) => {
+  const handleUpdateIncome = (updatedIncome: UpdatedBudgetEntry) => {
     setUpdatedError({});
 
     const validation = validateWithSchema(budgetEntrySchema, updatedIncome);
@@ -68,10 +72,10 @@ export const FixedIncomesDisplay = () => {
     });
   };
 
-  const handleDeleteIncome = (deletedIncome: FormBudgetEntry) => {
+  const handleDeleteIncome = (deletedIncome: BudgetEntry) => {
     setUpdatedError({});
 
-    deleteFixedIncome.mutate(deletedIncome.id ?? "", {
+    deleteFixedIncome.mutate(deletedIncome.id, {
       onSuccess: () => setSelectedEntry(null),
     });
   };

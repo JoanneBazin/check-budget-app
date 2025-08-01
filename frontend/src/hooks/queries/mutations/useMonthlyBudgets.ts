@@ -1,24 +1,25 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MonthlyBudget } from "@shared/schemas";
+import { MonthlyBudget, MonthlyBudgetForm } from "@shared/schemas";
 import {
   addMonthlyEntries,
   createMonthlyBudget,
   deleteMonthlyEntry,
   updateMonthlyEntry,
 } from "@/lib/api/monthlyBudgets";
+
+import { hydrateBudgetStore } from "@/lib/hydrateBudgetStore";
 import {
   AddMonthlyEntriesProps,
   DeleteMonthlyEntryProps,
   UpdateMonthlyEntryProps,
-} from "@/types/budgets";
-import { hydrateBudgetStore } from "@/lib/hydrateBudgetStore";
+} from "@/types";
 
 export const useCreateBudgetMutation = () => {
   const queryClient = useQueryClient();
 
   return useMutation({
-    mutationFn: (budget: MonthlyBudget) => createMonthlyBudget(budget),
+    mutationFn: (budget: MonthlyBudgetForm) => createMonthlyBudget(budget),
     onSuccess: (budget) => {
       if (budget.isCurrent) {
         hydrateBudgetStore(budget);

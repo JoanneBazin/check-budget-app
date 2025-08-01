@@ -4,7 +4,7 @@ import {
   updateFixedCharge,
 } from "@/lib/api/fixedCharges";
 import { useBudgetStore } from "@/stores/budgetStore";
-import { BudgetEntry } from "@shared/schemas";
+import { BudgetEntry, BudgetEntryForm } from "@shared/schemas";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 
 export const useAddFixedChargesMutation = () => {
@@ -12,7 +12,7 @@ export const useAddFixedChargesMutation = () => {
   const { fixedCharges, setFixedCharges } = useBudgetStore.getState();
 
   return useMutation({
-    mutationFn: (charges: BudgetEntry[]) => addFixedCharges(charges),
+    mutationFn: (charges: BudgetEntryForm[]) => addFixedCharges(charges),
     onSuccess: (charges) => {
       const updatedCharges = [...fixedCharges, ...charges];
 

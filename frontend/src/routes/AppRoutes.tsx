@@ -6,11 +6,12 @@ import { History } from "../pages/app/History";
 import { ProfileLayout } from "../layouts/app/ProfileLayout";
 import { Profile } from "../pages/profile/Profile";
 import { NotFound } from "../pages/NotFound";
-import { RequireAuth } from "../components/auth/RequireAuth";
-import { HomeRedirect } from "@/components/auth/HomeRedirect";
-import { RequireGuest } from "@/components/auth/RequireGuest";
+
 import { LoginPage } from "@/pages/public/LoginPage";
 import { SignupPage } from "@/pages/public/SignupPage";
+import { HomeRedirect } from "@/components/auth/HomeRedirect";
+import { RequireGuest } from "@/components/auth/RequireGuest";
+import { RequireAuth } from "@/components/auth/RequireAuth";
 
 export default function AppRoutes() {
   return (

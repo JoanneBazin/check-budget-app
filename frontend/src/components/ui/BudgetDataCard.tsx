@@ -1,13 +1,10 @@
 import "@/styles/components/ui/BudgetDataCard.scss";
+import { BudgetDataCardProps } from "@/types";
 export const BudgetDataCard = ({
   title,
   children,
   color = "white",
-}: {
-  title: string;
-  children: React.ReactNode;
-  color?: string;
-}) => {
+}: BudgetDataCardProps) => {
   return (
     <article className="data-card">
       <div className={`data-card-title ${color}`}>

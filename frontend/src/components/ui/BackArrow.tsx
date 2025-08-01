@@ -1,7 +1,7 @@
 import { ChevronLeft } from "lucide-react";
 import "@/styles/components/ui/BackArrow.scss";
 import { useNavigate } from "react-router-dom";
-import { BackArrowProps } from "@/types/budgets";
+import { BackArrowProps } from "@/types";
 
 export const BackArrow = ({ destination, onBack }: BackArrowProps) => {
   const navigate = useNavigate();

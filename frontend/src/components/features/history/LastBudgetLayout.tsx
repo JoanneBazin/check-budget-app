@@ -1,6 +1,4 @@
-import { LastBudgetLayoutProps } from "@/types/budgets";
 import { useEffect, useState } from "react";
-import { MonthlyBudget } from "@shared/schemas";
 import { getBudgetById } from "@/lib/api/monthlyBudgets";
 import "@/styles/components/layout/LastBudgetLayout.scss";
 import { formatDateTitle } from "@/lib/formatDateTitle";
@@ -10,6 +8,8 @@ import {
   TotalMonthlyEntriesDisplay,
 } from "@/components/ui";
 import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
+import { LastBudgetLayoutProps } from "@/types";
+import { MonthlyBudget } from "@shared/schemas";
 
 export const LastBudgetLayout = ({
   budgetId,
@@ -48,7 +48,7 @@ export const LastBudgetLayout = ({
       {budget ? (
         <>
           <TotalMonthlyEntriesDisplay
-            data={formatDateTitle(budget.year, budget.month)}
+            type={formatDateTitle(budget.year, budget.month)}
             total={budget.remainingBudget ?? 0}
           />
 
@@ -58,8 +58,8 @@ export const LastBudgetLayout = ({
           </div>
 
           <WeeklyExpensesDisplay
-            budgetId={budget.id ?? ""}
-            weeklyBudget={budget.weeklyBudget ?? 0}
+            budgetId={budget.id}
+            weeklyBudget={budget.weeklyBudget}
             expenses={budget.expenses}
             edit={false}
           />

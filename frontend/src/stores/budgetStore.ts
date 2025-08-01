@@ -1,4 +1,4 @@
-import { BudgetStore } from "@/types/budgets";
+import { BudgetStore } from "@/types";
 import { create } from "zustand";
 import { persist } from "zustand/middleware";
 

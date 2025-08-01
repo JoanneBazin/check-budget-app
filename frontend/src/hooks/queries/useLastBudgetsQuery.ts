@@ -1,9 +1,9 @@
 import { fetchLastBudgets } from "@/lib/api/monthlyBudgets";
-import { HistoryDataProps } from "@/types/budgets";
+import { LastMonthlyBudget } from "@/types";
 import { useQuery } from "@tanstack/react-query";
 
 export const useLastBudgetsQuery = () => {
-  const query = useQuery<HistoryDataProps[]>({
+  const query = useQuery<LastMonthlyBudget[]>({
     queryKey: ["history"],
     queryFn: fetchLastBudgets,
     retry: false,

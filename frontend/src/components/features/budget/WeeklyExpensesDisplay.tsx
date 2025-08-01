@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
-import { FormBudgetEntry, WeeklyExpensesDisplayProps } from "@/types/budgets";
 import {
+  createExpenseEntrySchema,
   ExpenseEntry,
   expenseEntrySchema,
   validateArrayWithSchema,
@@ -19,6 +19,11 @@ import {
   TotalDataDisplay,
 } from "@/components/ui";
 import { AddEntriesForm, UpdateEntryForm } from "@/components/forms";
+import {
+  NewBudgetEntry,
+  UpdatedExpenseEntry,
+  WeeklyExpensesDisplayProps,
+} from "@/types";
 
 export const WeeklyExpensesDisplay = ({
   budgetId,
@@ -26,7 +31,7 @@ export const WeeklyExpensesDisplay = ({
   expenses,
   edit = true,
 }: WeeklyExpensesDisplayProps) => {
-  const [newExpenses, setNewExpenses] = useState<FormBudgetEntry[]>([]);
+  const [newExpenses, setNewExpenses] = useState<NewBudgetEntry[]>([]);
   const [weekIndex, setWeekIndex] = useState(0);
   const currentWeekNumber = weekIndex + 1;
   const weeklyExpenses = expenses.filter(
@@ -57,7 +62,7 @@ export const WeeklyExpensesDisplay = ({
     }));
 
     const validation = validateArrayWithSchema(
-      expenseEntrySchema,
+      createExpenseEntrySchema,
       newWeeklyExpenses
     );
     if (!validation.success) {
@@ -66,12 +71,12 @@ export const WeeklyExpensesDisplay = ({
     }
 
     addExpenses.mutate(
-      { expenses: validation.data ?? [], budgetId },
+      { expenses: validation.data, budgetId },
       { onSuccess: () => setNewExpenses([]) }
     );
   };
 
-  const handleUpdateExpense = (updatedExpense: ExpenseEntry) => {
+  const handleUpdateExpense = (updatedExpense: UpdatedExpenseEntry) => {
     setUpdatedError({});
 
     const validation = validateWithSchema(expenseEntrySchema, updatedExpense);
@@ -91,7 +96,7 @@ export const WeeklyExpensesDisplay = ({
     setUpdatedError({});
 
     deleteExpense.mutate(
-      { expenseId: deletedExpense.id ?? "", budgetId },
+      { expenseId: deletedExpense.id, budgetId },
       { onSuccess: () => setSelectedEntry(null) }
     );
   };

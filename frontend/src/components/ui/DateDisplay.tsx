@@ -1,7 +1,7 @@
 import { useBudgetStore } from "@/stores/budgetStore";
-import { DateDisplayProps } from "@/types/budgets";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import "@/styles/components/ui/DateDisplay.scss";
+import { DateDisplayProps } from "@/types";
 
 export const DateDisplay = ({ weekIndex, setIndex }: DateDisplayProps) => {
   const weeks = useBudgetStore((s) => s.weeksInMonth);

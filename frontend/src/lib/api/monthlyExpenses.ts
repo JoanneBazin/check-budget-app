@@ -2,7 +2,7 @@ import {
   AddExpensesProps,
   DeleteExpenseProps,
   UpdateExpenseProps,
-} from "@/types/budgets";
+} from "@/types";
 
 export const addExpenses = async ({ expenses, budgetId }: AddExpensesProps) => {
   const response = await fetch(
@@ -33,11 +33,7 @@ export const updateExpense = async ({
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({
-        name: expense.name,
-        amount: expense.amount,
-        weekNumber: expense.weekNumber,
-      }),
+      body: JSON.stringify(expense),
     }
   );
 

@@ -3,10 +3,10 @@ import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
 import "@/styles/components/layout/CurrentBudgetLayout.scss";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
-import { MonthlyBudget } from "@shared/schemas";
 import { MonthlyEntries } from "../budget/MonthlyEntries";
 import { TotalMonthlyEntriesDisplay } from "@/components/ui";
 import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
+import { MonthlyBudget } from "@shared/schemas";
 
 type View = "app" | "charges" | "incomes";
 
@@ -36,7 +36,7 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
         onBack={() => setView("app")}
         data={budget.charges}
         dateTitle={dateTitle}
-        budgetId={budget.id ?? ""}
+        budgetId={budget.id}
       />
     );
   if (view === "incomes")
@@ -46,15 +46,15 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
         onBack={() => setView("app")}
         data={budget.incomes}
         dateTitle={dateTitle}
-        budgetId={budget.id ?? ""}
+        budgetId={budget.id}
       />
     );
 
   return (
     <section>
       <TotalMonthlyEntriesDisplay
-        data="budget"
-        total={budget.remainingBudget ?? 0}
+        type="budget"
+        total={budget.remainingBudget}
       />
 
       <div className="total-entries-container">
@@ -85,8 +85,8 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
       </div>
 
       <WeeklyExpensesDisplay
-        budgetId={budget.id ?? ""}
-        weeklyBudget={budget.weeklyBudget ?? 0}
+        budgetId={budget.id}
+        weeklyBudget={budget.weeklyBudget}
         expenses={budget.expenses}
       />
     </section>

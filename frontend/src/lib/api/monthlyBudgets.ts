@@ -2,8 +2,8 @@ import {
   AddMonthlyEntriesProps,
   DeleteMonthlyEntryProps,
   UpdateMonthlyEntryProps,
-} from "@/types/budgets";
-import { MonthlyBudget } from "@shared/schemas";
+} from "@/types";
+import { MonthlyBudgetForm } from "@shared/schemas";
 
 export const fetchCurrentBudget = async () => {
   const response = await fetch(
@@ -18,7 +18,7 @@ export const fetchCurrentBudget = async () => {
   return response.json();
 };
 
-export const createMonthlyBudget = async (budget: MonthlyBudget) => {
+export const createMonthlyBudget = async (budget: MonthlyBudgetForm) => {
   const response = await fetch("http://localhost:4000/api/monthly-budgets", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -77,7 +77,7 @@ export const updateMonthlyEntry = async ({
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ name: entry.name, amount: entry.amount }),
+      body: JSON.stringify(entry),
     }
   );
 

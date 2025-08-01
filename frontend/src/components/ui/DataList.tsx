@@ -1,6 +1,6 @@
-import { DataListProps } from "@/types/budgets";
 import { ChevronRight } from "lucide-react";
 import "@/styles/components/ui/DataList.scss";
+import { DataListProps } from "@/types";
 import { BudgetEntry } from "@shared/schemas";
 
 export const DataList = <T extends BudgetEntry>({

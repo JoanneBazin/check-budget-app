@@ -1,9 +1,9 @@
-import { FormBudgetEntry, MonthlyEntriesView } from "@/types/budgets";
 import "@/styles/components/layout/MonthlyEntries.scss";
 import { useState } from "react";
 import {
   BudgetEntry,
   budgetEntrySchema,
+  createBudgetEntrySchema,
   validateArrayWithSchema,
   validateWithSchema,
 } from "@shared/schemas";
@@ -20,6 +20,11 @@ import {
   TotalMonthlyEntriesDisplay,
 } from "@/components/ui";
 import { AddEntriesForm, UpdateEntryForm } from "@/components/forms";
+import {
+  MonthlyEntriesView,
+  NewBudgetEntry,
+  UpdatedBudgetEntry,
+} from "@/types";
 
 export const MonthlyEntries = ({
   type,
@@ -28,11 +33,11 @@ export const MonthlyEntries = ({
   dateTitle,
   budgetId,
 }: MonthlyEntriesView) => {
-  const totalData = data?.reduce((acc, entry) => acc + entry.amount, 0);
+  const totalData = data.reduce((acc, entry) => acc + entry.amount, 0);
   const title = type.charAt(0).toUpperCase() + type.slice(1) + " " + dateTitle;
 
   const [selectedEntry, setSelectedEntry] = useState<BudgetEntry | null>(null);
-  const [newEntries, setNewEntries] = useState<FormBudgetEntry[]>([]);
+  const [newEntries, setNewEntries] = useState<NewBudgetEntry[]>([]);
   const [entriesError, setEntriesError] = useState<Record<string, string>[]>(
     []
   );
@@ -44,7 +49,10 @@ export const MonthlyEntries = ({
   const handleAddEntries = () => {
     setEntriesError([]);
 
-    const validation = validateArrayWithSchema(budgetEntrySchema, newEntries);
+    const validation = validateArrayWithSchema(
+      createBudgetEntrySchema,
+      newEntries
+    );
 
     if (!validation.success) {
       setEntriesError(Object.values(validation.errors));
@@ -54,14 +62,14 @@ export const MonthlyEntries = ({
     addMonthlyEntries.mutate(
       {
         type: type === "charges" ? "charges" : "incomes",
-        entries: validation.data ?? [],
+        entries: validation.data,
         budgetId,
       },
       { onSuccess: () => setNewEntries([]) }
     );
   };
 
-  const handleUpdateEntry = (updatedEntry: FormBudgetEntry) => {
+  const handleUpdateEntry = (updatedEntry: UpdatedBudgetEntry) => {
     setUpdatedError({});
 
     const validation = validateWithSchema(budgetEntrySchema, updatedEntry);
@@ -74,20 +82,20 @@ export const MonthlyEntries = ({
     updateMonthlyEntry.mutate(
       {
         type: type === "charges" ? "charges" : "incomes",
-        entry: validation.data ?? {},
+        entry: validation.data,
         budgetId,
       },
       { onSuccess: () => setSelectedEntry(null) }
     );
   };
 
-  const handleDeleteEntry = (deletedEntry: FormBudgetEntry) => {
+  const handleDeleteEntry = (deletedEntry: BudgetEntry) => {
     setUpdatedError({});
 
     deleteMonthlyEntry.mutate(
       {
         type: type === "charges" ? "charges" : "incomes",
-        entryId: deletedEntry.id ?? "",
+        entryId: deletedEntry.id,
         budgetId,
       },
       { onSuccess: () => setSelectedEntry(null) }
@@ -97,7 +105,7 @@ export const MonthlyEntries = ({
   return (
     <section>
       <BackArrow onBack={onBack} />
-      <TotalMonthlyEntriesDisplay data={type} total={totalData} />
+      <TotalMonthlyEntriesDisplay type={type} total={totalData} />
 
       <div className="monthly-entries-container">
         <BudgetDataCard title={title} color="black">

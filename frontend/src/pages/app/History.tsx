@@ -3,10 +3,10 @@ import { useEffect, useState } from "react";
 import "@/styles/pages/History.scss";
 import { getBudgetByDate } from "@/lib/api/monthlyBudgets";
 import { Search } from "lucide-react";
-import { LastMonthlyBudget } from "@/types/budgets";
 import { LastBudgetLayout } from "@/components/features/history/LastBudgetLayout";
 import { useLastBudgetsQuery } from "@/hooks/queries";
 import { HistoryCard, MonthYearPicker } from "@/components/ui";
+import { LastMonthlyBudget } from "@/types";
 
 export const History = () => {
   const { data: lastBudgets, isPending, error } = useLastBudgetsQuery();

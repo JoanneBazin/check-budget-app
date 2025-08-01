@@ -1,7 +1,7 @@
-import { UpdateEntryFormProps } from "@/types/budgets";
 import { Check, X } from "lucide-react";
 import { useState } from "react";
 import "@/styles/components/forms/UpdateEntryForm.scss";
+import { UpdateEntryFormProps } from "@/types";
 import { BudgetEntry } from "@shared/schemas";
 
 export const UpdateEntryForm = <T extends BudgetEntry>({

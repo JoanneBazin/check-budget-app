@@ -1,7 +1,7 @@
 import { z } from "zod";
 
 export const budgetEntrySchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z
     .string()
     .trim()
@@ -25,8 +25,10 @@ export const budgetEntrySchema = z.object({
   ),
 });
 
+export const createBudgetEntrySchema = budgetEntrySchema.omit({ id: true });
+
 export const expenseEntrySchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   name: z
     .string()
     .min(2, "Le nom est trop court")
@@ -56,21 +58,34 @@ export const expenseEntrySchema = z.object({
     .optional(),
 });
 
+export const createExpenseEntrySchema = expenseEntrySchema.omit({ id: true });
+
 export const monthlyBudgetSchema = z.object({
-  id: z.string().optional(),
+  id: z.string(),
   month: z
     .number()
     .min(1, "Le mois doit être compris entre 1 et 12")
     .max(12, "Le mois doit être compris entre 1 et 12"),
   year: z.number().min(2025, "L'année doit être supérieure ou égale à 2025"),
   isCurrent: z.boolean(),
-  remainingBudget: z.number().optional(),
-  weeklyBudget: z.number().optional(),
+  remainingBudget: z.number(),
+  weeklyBudget: z.number(),
   numberOfWeeks: z.number().min(4).max(5),
   incomes: z.array(budgetEntrySchema).default([]),
   charges: z.array(budgetEntrySchema).default([]),
   expenses: z.array(expenseEntrySchema).default([]),
 });
+
+export const createMonthlyBudgetSchema = monthlyBudgetSchema
+  .omit({
+    id: true,
+    weeklyBudget: true,
+    remainingBudget: true,
+  })
+  .extend({
+    incomes: z.array(createBudgetEntrySchema).default([]),
+    charges: z.array(createBudgetEntrySchema).default([]),
+  });
 
 export const queryDateSchema = z.object({
   month: z.coerce.number().min(1).max(12),
@@ -78,5 +93,10 @@ export const queryDateSchema = z.object({
 });
 
 export type BudgetEntry = z.infer<typeof budgetEntrySchema>;
+export type BudgetEntryForm = z.infer<typeof createBudgetEntrySchema>;
+
 export type ExpenseEntry = z.infer<typeof expenseEntrySchema>;
+export type ExpenseEntryForm = z.infer<typeof createExpenseEntrySchema>;
+
 export type MonthlyBudget = z.infer<typeof monthlyBudgetSchema>;
+export type MonthlyBudgetForm = z.infer<typeof createMonthlyBudgetSchema>;

@@ -1,4 +1,4 @@
-import { BudgetEntry } from "@shared/schemas";
+import { BudgetEntry, BudgetEntryForm } from "@shared/schemas";
 
 export const fetchFixedIncomes = async () => {
   const response = await fetch("http://localhost:4000/api/fixed-incomes", {
@@ -10,7 +10,7 @@ export const fetchFixedIncomes = async () => {
   return response.json();
 };
 
-export const addFixedIncomes = async (incomes: BudgetEntry[]) => {
+export const addFixedIncomes = async (incomes: BudgetEntryForm[]) => {
   const response = await fetch(`http://localhost:4000/api/fixed-incomes`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -33,7 +33,7 @@ export const updateFixedIncome = async (income: BudgetEntry) => {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
       credentials: "include",
-      body: JSON.stringify({ name: income.name, amount: income.amount }),
+      body: JSON.stringify(income),
     }
   );
 

@@ -1,5 +1,5 @@
 import express from "express";
-import { budgetEntrySchema } from "@shared/schemas";
+import { budgetEntrySchema, createBudgetEntrySchema } from "@shared/schemas";
 import { requireAuth, validateBody } from "src/middleware";
 import {
   addFixedIncomes,
@@ -11,7 +11,12 @@ import {
 const router = express.Router();
 
 router.get("/", requireAuth, getFixedIncomes);
-router.post("/", requireAuth, validateBody(budgetEntrySchema), addFixedIncomes);
+router.post(
+  "/",
+  requireAuth,
+  validateBody(createBudgetEntrySchema),
+  addFixedIncomes
+);
 router.put(
   "/:id",
   requireAuth,

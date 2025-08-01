@@ -1,15 +1,15 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import {
-  AddExpensesProps,
-  DeleteExpenseProps,
-  UpdateExpenseProps,
-} from "@/types/budgets";
-import {
   addExpenses,
   deleteExpense,
   updateExpense,
 } from "@/lib/api/monthlyExpenses";
+import {
+  AddExpensesProps,
+  DeleteExpenseProps,
+  UpdateExpenseProps,
+} from "@/types";
 
 export const useAddExpensesMutation = () => {
   const queryClient = useQueryClient();

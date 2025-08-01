@@ -1,7 +1,7 @@
-import { CollapseProps } from "@/types/budgets";
 import { useState } from "react";
 import "@/styles/components/ui/Collapse.scss";
 import { ChevronDownIcon } from "lucide-react";
+import { CollapseProps } from "@/types";
 
 export const Collapse = ({ data, title, color }: CollapseProps) => {
   const [isOpen, setIsOpen] = useState(false);

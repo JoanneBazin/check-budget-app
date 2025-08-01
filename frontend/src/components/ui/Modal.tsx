@@ -1,7 +1,7 @@
-import { ModalProps } from "@/types/budgets";
 import * as Dialog from "@radix-ui/react-dialog";
 import { X } from "lucide-react";
 import "@/styles/components/ui/Modal.scss";
+import { ModalProps } from "@/types";
 
 export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
   return (
