@@ -1,4 +1,4 @@
-import { useLoginMutation } from "@/hooks/queries/mutations/useAuth";
+import { useLoginMutation } from "@/hooks/queries/mutations";
 import { loginSchema, validateWithSchema } from "@shared/schemas";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";

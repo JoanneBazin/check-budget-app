@@ -1,5 +1,5 @@
-import { SignupForm } from "@/components/forms/SignupForm";
-import { BackArrow } from "@/components/ui/BackArrow";
+import { SignupForm } from "@/components/forms";
+import { BackArrow } from "@/components/ui";
 
 export const SignupPage = () => {
   return (

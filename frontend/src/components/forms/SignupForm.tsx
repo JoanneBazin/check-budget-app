@@ -1,7 +1,7 @@
-import { useSignupMutation } from "@/hooks/queries/mutations/useAuth";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { signupSchema, validateWithSchema } from "@shared/schemas/index";
+import { useSignupMutation } from "@/hooks/queries/mutations";
 
 export const SignupForm = () => {
   const [user, setUser] = useState({ name: "", email: "", password: "" });

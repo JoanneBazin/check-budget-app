@@ -1,15 +1,15 @@
 import { LastBudgetLayoutProps } from "@/types/budgets";
-import { BackArrow } from "../ui/BackArrow";
 import { useEffect, useState } from "react";
 import { MonthlyBudget } from "@shared/schemas";
 import { getBudgetById } from "@/lib/api/monthlyBudgets";
 import "@/styles/components/layout/LastBudgetLayout.scss";
-import { TotalMonthlyEntriesDisplay } from "../ui/TotalMonthlyEntriesDisplay";
 import { formatDateTitle } from "@/lib/formatDateTitle";
-import { DataList } from "../ui/DataList";
-import { BudgetDataCard } from "../ui/BudgetDataCard";
-import { WeeklyExpensesDisplay } from "./WeeklyExpensesDisplay";
-import { Collapse } from "../ui/Collapse";
+import {
+  BackArrow,
+  Collapse,
+  TotalMonthlyEntriesDisplay,
+} from "@/components/ui";
+import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
 
 export const LastBudgetLayout = ({
   budgetId,

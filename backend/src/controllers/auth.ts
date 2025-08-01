@@ -1,9 +1,13 @@
-import { createSession, hashPassword, verifyPassword } from "../lib/auth";
-import { HttpError } from "../lib/HttpError";
-import { prisma } from "../lib/prismaClient";
 import { NextFunction, Request, Response } from "express";
-import { isPrismaUniqueConstraint } from "../lib/prismaErrorHelpers";
 import { LoginInput, SignupInput } from "@shared/schemas";
+import {
+  createSession,
+  hashPassword,
+  HttpError,
+  isPrismaUniqueConstraint,
+  prisma,
+  verifyPassword,
+} from "src/lib";
 
 export const signup = async (
   req: Request<{}, {}, SignupInput>,

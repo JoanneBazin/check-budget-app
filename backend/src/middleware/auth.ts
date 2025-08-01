@@ -1,6 +1,5 @@
-import { validateSession } from "../lib/auth";
 import { Request, Response, NextFunction } from "express";
-import { HttpError } from "../lib/HttpError";
+import { HttpError, validateSession } from "src/lib";
 
 export async function requireAuth(
   req: Request,

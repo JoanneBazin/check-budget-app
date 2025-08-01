@@ -1,5 +1,15 @@
 import { BudgetEntry } from "@shared/schemas";
 
+export const fetchFixedCharges = async () => {
+  const response = await fetch("http://localhost:4000/api/fixed-charges", {
+    credentials: "include",
+  });
+
+  if (!response.ok) throw new Error("Charges fixes indisponibles");
+
+  return response.json();
+};
+
 export const addFixedCharges = async (charges: BudgetEntry[]) => {
   const response = await fetch(`http://localhost:4000/api/fixed-charges`, {
     method: "POST",

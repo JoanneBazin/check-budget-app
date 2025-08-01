@@ -1,7 +1,5 @@
-import { BudgetDataCard } from "../ui/BudgetDataCard";
 import { useEffect, useState } from "react";
 import { FormBudgetEntry, WeeklyExpensesDisplayProps } from "@/types/budgets";
-import { AddEntriesForm } from "../forms/AddEntriesForm";
 import {
   ExpenseEntry,
   expenseEntrySchema,
@@ -12,12 +10,15 @@ import {
   useAddExpensesMutation,
   useDeleteExpenseMutation,
   useUpdateExpenseMutation,
-} from "@/hooks/queries/mutations/useExpenses";
-import { DateDisplay } from "../ui/DateDisplay";
-import { DataList } from "@/components/ui/DataList";
-import { TotalDataDisplay } from "../ui/TotalDataDisplay";
-import { Modal } from "../ui/Modal";
-import { UpdateEntryForm } from "../forms/UpdateEntryForm";
+} from "@/hooks/queries/mutations";
+import {
+  BudgetDataCard,
+  DataList,
+  DateDisplay,
+  Modal,
+  TotalDataDisplay,
+} from "@/components/ui";
+import { AddEntriesForm, UpdateEntryForm } from "@/components/forms";
 
 export const WeeklyExpensesDisplay = ({
   budgetId,

@@ -1,8 +1,8 @@
-import { CurrentBudgetLayout } from "@/components/layout/CurrentBudgetLayout";
-import { useCurrentBudgetQuery } from "@/hooks/queries/useCurrentBudgetQuery";
+import { CurrentBudgetLayout } from "@/components/features/dashboard/CurrentBudgetLayout";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { Link } from "react-router-dom";
 import "@/styles/pages/Dashboard.scss";
+import { useCurrentBudgetQuery } from "@/hooks/queries";
 
 export const Dashboard = () => {
   const { isLoading } = useCurrentBudgetQuery();

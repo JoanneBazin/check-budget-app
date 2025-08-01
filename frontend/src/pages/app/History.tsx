@@ -1,13 +1,12 @@
-import { MonthYearPicker } from "@/components/ui/MonthYearPicker";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
 import "@/styles/pages/History.scss";
-import { useLastBudgetsQuery } from "@/hooks/queries/useLastBudgetsQuery";
-import { HistoryCard } from "@/components/ui/HistoryCard";
 import { getBudgetByDate } from "@/lib/api/monthlyBudgets";
 import { Search } from "lucide-react";
 import { LastMonthlyBudget } from "@/types/budgets";
-import { LastBudgetLayout } from "@/components/layout/LastBudgetLayout";
+import { LastBudgetLayout } from "@/components/features/history/LastBudgetLayout";
+import { useLastBudgetsQuery } from "@/hooks/queries";
+import { HistoryCard, MonthYearPicker } from "@/components/ui";
 
 export const History = () => {
   const { data: lastBudgets, isPending, error } = useLastBudgetsQuery();

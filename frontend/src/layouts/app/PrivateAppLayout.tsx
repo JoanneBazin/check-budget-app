@@ -1,11 +1,12 @@
-import { Bottombar } from "@/components/layout/Bottombar";
-import { Header } from "@/components/layout/Header";
-import { Banner } from "@/components/ui/Banner";
-import { useCurrentBudgetQuery } from "@/hooks/queries/useCurrentBudgetQuery";
-import { useFixedChargesQuery } from "@/hooks/queries/useFixedChargesQuery";
-import { useFixedIncomesQuery } from "@/hooks/queries/useFixedIncomesQuery";
+import {
+  useCurrentBudgetQuery,
+  useFixedChargesQuery,
+  useFixedIncomesQuery,
+} from "@/hooks/queries";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { Outlet } from "react-router-dom";
+import { Bottombar, Header } from "../components";
+import { Banner } from "@/components/ui";
 
 export const PrivateAppLayout = () => {
   useCurrentBudgetQuery();

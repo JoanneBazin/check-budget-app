@@ -1,17 +1,8 @@
+import { fetchFixedIncomes } from "@/lib/api/fixedIncomes";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { BudgetEntryFromDB } from "@/types/budgets";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
-
-export const fetchFixedIncomes = async () => {
-  const response = await fetch("http://localhost:4000/api/fixed-incomes", {
-    credentials: "include",
-  });
-
-  if (!response.ok) throw new Error("Revenus fixes indisponibles");
-
-  return response.json();
-};
 
 export const useFixedIncomesQuery = () => {
   const setFixedIncomes = useBudgetStore((s) => s.setFixedIncomes);

@@ -1,10 +1,13 @@
 import { NextFunction, Request, Response } from "express";
-import { prisma } from "../lib/prismaClient";
-import { getParamsId, getUserId } from "../lib/req-helpers";
-import { isPrismaRecordNotFound } from "../lib/prismaErrorHelpers";
-import { HttpError } from "../lib/HttpError";
-import { budgetEntrySelect } from "src/lib/selects";
-import { normalizeDecimalFields } from "src/lib/normalizeDecimalFields";
+import {
+  budgetEntrySelect,
+  getParamsId,
+  getUserId,
+  HttpError,
+  isPrismaRecordNotFound,
+  normalizeDecimalFields,
+  prisma,
+} from "src/lib";
 
 export const addFixedCharges = async (
   req: Request,

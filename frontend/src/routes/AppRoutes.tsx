@@ -1,9 +1,9 @@
 import { Route, Routes } from "react-router-dom";
-import { PrivateAppLayout } from "../layouts/PrivateAppLayout";
+import { PrivateAppLayout } from "../layouts/app/PrivateAppLayout";
 import { Dashboard } from "../pages/app/Dashboard";
 import { CreateBudget } from "../pages/app/CreateBudget";
 import { History } from "../pages/app/History";
-import { ProfileLayout } from "../layouts/ProfileLayout";
+import { ProfileLayout } from "../layouts/app/ProfileLayout";
 import { Profile } from "../pages/profile/Profile";
 import { NotFound } from "../pages/NotFound";
 import { RequireAuth } from "../components/auth/RequireAuth";

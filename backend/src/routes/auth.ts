@@ -1,8 +1,7 @@
 import express from "express";
-import { getSession, login, logout, signup } from "../controllers/auth";
-import { requireAuth } from "../middleware/auth";
-import { validateBody } from "../middleware/validateBody";
 import { loginSchema, signupSchema } from "@shared/schemas";
+import { requireAuth, validateBody } from "src/middleware";
+import { getSession, login, logout, signup } from "src/controllers";
 
 const router = express.Router();
 

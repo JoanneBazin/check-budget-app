@@ -5,6 +5,19 @@ import {
 } from "@/types/budgets";
 import { MonthlyBudget } from "@shared/schemas";
 
+export const fetchCurrentBudget = async () => {
+  const response = await fetch(
+    "http://localhost:4000/api/monthly-budgets/current",
+    {
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) throw new Error("Budget actuel indisponible");
+
+  return response.json();
+};
+
 export const createMonthlyBudget = async (budget: MonthlyBudget) => {
   const response = await fetch("http://localhost:4000/api/monthly-budgets", {
     method: "POST",
@@ -134,6 +147,19 @@ export const getBudgetById = async (budgetId: string) => {
   );
 
   if (!response.ok) throw new Error("Budget introuvable");
+
+  return response.json();
+};
+
+export const fetchLastBudgets = async () => {
+  const response = await fetch(
+    "http://localhost:4000/api/monthly-budgets/history",
+    {
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) throw new Error("Historique non disponible");
 
   return response.json();
 };

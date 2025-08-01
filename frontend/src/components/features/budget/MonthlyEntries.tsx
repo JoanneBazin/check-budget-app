@@ -1,11 +1,6 @@
-import { BudgetDataCard } from "@/components/ui/BudgetDataCard";
-import { TotalMonthlyEntriesDisplay } from "@/components/ui/TotalMonthlyEntriesDisplay";
 import { FormBudgetEntry, MonthlyEntriesView } from "@/types/budgets";
-import { BackArrow } from "../ui/BackArrow";
 import "@/styles/components/layout/MonthlyEntries.scss";
-import { DataList } from "../ui/DataList";
 import { useState } from "react";
-import { AddEntriesForm } from "../forms/AddEntriesForm";
 import {
   BudgetEntry,
   budgetEntrySchema,
@@ -16,9 +11,15 @@ import {
   useAddMonthlyEntriesMutation,
   useDeleteMonthlyEntriesMutation,
   useUpdateMonthlyEntriesMutation,
-} from "@/hooks/queries/mutations/useMonthlyBudgets";
-import { Modal } from "../ui/Modal";
-import { UpdateEntryForm } from "../forms/UpdateEntryForm";
+} from "@/hooks/queries/mutations";
+import {
+  BackArrow,
+  BudgetDataCard,
+  DataList,
+  Modal,
+  TotalMonthlyEntriesDisplay,
+} from "@/components/ui";
+import { AddEntriesForm, UpdateEntryForm } from "@/components/forms";
 
 export const MonthlyEntries = ({
   type,

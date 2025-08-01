@@ -1,5 +1,5 @@
-import { FixedChargesDisplay } from "@/components/layout/FixedChargesDisplay";
-import { FixedIncomesDisplay } from "@/components/layout/FixedIncomesDisplay";
+import { FixedChargesDisplay } from "@/components/features/fixed-entries/FixedChargesDisplay";
+import { FixedIncomesDisplay } from "@/components/features/fixed-entries/FixedIncomesDisplay";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useUserStore } from "@/stores/userStore";
 import { useEffect } from "react";

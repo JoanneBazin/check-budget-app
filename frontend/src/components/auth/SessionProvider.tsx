@@ -1,4 +1,4 @@
-import { useSessionQuery } from "@/hooks/queries/useSessionQuery";
+import { useSessionQuery } from "@/hooks/queries";
 import { resetAppState } from "@/lib/resetAppState";
 import { useUserStore } from "@/stores/userStore";
 import { useQueryClient } from "@tanstack/react-query";

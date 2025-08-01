@@ -1,7 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { getUserId } from "../lib/req-helpers";
-import { prisma } from "../lib/prismaClient";
-import { HttpError } from "../lib/HttpError";
+import { getUserId, HttpError, prisma } from "src/lib";
 
 export const checkBudgetAccess = async (
   req: Request,

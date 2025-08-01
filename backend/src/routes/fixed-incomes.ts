@@ -1,13 +1,12 @@
 import express from "express";
-import { requireAuth } from "../middleware/auth";
+import { budgetEntrySchema } from "@shared/schemas";
+import { requireAuth, validateBody } from "src/middleware";
 import {
   addFixedIncomes,
   deleteFixedIncome,
   getFixedIncomes,
   updateFixedIncome,
-} from "../controllers/fixed-incomes";
-import { validateBody } from "../middleware/validateBody";
-import { budgetEntrySchema } from "@shared/schemas";
+} from "src/controllers";
 
 const router = express.Router();
 

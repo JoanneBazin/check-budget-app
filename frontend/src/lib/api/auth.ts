@@ -1,5 +1,7 @@
 import { LoginInput, SignupInput } from "@shared/schemas";
 import { User } from "@shared/types";
+import { useQueryClient } from "@tanstack/react-query";
+import { resetAppState } from "../resetAppState";
 
 export const login = async ({ email, password }: LoginInput): Promise<User> => {
   const response = await fetch("http://localhost:4000/api/auth/login", {
@@ -47,4 +49,18 @@ export const logout = async (): Promise<void> => {
     const { error } = await response.json();
     throw new Error(error || "Echec de la déconnexion");
   }
+};
+
+export const fetchSession = async () => {
+  const response = await fetch("http://localhost:4000/api/auth/session", {
+    credentials: "include",
+  });
+
+  if (!response.ok) throw new Error("Session invalide");
+  if (response.status === 401) {
+    const queryClient = useQueryClient();
+    resetAppState(queryClient);
+  }
+
+  return response.json();
 };

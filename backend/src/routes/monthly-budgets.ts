@@ -1,37 +1,33 @@
 import express from "express";
-import { requireAuth } from "../middleware/auth";
-import { validateBody } from "../middleware/validateBody";
-import {
-  addMonthlyBudget,
-  deleteMonthlyBudget,
-  getCurrentMonthlyBudget,
-  getLastBudgets,
-  getMonthlyBudget,
-  getMonthlyBudgetById,
-} from "../controllers/monthly-budgets";
 import {
   budgetEntrySchema,
   expenseEntrySchema,
   monthlyBudgetSchema,
   queryDateSchema,
 } from "@shared/schemas";
-import { validateQuery } from "../middleware/validateQuery";
 import {
-  addMonthlyIncomes,
-  deleteMonthlyIncome,
-  updateMonthlyIncome,
-} from "../controllers/monthly-incomes";
-import { checkBudgetAccess } from "../middleware/checkBudgetAccess";
+  checkBudgetAccess,
+  requireAuth,
+  validateBody,
+  validateQuery,
+} from "src/middleware";
 import {
+  addMonthlyBudget,
   addMonthlyCharges,
-  deleteMonthlyCharge,
-  updateMonthlyCharge,
-} from "../controllers/monthly-charges";
-import {
   addMonthlyExpenses,
+  addMonthlyIncomes,
+  deleteMonthlyBudget,
+  deleteMonthlyCharge,
   deleteMonthlyExpense,
+  deleteMonthlyIncome,
+  getCurrentMonthlyBudget,
+  getLastBudgets,
+  getMonthlyBudget,
+  getMonthlyBudgetById,
+  updateMonthlyCharge,
   updateMonthlyExpense,
-} from "../controllers/monthly-expenses";
+  updateMonthlyIncome,
+} from "src/controllers";
 
 const router = express.Router();
 

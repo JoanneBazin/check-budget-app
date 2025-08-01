@@ -1,5 +1,4 @@
-import { HttpError } from "../lib/HttpError";
-import { prisma } from "../lib/prismaClient";
+import { HttpError, prisma } from "src/lib";
 import {
   calculateRemainingBudget,
   calculateWeeklyBudget,

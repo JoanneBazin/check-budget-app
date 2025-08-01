@@ -3,10 +3,10 @@ import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
 import "@/styles/components/layout/CurrentBudgetLayout.scss";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
-import { WeeklyExpensesDisplay } from "./WeeklyExpensesDisplay";
 import { MonthlyBudget } from "@shared/schemas";
-import { TotalMonthlyEntriesDisplay } from "../ui/TotalMonthlyEntriesDisplay";
-import { MonthlyEntries } from "./MonthlyEntries";
+import { MonthlyEntries } from "../budget/MonthlyEntries";
+import { TotalMonthlyEntriesDisplay } from "@/components/ui";
+import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
 
 type View = "app" | "charges" | "incomes";
 

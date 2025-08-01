@@ -1,8 +1,15 @@
+import { AddEntriesForm, UpdateEntryForm } from "@/components/forms";
+import {
+  BudgetDataCard,
+  DataList,
+  Modal,
+  TotalDataDisplay,
+} from "@/components/ui";
 import {
   useAddFixedChargesMutation,
   useDeleteFixedChargeMutation,
   useUpdateFixedChargeMutation,
-} from "@/hooks/queries/mutations/useFixedCharges";
+} from "@/hooks/queries/mutations";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { FormBudgetEntry } from "@/types/budgets";
 import {
@@ -12,12 +19,6 @@ import {
   validateWithSchema,
 } from "@shared/schemas";
 import { useState } from "react";
-import { BudgetDataCard } from "../ui/BudgetDataCard";
-import { DataList } from "../ui/DataList";
-import { AddEntriesForm } from "../forms/AddEntriesForm";
-import { TotalDataDisplay } from "../ui/TotalDataDisplay";
-import { Modal } from "../ui/Modal";
-import { UpdateEntryForm } from "../forms/UpdateEntryForm";
 
 export const FixedChargesDisplay = () => {
   const fixedCharges = useBudgetStore((s) => s.fixedCharges);

@@ -1,5 +1,15 @@
 import { BudgetEntry } from "@shared/schemas";
 
+export const fetchFixedIncomes = async () => {
+  const response = await fetch("http://localhost:4000/api/fixed-incomes", {
+    credentials: "include",
+  });
+
+  if (!response.ok) throw new Error("Revenus fixes indisponibles");
+
+  return response.json();
+};
+
 export const addFixedIncomes = async (incomes: BudgetEntry[]) => {
   const response = await fetch(`http://localhost:4000/api/fixed-incomes`, {
     method: "POST",
