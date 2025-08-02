@@ -1,5 +1,4 @@
 import { ChevronLeft } from "lucide-react";
-import "@/styles/components/ui/BackArrow.scss";
 import { useNavigate } from "react-router-dom";
 import { BackArrowProps } from "@/types";
 
@@ -20,7 +19,7 @@ export const BackArrow = ({ destination, onBack }: BackArrowProps) => {
       aria-label="Retour"
       onClick={handleClick}
     >
-      <ChevronLeft />
+      <ChevronLeft className="icon" />
     </button>
   );
 };

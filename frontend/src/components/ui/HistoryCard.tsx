@@ -1,5 +1,4 @@
 import { formatDateTitle } from "@/lib/formatDateTitle";
-import "@/styles/components/ui/HistoryCard.scss";
 import { HistoryCardProps } from "@/types";
 
 export const HistoryCard = ({ data, onSelect }: HistoryCardProps) => {

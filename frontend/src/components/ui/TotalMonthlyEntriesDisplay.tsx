@@ -1,4 +1,3 @@
-import "@/styles/components/ui/TotalMonthlyEntriesDisplay.scss";
 import { TotalMonthlyEntriesProps } from "@/types";
 
 export const TotalMonthlyEntriesDisplay = ({

@@ -1,5 +1,4 @@
 import { useEffect, useState } from "react";
-import "@/styles/components/forms/AddEntriesForm.scss";
 import { AddEntriesFormProps, NewBudgetEntry } from "@/types";
 
 export const AddEntriesForm = ({

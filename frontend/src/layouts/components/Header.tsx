@@ -1,7 +1,6 @@
 import { AlignJustify, X } from "lucide-react";
 import { useState } from "react";
 import { NavLink, useNavigate } from "react-router";
-import "@/styles/components/layout/Header.scss";
 import { useLogoutMutation } from "@/hooks/queries/mutations";
 
 export const Header = () => {

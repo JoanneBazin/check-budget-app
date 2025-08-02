@@ -1,6 +1,5 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
-import "@/styles/pages/CreateBudget.scss";
 import { createMonthlyBudgetSchema, validateWithSchema } from "@shared/schemas";
 import { extractArrayErrors } from "@/lib/extractArrayErrors";
 import { useNavigate } from "react-router-dom";

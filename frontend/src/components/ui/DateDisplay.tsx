@@ -1,6 +1,5 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { ChevronLeft, ChevronRight } from "lucide-react";
-import "@/styles/components/ui/DateDisplay.scss";
 import { DateDisplayProps } from "@/types";
 
 export const DateDisplay = ({ weekIndex, setIndex }: DateDisplayProps) => {

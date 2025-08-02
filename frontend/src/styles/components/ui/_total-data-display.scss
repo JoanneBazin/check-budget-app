@@ -1,3 +1,5 @@
+@use "../../abstracts" as *;
+
 .total-data {
   display: flex;
   justify-content: space-between;
@@ -7,7 +9,7 @@
   margin-top: 20px;
 
   &-amount {
-    color: $gray;
+    color: $gray-700;
   }
 }
 

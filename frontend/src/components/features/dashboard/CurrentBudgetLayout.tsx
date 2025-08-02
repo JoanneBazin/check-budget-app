@@ -1,7 +1,6 @@
 import { formatDateTitle } from "@/lib/formatDateTitle";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
-import "@/styles/components/layout/CurrentBudgetLayout.scss";
 import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { MonthlyEntries } from "../budget/MonthlyEntries";
 import { TotalMonthlyEntriesDisplay } from "@/components/ui";

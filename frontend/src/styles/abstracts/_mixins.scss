@@ -1,0 +1,82 @@
+@use "./variables" as *;
+
+// Responsive
+
+@mixin mobile-only {
+  @media (max-width: #{$breakpoint-sm - 1px}) {
+    @content;
+  }
+}
+
+@mixin tablet-up {
+  @media (max-width: #{$breakpoint-md}) {
+    @content;
+  }
+}
+@mixin desktop-up {
+  @media (max-width: #{$breakpoint-lg}) {
+    @content;
+  }
+}
+
+// Layout
+
+@mixin flex-center {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@mixin flex-between {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+// Components
+
+@mixin button-base {
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  padding: 0;
+  border: none;
+  background: none;
+  border-radius: $border-radius-sm;
+  font-family: inherit;
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+
+  &:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+  }
+}
+
+@mixin button-variant($bg-color, $hover-bg-color, $text-color: white) {
+  background-color: $bg-color;
+  color: $text-color;
+
+  &:hover {
+    background-color: $hover-bg-color;
+  }
+}
+
+@mixin input-base {
+  width: 100%;
+  padding: $spacing-xxs $spacing-sm;
+  border: 1px solid $gray-500;
+  border-radius: $border-radius-xs;
+  box-shadow: $shadow-sm;
+  font-family: inherit;
+  font-size: $font-size-sm;
+  transition: border-color 0.2s ease-in-out;
+
+  &:focus {
+    outline: none;
+    border-color: $primary-light;
+  }
+}

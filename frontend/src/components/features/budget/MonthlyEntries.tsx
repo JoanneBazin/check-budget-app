@@ -1,4 +1,3 @@
-import "@/styles/components/layout/MonthlyEntries.scss";
 import { useState } from "react";
 import {
   BudgetEntry,

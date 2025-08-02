@@ -1,4 +1,3 @@
-import "@/styles/components/ui/TotalDataDisplay.scss";
 import { TotalDataDisplayProps } from "@/types";
 
 export const TotalDataDisplay = ({

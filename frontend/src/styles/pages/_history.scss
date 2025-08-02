@@ -1,3 +1,5 @@
+@use "../abstracts" as *;
+
 .date-picker-container {
   display: flex;
   align-items: center;
@@ -20,7 +22,7 @@
   align-items: center;
   gap: 8px;
   margin-top: 12px;
-  color: $gray;
+  color: $gray-700;
 
   &--text {
     font-size: 14px;

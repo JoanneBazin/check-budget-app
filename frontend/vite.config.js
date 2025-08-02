@@ -47,13 +47,13 @@ export default defineConfig({
       },
     }),
   ],
-  css: {
-    preprocessorOptions: {
-      scss: {
-        additionalData: `@use "@/styles/_variables.scss" as *; @use "@/styles/_mixins.scss" as *; `,
-      },
-    },
-  },
+  // css: {
+  //   preprocessorOptions: {
+  //     scss: {
+  //       additionalData: `@use "@/styles/abstracts" as *;`,
+  //     },
+  //   },
+  // },
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

@@ -1,6 +1,5 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useUserStore } from "@/stores/userStore";
-import "@/styles/components/ui/Banner.scss";
 
 export const Banner = () => {
   const pageTitle = useBudgetStore((s) => s.pageTitle);

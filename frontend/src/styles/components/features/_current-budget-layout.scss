@@ -1,3 +1,5 @@
+@use "../../abstracts" as *;
+
 .total-entries-container {
   display: flex;
   justify-content: space-between;
@@ -12,7 +14,7 @@
     &-text {
       display: flex;
       justify-content: space-between;
-      font-family: $worksans;
+      font-family: $font-family-secondary;
       font-size: 13px;
     }
 
@@ -22,12 +24,12 @@
       font-weight: 200;
 
       .icon {
-        color: $primary-color;
+        color: $primary;
         margin-bottom: 12px;
       }
     }
     &.incomes {
-      background: $primary-color;
+      background: $primary;
       color: $black;
       font-weight: 300;
 

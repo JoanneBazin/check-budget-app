@@ -1,4 +1,3 @@
-import "@/styles/components/ui/BudgetDataCard.scss";
 import { BudgetDataCardProps } from "@/types";
 export const BudgetDataCard = ({
   title,

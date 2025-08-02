@@ -1,6 +1,5 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
-import "@/styles/pages/History.scss";
 import { getBudgetByDate } from "@/lib/api/monthlyBudgets";
 import { Search } from "lucide-react";
 import { LastBudgetLayout } from "@/components/features/history/LastBudgetLayout";

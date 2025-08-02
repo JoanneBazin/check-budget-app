@@ -1,5 +1,7 @@
+@use "../../abstracts" as *;
+
 .total-budget {
-  font-family: $worksans;
+  font-family: $font-family-secondary;
   font-size: 20px;
   font-weight: 600;
   display: flex;

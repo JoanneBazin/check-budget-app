@@ -1,5 +1,4 @@
 import { useState } from "react";
-import "@/styles/components/ui/Collapse.scss";
 import { ChevronDownIcon } from "lucide-react";
 import { CollapseProps } from "@/types";
 

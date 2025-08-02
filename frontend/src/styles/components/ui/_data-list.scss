@@ -1,3 +1,5 @@
+@use "../../abstracts" as *;
+
 .empty-data-info {
   font-size: 12px;
 }
@@ -20,11 +22,11 @@
     gap: 16px;
 
     &-entry {
-      color: $gray;
+      color: $gray-700;
     }
 
     &-update {
-      color: $primary-color;
+      color: $primary;
       font-size: 12px;
     }
   }

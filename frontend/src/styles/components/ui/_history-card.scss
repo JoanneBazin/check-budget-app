@@ -1,3 +1,5 @@
+@use "../../abstracts" as *;
+
 .history-card {
   display: grid;
   grid-template-columns: 45% 35% 20%;
@@ -8,7 +10,7 @@
   margin-bottom: 14px;
 
   &--title {
-    font-family: $worksans;
+    font-family: $font-family-secondary;
     font-size: 15px;
     font-weight: 600;
   }
@@ -21,11 +23,11 @@
   }
 
   &--amount {
-    color: $gray;
+    color: $gray-700;
   }
 
   &--read {
     font-size: 12px;
-    color: $primary-color;
+    color: $primary;
   }
 }

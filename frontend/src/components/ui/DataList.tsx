@@ -1,5 +1,4 @@
 import { ChevronRight } from "lucide-react";
-import "@/styles/components/ui/DataList.scss";
 import { DataListProps } from "@/types";
 import { BudgetEntry } from "@shared/schemas";
 

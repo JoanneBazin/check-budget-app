@@ -1,13 +1,15 @@
 .arrow-container {
   position: absolute;
-  left: 15px;
+  left: 8px;
   top: 15px;
-  width: 35px;
-  height: 35px;
-  background: $light-gray;
   border-radius: 50px;
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 110;
+
+  .icon {
+    width: 35px;
+    height: 35px;
+  }
 }

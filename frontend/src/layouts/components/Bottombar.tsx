@@ -1,6 +1,5 @@
 import { CalendarPlus, History, LayoutDashboard } from "lucide-react";
 import { NavLink } from "react-router-dom";
-import "@/styles/components/layout/Bottombar.scss";
 
 export const Bottombar = () => {
   return (

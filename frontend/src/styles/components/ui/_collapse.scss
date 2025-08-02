@@ -1,3 +1,5 @@
+@use "../../abstracts" as *;
+
 .collapse-container {
   padding: 10px;
   border-radius: 10px;
@@ -15,7 +17,7 @@
   }
 
   &.primary {
-    background: $primary-color;
+    background: $primary;
   }
 
   .collapse-title {
@@ -33,10 +35,10 @@
     font-size: 12px;
 
     .amount.black {
-      color: $gray;
+      color: $gray-700;
     }
     .amount.primary {
-      color: $dark-gray;
+      color: $gray-700;
     }
   }
 }

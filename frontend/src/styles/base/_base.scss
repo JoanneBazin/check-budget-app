@@ -1,0 +1,31 @@
+@use "../abstracts" as *;
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  width: 100vw;
+  min-height: 100vh;
+  margin: 0;
+  padding: 0;
+}
+
+main {
+  width: 100%;
+  padding: 60px 20px 75px 20px;
+}
+
+button {
+  @include button-base;
+}
+
+form {
+  display: flex;
+  margin: 10px auto;
+  flex-direction: column;
+}
+
+input {
+  @include input-base;
+}

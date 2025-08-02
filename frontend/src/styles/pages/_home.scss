@@ -1,3 +1,5 @@
+@use "../abstracts" as *;
+
 .auth-btn {
   display: flex;
   flex-direction: column;
@@ -10,10 +12,10 @@
   }
 
   &__login {
-    background: $primary-color;
+    background: $primary;
   }
   &__signup {
-    border: 1px solid $primary-color;
-    color: $primary-color;
+    border: 1px solid $primary;
+    color: $primary;
   }
 }

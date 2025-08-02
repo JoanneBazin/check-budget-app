@@ -1,6 +1,5 @@
 import { useEffect, useState } from "react";
 import { getBudgetById } from "@/lib/api/monthlyBudgets";
-import "@/styles/components/layout/LastBudgetLayout.scss";
 import { formatDateTitle } from "@/lib/formatDateTitle";
 import {
   BackArrow,
