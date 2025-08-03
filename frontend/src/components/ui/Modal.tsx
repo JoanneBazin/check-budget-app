@@ -9,13 +9,13 @@ export const Modal = ({ isOpen, onClose, title, children }: ModalProps) => {
         <Dialog.Overlay className="dialog-overlay" />
 
         <Dialog.Content className="dialog-content">
-          <Dialog.Title className="dialog-title">{title}</Dialog.Title>
+          <Dialog.Title className="dialog-content__title">{title}</Dialog.Title>
           <Dialog.Description className="sr-only">
             Modifier les informations liées à cette entrée
           </Dialog.Description>
           {children}
           <Dialog.Close asChild>
-            <button className="dialog-close" aria-label="Fermer">
+            <button className="dialog-content__close" aria-label="Fermer">
               <X />
             </button>
           </Dialog.Close>

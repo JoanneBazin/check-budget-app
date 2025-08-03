@@ -11,7 +11,7 @@
 }
 
 body {
-  color: $gray-900;
+  color: $black;
   line-height: 1.5;
 }
 
@@ -19,6 +19,12 @@ h1 {
   font-family: $font-family-secondary;
   font-weight: $font-weight-light;
   text-align: center;
+  margin: 0;
+}
+
+h2 {
+  font-size: $font-size-sm;
+  font-weight: $font-weight-medium;
   margin: 0;
 }
 

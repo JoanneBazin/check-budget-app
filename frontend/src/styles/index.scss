@@ -4,35 +4,45 @@
 @use "layout";
 @use "components";
 @use "pages";
+@use "utilities";
 
 .add-btn {
-  padding: 4px 12px;
+  padding: $spacing-xxs $spacing-md;
   border: 1px solid $gray-500;
-  border-radius: 10px;
-  font-size: 20px;
+  border-radius: $border-radius-sm;
+  font-size: $font-size-xl;
+  color: $primary-dark;
   width: fit-content;
 }
 
 .delete-btn {
-  padding-left: 10px;
-  font-size: 18px;
-  font-weight: 400;
+  font-size: $font-size-lg;
+  font-weight: $font-weight-light;
   width: fit-content;
-  color: red;
+  color: $error;
 }
 
 .form-error {
-  font-size: 10px;
-  color: red;
-  margin-bottom: 5px;
+  font-size: $font-size-xxs;
+  color: $error;
+  margin-top: 5px;
 }
 
 .submit-btn {
-  padding: 8px 16px;
-  margin: 14px 0 14px auto;
+  @include button-variant($primary, $primary-dark, $white);
+  padding: $spacing-xs $spacing-lg;
+  margin: $spacing-sm 0;
   background: $primary;
-  border-radius: 10px;
-  width: fit-content;
-  font-size: 14px;
-  font-weight: 500;
+}
+
+.picker-input {
+  font-weight: $font-weight-medium;
+  text-align: center;
+  padding: $spacing-xxs 0;
+}
+
+.auth-form {
+  @include flex-center;
+  gap: $spacing-md;
+  width: 50%;
 }

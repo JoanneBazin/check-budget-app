@@ -69,7 +69,7 @@ export const CreateBudget = () => {
 
   return (
     <section className="create-section">
-      <div className="create-title">
+      <div className="create-section__title">
         <h2>Budget pour le mois de</h2>
         <MonthYearPicker onChange={handleDateChange} />
       </div>
@@ -89,8 +89,8 @@ export const CreateBudget = () => {
         />
       </BudgetDataCard>
 
-      <div className="checkbox-container">
-        <label className="checkbox-label">
+      <div className="create-section__checkbox">
+        <label className="create-section__checkbox__label">
           <input
             type="checkbox"
             checked={isCurrent}
@@ -98,7 +98,7 @@ export const CreateBudget = () => {
           />
           Définir comme budget actif
         </label>
-        <span className="checkbox-span">
+        <span className="create-section__checkbox__span">
           Ce budget sera disponible directement sur votre dashboard
         </span>
       </div>

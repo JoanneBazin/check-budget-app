@@ -2,30 +2,29 @@
 
 .data-card {
   position: relative;
-  margin-bottom: 15px;
+  margin-bottom: $spacing-lg;
   border: 1px solid $black;
-  border-radius: 20px;
+  border-radius: $border-radius-xl;
 
-  &-title {
-    padding: 10px 15px;
+  &__title {
+    padding: $spacing-sm $spacing-lg;
     border-bottom: 1px solid $black;
-    font-size: 14px;
-    font-weight: 600;
+    font-size: $font-size-sm;
+    font-weight: $font-weight-semibold;
     border-radius: 20px 20px 0 0;
+    font-weight: $font-weight-light;
 
     &.black {
       background: $black;
       color: $white;
-      font-weight: 400;
     }
 
     &.primary {
       background: $primary;
-      font-weight: 400;
     }
   }
 
-  &-content {
-    padding: 10px 15px;
+  &__content {
+    padding: $spacing-sm $spacing-lg;
   }
 }

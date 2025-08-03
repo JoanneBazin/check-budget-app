@@ -1,24 +1,20 @@
 @use "../abstracts" as *;
 
-.add-container {
-  display: flex;
-  align-items: center;
-  gap: 20px;
+.budget-actions {
+  @include flex-center;
+  gap: $spacing-lg;
   margin: 50px 0;
 
-  .add-btn {
+  &__button {
     height: 40px;
     width: 40px;
-    border-radius: 10px;
+    border-radius: $border-radius-sm;
     background: $primary;
     font-size: 28px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    @include flex-center;
   }
 
-  .add-text {
-    font-family: "Work Sans", sans-serif;
-    font-size: 14px;
+  &__text {
+    font-size: $font-size-sm;
   }
 }

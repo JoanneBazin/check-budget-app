@@ -29,3 +29,9 @@ export interface BudgetDataCardProps {
   children: React.ReactNode;
   color?: string;
 }
+
+export interface TotalCardProps {
+  title: string;
+  totalData: number;
+  setView: () => void;
+}

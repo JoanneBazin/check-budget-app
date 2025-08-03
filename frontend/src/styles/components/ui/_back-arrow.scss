@@ -1,14 +1,14 @@
-.arrow-container {
+@use "../../abstracts" as *;
+
+.back-arrow {
   position: absolute;
   left: 8px;
   top: 15px;
   border-radius: 50px;
-  display: flex;
-  align-items: center;
-  justify-content: center;
+  @include flex-center;
   z-index: 110;
 
-  .icon {
+  &__icon {
     width: 35px;
     height: 35px;
   }

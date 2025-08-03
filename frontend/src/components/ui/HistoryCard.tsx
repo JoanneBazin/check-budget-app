@@ -6,15 +6,15 @@ export const HistoryCard = ({ data, onSelect }: HistoryCardProps) => {
   const title = dateTitle.charAt(0).toUpperCase() + dateTitle.slice(1);
   return (
     <div className="history-card">
-      <p className="history-card--title">{title}</p>
-      <div className="history-card--sold">
+      <p className="history-card__title">{title}</p>
+      <div className="history-card__sold">
         <p>Solde</p>
-        <p className="history-card--amount">
-          <span>€ </span>
+        <p className="history-card__amount">
+          <span>€</span>
           {data.remainingBudget}
         </p>
       </div>
-      <button onClick={() => onSelect(data.id)} className="history-card--read">
+      <button onClick={() => onSelect(data.id)} className="history-card__read">
         consulter
       </button>
     </div>

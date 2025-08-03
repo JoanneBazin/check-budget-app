@@ -51,7 +51,7 @@ export const LastBudgetLayout = ({
             total={budget.remainingBudget ?? 0}
           />
 
-          <div className="monthly-entries-collapses">
+          <div className="flex-start gap-sm my-md">
             <Collapse data={budget.charges} title="Charges" color="black" />
             <Collapse data={budget.incomes} title="Revenus" color="primary" />
           </div>

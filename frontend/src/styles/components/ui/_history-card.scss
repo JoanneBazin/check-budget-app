@@ -4,30 +4,32 @@
   display: grid;
   grid-template-columns: 45% 35% 20%;
   align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.19) 0px 10px 20px, rgba(0, 0, 0, 0.23) 0px 6px 6px;
-  border-radius: 10px;
-  padding: 12px 16px;
-  margin-bottom: 14px;
+  box-shadow: $shadow-md;
+  border-radius: $border-radius-sm;
+  padding: $spacing-md $spacing-lg;
+  margin-bottom: $spacing-lg;
+  font-size: $font-size-sm;
 
-  &--title {
+  &__title {
     font-family: $font-family-secondary;
-    font-size: 15px;
-    font-weight: 600;
+    font-weight: $font-weight-semibold;
   }
 
-  &--sold {
-    font-size: 14px;
-    font-weight: 500;
+  &__sold {
+    font-weight: $font-weight-medium;
     display: flex;
     gap: 6px;
   }
 
-  &--amount {
+  &__amount {
     color: $gray-700;
+    font-family: $font-family-mono;
+    display: flex;
+    gap: 2px;
   }
 
-  &--read {
-    font-size: 12px;
+  &__read {
+    font-size: $font-size-xs;
     color: $primary;
   }
 }

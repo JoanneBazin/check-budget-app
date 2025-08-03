@@ -4,43 +4,32 @@
   display: flex;
   flex-direction: column;
   justify-content: end;
-}
 
-.create-title {
-  display: flex;
-  align-items: center;
-  gap: 8px;
-  margin-bottom: 20px;
-
-  h2 {
-    font-size: 14px;
-    font-weight: 500;
-    margin: 0;
+  &__title {
+    @include flex-center;
+    gap: 8px;
+    margin-bottom: $spacing-xl;
   }
 
-  .picker-input {
-    border-radius: 5px;
-    border: 1px solid $gray-700;
-    font-family: "Manrope", sans-serif;
-    font-weight: 600;
-    text-align: center;
-    padding: 5px 0;
-  }
-}
-
-.checkbox-container {
-  display: flex;
-  flex-direction: column;
-  align-items: end;
-  margin: 8px 0;
-
-  .checkbox-label {
+  &__checkbox {
     display: flex;
-    align-items: center;
-    gap: 4px;
-    font-size: 12px;
-  }
-  .checkbox-span {
-    font-size: 10px;
+    flex-direction: column;
+    align-items: end;
+    margin: $spacing-xs 0;
+
+    &__label {
+      @include flex-center;
+      gap: 4px;
+      font-size: $font-size-xs;
+
+      input {
+        width: inherit;
+        padding: inherit;
+        box-shadow: inherit;
+      }
+    }
+    &__span {
+      font-size: $font-size-xxs;
+    }
   }
 }

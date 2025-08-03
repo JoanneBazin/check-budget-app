@@ -56,7 +56,7 @@ export const History = () => {
       {searchError && (
         <div className="search-error">
           <Search size={18} />
-          <p className="search-error--text">{searchError}</p>
+          <p className="search-error__text">{searchError}</p>
         </div>
       )}
 
@@ -69,7 +69,7 @@ export const History = () => {
       {isPending && <div>Loading...</div>}
       {error && <div>{error.message}</div>}
 
-      <div className="history-container">
+      <div className="my-2xl">
         {lastBudgets &&
           lastBudgets.map((budget) => (
             <HistoryCard

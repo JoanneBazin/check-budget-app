@@ -31,7 +31,7 @@ export const SignupForm = () => {
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="auth-form">
       <div>
         <input
           type="name"

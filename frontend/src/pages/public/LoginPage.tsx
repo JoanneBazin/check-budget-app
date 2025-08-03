@@ -3,10 +3,10 @@ import { BackArrow } from "@/components/ui";
 
 export const LoginPage = () => {
   return (
-    <div>
+    <main>
       <BackArrow destination="/" />
-      <h1>Login Page</h1>
+      <h1 className="my-xl">Connexion</h1>
       <LoginForm />
-    </div>
+    </main>
   );
 };

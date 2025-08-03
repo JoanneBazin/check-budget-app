@@ -1,34 +1,13 @@
 @use "../../abstracts" as *;
 
 .total-data {
-  display: flex;
-  justify-content: space-between;
-  padding: 16px 10px 6px 10px;
-  position: relative;
-  font-size: 14px;
-  margin-top: 20px;
+  @include flex-between;
+  @include before-line;
+  padding: $spacing-lg $spacing-sm $spacing-xs $spacing-sm;
+  font-size: $font-size-sm;
+  margin-top: $spacing-xl;
 
-  &-amount {
+  &__amount {
     color: $gray-700;
   }
-}
-
-.total-data::before {
-  content: "";
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  height: 1px;
-  background: linear-gradient(
-    to right,
-    transparent 0%,
-    transparent 15%,
-    rgba(0, 0, 0, 0.3) 20%,
-    black 30%,
-    black 70%,
-    rgba(0, 0, 0, 0.3) 80%,
-    transparent 85%,
-    transparent 100%
-  );
 }

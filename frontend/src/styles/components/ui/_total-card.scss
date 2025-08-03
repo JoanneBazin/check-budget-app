@@ -1,0 +1,30 @@
+@use "../../abstracts" as *;
+
+.total-card {
+  padding: $spacing-sm;
+  width: 48%;
+  border: 1px solid $black;
+  border-radius: 16px;
+
+  &__text {
+    @include flex-between;
+    font-family: $font-family-secondary;
+    font-size: 13px;
+  }
+
+  &__icon {
+    margin-bottom: $spacing-sm;
+  }
+
+  &.black {
+    background: $black;
+    color: $white;
+    font-weight: 300;
+  }
+
+  &.primary {
+    background: $primary;
+    color: $black;
+    font-weight: 400;
+  }
+}

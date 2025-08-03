@@ -1,11 +1,11 @@
 import { formatDateTitle } from "@/lib/formatDateTitle";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
-import { ArrowDownLeft, ArrowUpRight } from "lucide-react";
 import { MonthlyEntries } from "../budget/MonthlyEntries";
 import { TotalMonthlyEntriesDisplay } from "@/components/ui";
 import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
 import { MonthlyBudget } from "@shared/schemas";
+import { TotalCard } from "@/components/ui/TotalCard";
 
 type View = "app" | "charges" | "incomes";
 
@@ -56,31 +56,17 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
         total={budget.remainingBudget}
       />
 
-      <div className="total-entries-container">
-        <div
-          className="total-entries charges"
-          role="button"
-          tabIndex={0}
-          onClick={() => setView("charges")}
-        >
-          <ArrowDownLeft className="icon" />
-          <div className="total-entries-text">
-            <p>Charges</p>
-            <span>€ {totalCharges}</span>
-          </div>
-        </div>
-        <div
-          className="total-entries incomes"
-          role="button"
-          tabIndex={0}
-          onClick={() => setView("incomes")}
-        >
-          <ArrowUpRight className="icon" />
-          <div className="total-entries-text">
-            <p>Apports</p>
-            <span>€ {totalIncomes}</span>
-          </div>
-        </div>
+      <div className="flex-between my-xl">
+        <TotalCard
+          title="charges"
+          totalData={totalCharges}
+          setView={() => setView("charges")}
+        />
+        <TotalCard
+          title="revenus"
+          totalData={totalIncomes}
+          setView={() => setView("incomes")}
+        />
       </div>
 
       <WeeklyExpensesDisplay

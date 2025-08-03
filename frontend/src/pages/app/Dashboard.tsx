@@ -13,18 +13,18 @@ export const Dashboard = () => {
     <CurrentBudgetLayout budget={currentBudget} />
   ) : (
     <section>
-      <div className="add-container">
-        <Link to="/app/create" className="add-btn">
+      <div className="budget-actions">
+        <Link to="/app/create" className="budget-actions__button">
           +
         </Link>
-        <p className="add-text">Commencer un nouveau mois</p>
+        <p className="budget-actions__text">Commencer un nouveau mois</p>
       </div>
 
-      <div className="add-container">
-        <Link to="/profile" className="add-btn">
+      <div className="budget-actions">
+        <Link to="/profile" className="budget-actions__button">
           +
         </Link>
-        <p className="add-text">Mes revenus et charges fixes</p>
+        <p className="budget-actions__text">Mes revenus et charges fixes</p>
       </div>
     </section>
   );

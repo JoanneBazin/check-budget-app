@@ -106,7 +106,7 @@ export const MonthlyEntries = ({
       <BackArrow onBack={onBack} />
       <TotalMonthlyEntriesDisplay type={type} total={totalData} />
 
-      <div className="monthly-entries-container">
+      <div className="my-2xl">
         <BudgetDataCard title={title} color="black">
           <DataList data={data} setSelectedEntry={setSelectedEntry} />
 

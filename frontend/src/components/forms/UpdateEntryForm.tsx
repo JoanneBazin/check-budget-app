@@ -14,13 +14,12 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
 
   return (
     <form>
-      <div className="inputs-container">
+      <div className="input-item">
         <div>
           <input
             type="text"
             placeholder="Nom"
             name="name"
-            className="name-input"
             value={updatedEntry.name}
             onChange={(e) =>
               setUpdatedEntry({ ...updatedEntry, name: e.target.value })
@@ -28,19 +27,20 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
           />
           {errors.name ? <p className="form-error">{errors.name}</p> : null}
         </div>
-        <div className="amount-content">
-          <div className="amount-container">
-            <span className="currency-symbol">€</span>
-            <input
-              type="number"
-              placeholder="Montant"
-              name="amount"
-              className="amount-input"
-              value={updatedEntry.amount}
-              onChange={(e) =>
-                setUpdatedEntry({ ...updatedEntry, amount: e.target.value })
-              }
-            />
+        <div className="input-item__right">
+          <div className="input-item__right__amount">
+            <div className="flex-center">
+              <span className="mr-xxs">€</span>
+              <input
+                type="number"
+                placeholder="Montant"
+                name="amount"
+                value={updatedEntry.amount}
+                onChange={(e) =>
+                  setUpdatedEntry({ ...updatedEntry, amount: e.target.value })
+                }
+              />
+            </div>
             <button
               type="button"
               className="delete-btn"
@@ -55,20 +55,21 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
           ) : null}
         </div>
       </div>
+
       {confirmDelete && (
-        <div className="delete-container">
+        <div className="delete-item">
           <p>Supprimer cette entrée ?</p>
           <button
             type="button"
             onClick={() => onDelete(updatedEntry)}
-            className="btn valid"
+            className="delete-item__button valid"
           >
             <Check size={16} />
           </button>
           <button
             type="button"
             onClick={() => setConfirmDelete(false)}
-            className="btn cancel"
+            className="delete-item__button cancel"
           >
             <X size={16} />
           </button>

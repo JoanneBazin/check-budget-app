@@ -1,18 +1,13 @@
-.date-selector {
+@use "../../abstracts" as *;
+
+.week-selector {
   position: absolute;
-  display: flex;
-  align-items: center;
+  @include flex-center;
   top: 8px;
   right: 10px;
-  font-size: 12px;
+  font-size: $font-size-xs;
 
-  .icon-btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    .icon {
-      width: 18px;
-    }
+  &__icon {
+    width: 18px;
   }
 }

@@ -1,43 +1,40 @@
 @use "../../abstracts" as *;
 
-.collapse-container {
-  padding: 10px;
-  border-radius: 10px;
+.collapse {
+  padding: $spacing-sm;
+  border-radius: $border-radius-md;
   width: 100%;
-  font-size: 14px;
-  margin-bottom: 8px;
+  font-size: $font-size-sm;
+  margin-bottom: $spacing-xs;
 
   &.black {
     background: $black;
-    color: $white;
+    color: $gray-200;
 
     button {
-      color: $white;
+      color: $gray-200;
     }
   }
 
   &.primary {
     background: $primary;
+    color: $black;
   }
 
-  .collapse-title {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    font-weight: 600;
+  &__title {
+    @include flex-between;
   }
 
-  .entries-container {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+  &__content {
+    @include flex-between;
     padding-top: 6px;
-    font-size: 12px;
+    font-size: $font-size-xs;
 
-    .amount.black {
+    &__amount.black {
       color: $gray-700;
     }
-    .amount.primary {
+
+    &__amount.primary {
       color: $gray-700;
     }
   }

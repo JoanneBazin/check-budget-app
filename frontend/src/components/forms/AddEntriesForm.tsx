@@ -50,7 +50,7 @@ export const AddEntriesForm = ({
     <form>
       {entries.map((entry, index) => (
         <div key={index}>
-          <div className="inputs-container">
+          <div className="input-item">
             <div>
               <input
                 type="text"
@@ -64,19 +64,21 @@ export const AddEntriesForm = ({
                 <p className="form-error">{errors[index].name}</p>
               ) : null}
             </div>
-            <div className="amount-content">
-              <div className="amount-container">
-                <span className="currency-symbol">€</span>
-                <input
-                  type="number"
-                  placeholder="Montant"
-                  name="amount"
-                  className="amount-input"
-                  value={entry.amount}
-                  onChange={(e) =>
-                    handleUpdate(index, "amount", e.target.value)
-                  }
-                />
+
+            <div className="input-item__right">
+              <div className="input-item__right__amount">
+                <div className="flex-center">
+                  <span className="mr-xxs">€</span>
+                  <input
+                    type="number"
+                    placeholder="Montant"
+                    name="amount"
+                    value={entry.amount}
+                    onChange={(e) =>
+                      handleUpdate(index, "amount", e.target.value)
+                    }
+                  />
+                </div>
                 <button
                   type="button"
                   className="delete-btn"

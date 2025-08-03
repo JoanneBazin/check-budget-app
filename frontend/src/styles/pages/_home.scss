@@ -1,13 +1,13 @@
 @use "../abstracts" as *;
 
-.auth-btn {
+.auth-actions {
   display: flex;
   flex-direction: column;
   gap: 20px;
   align-items: center;
 
   a {
-    padding: 10px 20px;
+    padding: $spacing-sm $spacing-xl;
     border-radius: 15px;
   }
 

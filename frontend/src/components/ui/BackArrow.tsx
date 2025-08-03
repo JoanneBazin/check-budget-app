@@ -14,12 +14,8 @@ export const BackArrow = ({ destination, onBack }: BackArrowProps) => {
   };
 
   return (
-    <button
-      className="arrow-container"
-      aria-label="Retour"
-      onClick={handleClick}
-    >
-      <ChevronLeft className="icon" />
+    <button className="back-arrow" aria-label="Retour" onClick={handleClick}>
+      <ChevronLeft className="back-arrow__icon" />
     </button>
   );
 };

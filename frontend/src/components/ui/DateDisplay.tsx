@@ -6,14 +6,13 @@ export const DateDisplay = ({ weekIndex, setIndex }: DateDisplayProps) => {
   const weeks = useBudgetStore((s) => s.weeksInMonth);
 
   return (
-    <div className="date-selector">
+    <div className="week-selector">
       <button
         onClick={() => setIndex(Math.max(weekIndex - 1, 0))}
         disabled={weekIndex === 0}
         aria-label="Afficher la semaine précédente"
-        className="icon-btn"
       >
-        <ChevronLeft className="icon" />
+        <ChevronLeft className="week-selector__icon" />
       </button>
       <span>
         du{" "}
@@ -31,9 +30,8 @@ export const DateDisplay = ({ weekIndex, setIndex }: DateDisplayProps) => {
         onClick={() => setIndex(Math.min(weekIndex + 1, weeks.length - 1))}
         disabled={weekIndex === weeks.length - 1}
         aria-label="Afficher la semaine suivante"
-        className="icon-btn"
       >
-        <ChevronRight className="icon" />
+        <ChevronRight className="week-selector__icon" />
       </button>
     </div>
   );

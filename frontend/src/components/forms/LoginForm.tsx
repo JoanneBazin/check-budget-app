@@ -30,7 +30,7 @@ export const LoginForm = () => {
     mutate(validation.data, { onSuccess: () => navigate("/app") });
   };
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit} className="auth-form">
       <div>
         <input
           type="email"

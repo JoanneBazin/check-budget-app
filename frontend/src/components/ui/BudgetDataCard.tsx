@@ -6,10 +6,10 @@ export const BudgetDataCard = ({
 }: BudgetDataCardProps) => {
   return (
     <article className="data-card">
-      <div className={`data-card-title ${color}`}>
+      <div className={`data-card__title ${color}`}>
         <p>{title}</p>
       </div>
-      <div className="data-card-content">{children}</div>
+      <div className="data-card__content">{children}</div>
     </article>
   );
 };

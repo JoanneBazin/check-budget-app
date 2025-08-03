@@ -9,22 +9,22 @@ export const DataList = <T extends BudgetEntry>({
 }: DataListProps<T>) => {
   return (
     <>
-      <div>
+      <div className="mb-xs">
         {data.length > 0 ? (
           data.map((entry, index) => (
-            <div key={index} className="current-data">
-              <div className="entry-name">
+            <div key={index} className="data-item">
+              <div className="data-item__name">
                 <ChevronRight size={16} />
                 <p>{entry.name}</p>
               </div>
-              <div className="amount">
-                <p className="amount-entry">
+              <div className="data-item__amount">
+                <p className="data-item__amount__entry">
                   <span>€</span>
                   {entry.amount}
                 </p>
                 {setSelectedEntry && edit && (
                   <button
-                    className="amount-update"
+                    className="data-item__amount__update"
                     onClick={() => setSelectedEntry(entry)}
                   >
                     modifier

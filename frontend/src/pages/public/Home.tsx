@@ -2,16 +2,16 @@ import { Link } from "react-router-dom";
 
 export const Home = () => {
   return (
-    <div>
+    <main>
       <h1>Check Your Budget</h1>
-      <div className="auth-btn">
-        <Link to="/login" className="auth-btn__login">
+      <div className="auth-actions">
+        <Link to="/login" className="auth-actions__login">
           Connexion
         </Link>
-        <Link to="/signup" className="auth-btn__signup">
+        <Link to="/signup" className="auth-actions__signup">
           Inscription
         </Link>
       </div>
-    </div>
+    </main>
   );
 };

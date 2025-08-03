@@ -15,7 +15,7 @@ export const Profile = () => {
   }, []);
 
   return (
-    <section>
+    <section className="my-2xl">
       <FixedIncomesDisplay />
       <FixedChargesDisplay />
     </section>

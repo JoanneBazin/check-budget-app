@@ -5,8 +5,8 @@ import { CollapseProps } from "@/types";
 export const Collapse = ({ data, title, color }: CollapseProps) => {
   const [isOpen, setIsOpen] = useState(false);
   return (
-    <div className={`collapse-container ${color}`}>
-      <div className="collapse-title">
+    <div className={`collapse ${color}`}>
+      <div className="collapse__title">
         <p>{title}</p>
         <button
           aria-label={`Voir les ${title}`}
@@ -17,11 +17,11 @@ export const Collapse = ({ data, title, color }: CollapseProps) => {
       </div>
 
       {isOpen && (
-        <div>
+        <div className="p-xxs">
           {data.map((entry) => (
-            <div key={entry.id} className="entries-container">
+            <div key={entry.id} className="collapse__content">
               <p>{entry.name}</p>
-              <p className={`amount ${color}`}>
+              <p className={`collapse__content__amount ${color}`}>
                 <span>€</span>
                 {entry.amount}
               </p>
