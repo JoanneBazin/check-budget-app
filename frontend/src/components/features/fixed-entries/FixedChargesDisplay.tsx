@@ -82,7 +82,11 @@ export const FixedChargesDisplay = () => {
 
   return (
     <BudgetDataCard title="Mes charges fixes">
-      <DataList data={fixedCharges} setSelectedEntry={setSelectedEntry} />
+      <DataList
+        data={fixedCharges}
+        setSelectedEntry={setSelectedEntry}
+        emptyMessage="Aucune charge fixe déclarée"
+      />
 
       <AddEntriesForm
         initialData={newCharges}

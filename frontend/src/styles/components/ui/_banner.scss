@@ -1,31 +1,39 @@
 @use "../../abstracts" as *;
 
-.banner-container {
+.banner {
   display: flex;
   align-items: center;
-  gap: 10px;
-  margin-bottom: 20px;
+  gap: $spacing-sm;
+  margin-bottom: $spacing-xl;
 
-  .avatar {
+  @include tablet-up {
+    margin-bottom: $spacing-3xl;
+  }
+
+  & {
+    @include desktop-up {
+      margin-bottom: 50px;
+    }
+  }
+
+  &__avatar {
     height: 50px;
     width: 50px;
-    border-radius: 50px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    background: $primary;
-    font-size: 26px;
-    font-weight: 800;
+    border-radius: $border-radius-rounded;
+    @include flex-center;
+    background: $primary-light;
+    font-size: $font-size-3xl;
+    font-weight: $font-weight-bold;
   }
 
-  .user-name {
-    font-size: 18px;
-    font-weight: 600;
+  &__user-name {
+    font-weight: $font-weight-semibold;
+    @include font-responsive(lg);
   }
 
-  .title {
-    font-size: 12px;
+  &__title {
     color: $gray-700;
-    margin: 4px 0 0 0;
+    margin: $spacing-xxs 0 0 0;
+    @include font-responsive(xs);
   }
 }

@@ -1,13 +1,20 @@
 @use "../../abstracts" as *;
 
-.empty-data-info {
-  font-size: 12px;
+.empty-data {
+  @include flex-center;
+  gap: $spacing-sm;
+  padding: $spacing-sm;
+  @include font-responsive(xs);
+
+  &__icon {
+    @include icon-size(14px, 20px);
+  }
 }
 
 .data-item {
   @include flex-between;
-  font-size: $font-size-sm;
   margin-bottom: $spacing-xxs;
+  @include font-responsive(sm);
 
   &__name {
     @include flex-center;
@@ -25,7 +32,7 @@
 
     &__update {
       color: $primary;
-      font-size: $font-size-xs;
+      @include font-responsive(xs);
     }
   }
 }

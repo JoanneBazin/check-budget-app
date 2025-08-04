@@ -4,7 +4,7 @@ import { Header } from "../components";
 
 export const ProfileLayout = () => {
   return (
-    <>
+    <div className="app-container">
       <BackArrow destination="/app" />
       <Header />
 
@@ -12,6 +12,6 @@ export const ProfileLayout = () => {
         <Banner />
         <Outlet />
       </main>
-    </>
+    </div>
   );
 };

@@ -8,7 +8,7 @@
   border-radius: $border-radius-sm;
   padding: $spacing-md $spacing-lg;
   margin-bottom: $spacing-lg;
-  font-size: $font-size-sm;
+  @include font-responsive(sm);
 
   &__title {
     font-family: $font-family-secondary;
@@ -29,7 +29,7 @@
   }
 
   &__read {
-    font-size: $font-size-xs;
     color: $primary;
+    @include font-responsive(xs);
   }
 }

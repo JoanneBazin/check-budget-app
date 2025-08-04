@@ -1,40 +1,45 @@
 @use "../abstracts" as *;
 
-header {
-  position: fixed;
-  width: 100%;
-  top: 0;
-  z-index: 100;
+.app-header {
   display: flex;
   justify-content: flex-end;
-}
 
-.burger-menu-icon {
-  padding: 15px 10px 0 0;
-  background: $white;
-}
+  &__burger-menu {
+    padding: $spacing-lg $spacing-sm 0 0;
+    background: $white;
 
-.header-nav {
-  background: $white;
-  border-radius: 15px 0 15px 15px;
-  border: 1px solid #000000;
-  padding: 15px 10px;
-
-  .close-btn {
-    display: flex;
-    justify-content: end;
+    .burger-icon {
+      @include icon-size(24px, 40px);
+    }
   }
 
-  .nav-items {
-    display: flex;
-    flex-direction: column;
-    gap: 10px;
-    padding: 10px 20px 0 0;
+  &__content {
+    background: $white;
+    border-radius: $border-radius-md 0 $border-radius-md $border-radius-md;
+    border: 1px solid $gray-500;
+    @include padding-responsive(lg, sm);
 
-    li {
-      font-size: 14px;
-      .active {
-        font-weight: 700;
+    .close-btn {
+      display: flex;
+      justify-content: end;
+      color: $black;
+
+      .close-icon {
+        @include icon-size(24px, 30px);
+      }
+    }
+
+    .nav-items {
+      display: flex;
+      flex-direction: column;
+      gap: $spacing-sm;
+      padding: $spacing-sm $spacing-xl 0 0;
+
+      li {
+        @include font-responsive(sm);
+        .active {
+          font-weight: $font-weight-bold;
+        }
       }
     }
   }

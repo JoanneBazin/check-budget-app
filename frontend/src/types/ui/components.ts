@@ -7,6 +7,7 @@ export interface BackArrowProps {
 
 export interface DataListProps<T extends BudgetEntry> {
   data: T[];
+  emptyMessage: string;
   setSelectedEntry?: (entry: T) => void;
   edit?: boolean;
 }

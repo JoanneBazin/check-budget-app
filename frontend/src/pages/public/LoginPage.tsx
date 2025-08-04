@@ -3,7 +3,7 @@ import { BackArrow } from "@/components/ui";
 
 export const LoginPage = () => {
   return (
-    <main>
+    <main className="app-container">
       <BackArrow destination="/" />
       <h1 className="my-xl">Connexion</h1>
       <LoginForm />

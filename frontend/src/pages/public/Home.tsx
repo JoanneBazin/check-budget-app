@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 
 export const Home = () => {
   return (
-    <main>
+    <main className="app-container">
       <h1>Check Your Budget</h1>
       <div className="auth-actions">
         <Link to="/login" className="auth-actions__login">

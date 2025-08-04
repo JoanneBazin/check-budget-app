@@ -23,11 +23,15 @@
   padding: $spacing-xl $spacing-xl 0 $spacing-xl;
   z-index: 300;
 
+  @include tablet-up {
+    padding: $spacing-2xl $spacing-2xl 0 $spacing-2xl;
+  }
+
   &__title {
     font-family: $font-family-secondary;
-    font-size: $font-size-base;
     font-weight: $font-weight-medium;
     margin-bottom: $spacing-xl;
+    @include font-responsive(base);
   }
 
   &__close {

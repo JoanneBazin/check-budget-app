@@ -1,11 +1,14 @@
 @use "../../abstracts" as *;
 
 .collapse {
-  padding: $spacing-sm;
   border-radius: $border-radius-md;
   width: 100%;
-  font-size: $font-size-sm;
   margin-bottom: $spacing-xs;
+  @include font-responsive(sm);
+
+  & {
+    @include padding-responsive(sm, sm);
+  }
 
   &.black {
     background: $black;
@@ -28,7 +31,7 @@
   &__content {
     @include flex-between;
     padding-top: 6px;
-    font-size: $font-size-xs;
+    @include font-responsive(xs);
 
     &__amount.black {
       color: $gray-700;

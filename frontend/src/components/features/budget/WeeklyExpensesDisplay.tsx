@@ -107,7 +107,11 @@ export const WeeklyExpensesDisplay = ({
 
       {edit ? (
         <div>
-          <DataList data={weeklyExpenses} setSelectedEntry={setSelectedEntry} />
+          <DataList
+            data={weeklyExpenses}
+            setSelectedEntry={setSelectedEntry}
+            emptyMessage="Aucune dépense cette semaine"
+          />
           <AddEntriesForm
             initialData={newExpenses}
             errors={expensesError}
@@ -115,13 +119,21 @@ export const WeeklyExpensesDisplay = ({
             defaultInput={false}
           />
           {newExpenses.length > 0 && (
-            <button onClick={handleAddExpenses} className="submit-btn">
+            <button
+              onClick={handleAddExpenses}
+              className="submit-btn"
+              disabled={addExpenses.isPending}
+            >
               Enregistrer
             </button>
           )}
         </div>
       ) : (
-        <DataList data={weeklyExpenses} edit={false} />
+        <DataList
+          data={weeklyExpenses}
+          emptyMessage="Aucune dépense cette semaine"
+          edit={false}
+        />
       )}
 
       <TotalDataDisplay

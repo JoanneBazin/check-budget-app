@@ -82,7 +82,11 @@ export const FixedIncomesDisplay = () => {
 
   return (
     <BudgetDataCard title="Mes revenus fixes">
-      <DataList data={fixedIncomes} setSelectedEntry={setSelectedEntry} />
+      <DataList
+        data={fixedIncomes}
+        setSelectedEntry={setSelectedEntry}
+        emptyMessage="Aucun revenu fixe déclaré"
+      />
 
       <AddEntriesForm
         initialData={newIncomes}

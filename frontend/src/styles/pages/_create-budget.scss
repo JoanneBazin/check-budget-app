@@ -20,7 +20,7 @@
     &__label {
       @include flex-center;
       gap: 4px;
-      font-size: $font-size-xs;
+      @include font-responsive(xs);
 
       input {
         width: inherit;
@@ -29,7 +29,7 @@
       }
     }
     &__span {
-      font-size: $font-size-xxs;
+      @include font-responsive(xxs);
     }
   }
 }

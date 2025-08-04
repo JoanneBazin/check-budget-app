@@ -4,7 +4,7 @@
   display: flex;
   align-items: center;
   gap: 20px;
-  font-size: $font-size-sm;
+  @include font-responsive(sm);
 }
 
 .search-error {
@@ -14,7 +14,7 @@
   color: $gray-700;
 
   &__text {
-    font-size: $font-size-sm;
+    @include font-responsive(sm);
   }
 }
 

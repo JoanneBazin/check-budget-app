@@ -2,9 +2,9 @@
 
 .total-budget {
   font-family: $font-family-mono;
-  font-size: $font-size-lg;
   font-weight: $font-weight-semibold;
   display: flex;
   align-items: center;
   gap: $spacing-xs;
+  @include font-responsive(lg);
 }

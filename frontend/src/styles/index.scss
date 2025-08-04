@@ -13,6 +13,11 @@
   font-size: $font-size-xl;
   color: $primary-dark;
   width: fit-content;
+
+  &:hover {
+    background: $primary-light;
+    color: $white;
+  }
 }
 
 .delete-btn {
@@ -20,12 +25,17 @@
   font-weight: $font-weight-light;
   width: fit-content;
   color: $error;
+  @include font-responsive(lg);
 }
 
 .form-error {
-  font-size: $font-size-xxs;
   color: $error;
   margin-top: 5px;
+  @include font-responsive(xxs);
+}
+.req-error {
+  color: $error;
+  @include font-responsive(xs);
 }
 
 .submit-btn {
@@ -33,6 +43,8 @@
   padding: $spacing-xs $spacing-lg;
   margin: $spacing-sm 0;
   background: $primary;
+  width: fit-content;
+  align-self: flex-end;
 }
 
 .picker-input {

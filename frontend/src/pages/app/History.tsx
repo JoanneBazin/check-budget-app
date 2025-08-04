@@ -6,6 +6,8 @@ import { LastBudgetLayout } from "@/components/features/history/LastBudgetLayout
 import { useLastBudgetsQuery } from "@/hooks/queries";
 import { HistoryCard, MonthYearPicker } from "@/components/ui";
 import { LastMonthlyBudget } from "@/types";
+import { Loader } from "@/components/ui/Loader";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
 
 export const History = () => {
   const { data: lastBudgets, isPending, error } = useLastBudgetsQuery();
@@ -15,7 +17,7 @@ export const History = () => {
   const [searchedBudget, setSearchedBudget] =
     useState<LastMonthlyBudget | null>(null);
 
-  const [isLoading, setIsLoading] = useState(false);
+  const [isSearchLoading, setIsSearchLoading] = useState(false);
   const [searchError, setSearchError] = useState<string | null>(null);
 
   useEffect(() => {
@@ -24,7 +26,7 @@ export const History = () => {
 
   const handleDateChange = async (month: number, year: number) => {
     try {
-      setIsLoading(true);
+      setIsSearchLoading(true);
       setSearchError(null);
       setSearchedBudget(null);
       const data = await getBudgetByDate(year, month);
@@ -34,7 +36,7 @@ export const History = () => {
         error instanceof Error ? error.message : "Erreur lors de la recherche"
       );
     } finally {
-      setIsLoading(false);
+      setIsSearchLoading(false);
     }
   };
 
@@ -60,14 +62,16 @@ export const History = () => {
         </div>
       )}
 
+      {isSearchLoading && <Loader type="datalist" />}
+
       {searchedBudget && (
         <div className="selected-budget-card">
           <HistoryCard data={searchedBudget} onSelect={setSelectedBudget} />
         </div>
       )}
 
-      {isPending && <div>Loading...</div>}
-      {error && <div>{error.message}</div>}
+      {isPending && <Loader type="layout" />}
+      {error && <ErrorMessage message={error.message} />}
 
       <div className="my-2xl">
         {lastBudgets &&

@@ -9,6 +9,8 @@ import {
 import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
 import { LastBudgetLayoutProps } from "@/types";
 import { MonthlyBudget } from "@shared/schemas";
+import { Loader } from "@/components/ui/Loader";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
 
 export const LastBudgetLayout = ({
   budgetId,
@@ -42,8 +44,8 @@ export const LastBudgetLayout = ({
   return (
     <section>
       <BackArrow onBack={onBack} />
-      {isLoading && <div>Loading...</div>}
-      {error && <div>{error}</div>}
+      {isLoading && <Loader type="layout" />}
+      {error && <ErrorMessage message={error} />}
       {budget ? (
         <>
           <TotalMonthlyEntriesDisplay

@@ -23,9 +23,9 @@ h1 {
 }
 
 h2 {
-  font-size: $font-size-sm;
   font-weight: $font-weight-medium;
   margin: 0;
+  @include font-responsive(sm);
 }
 
 p {

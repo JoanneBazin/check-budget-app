@@ -1,5 +1,6 @@
 import { fetchCurrentBudget } from "@/lib/api/monthlyBudgets";
 import { hydrateBudgetStore } from "@/lib/hydrateBudgetStore";
+import { useBudgetStore } from "@/stores/budgetStore";
 import { MonthlyBudget } from "@shared/schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
@@ -13,8 +14,12 @@ export const useCurrentBudgetQuery = () => {
   });
 
   useEffect(() => {
-    if (query.data) {
-      hydrateBudgetStore(query.data);
+    if (query.isFetched) {
+      const { setIsBudgetHydrated } = useBudgetStore.getState();
+      if (query.data) {
+        hydrateBudgetStore(query.data);
+      }
+      setIsBudgetHydrated(true);
     }
   }, [query.data]);
 

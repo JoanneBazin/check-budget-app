@@ -13,6 +13,10 @@ export const fetchCurrentBudget = async () => {
     }
   );
 
+  if (response.status === 404) {
+    return null;
+  }
+
   if (!response.ok) throw new Error("Budget actuel indisponible");
 
   return response.json();

@@ -2,17 +2,21 @@
 
 .data-card {
   position: relative;
-  margin-bottom: $spacing-lg;
+  margin: 0 auto $spacing-lg auto;
   border: 1px solid $black;
   border-radius: $border-radius-xl;
 
   &__title {
     padding: $spacing-sm $spacing-lg;
     border-bottom: 1px solid $black;
-    font-size: $font-size-sm;
     font-weight: $font-weight-semibold;
     border-radius: 20px 20px 0 0;
-    font-weight: $font-weight-light;
+
+    @include padding-responsive(sm, lg);
+
+    & {
+      @include font-responsive(sm);
+    }
 
     &.black {
       background: $black;
@@ -25,6 +29,6 @@
   }
 
   &__content {
-    padding: $spacing-sm $spacing-lg;
+    @include padding-responsive(sm, lg);
   }
 }

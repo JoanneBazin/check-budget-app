@@ -5,9 +5,10 @@
   @include flex-center;
   top: 8px;
   right: 10px;
-  font-size: $font-size-xs;
+
+  @include font-responsive(xs);
 
   &__icon {
-    width: 18px;
+    @include icon-size(18px, 26px);
   }
 }

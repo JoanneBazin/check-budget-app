@@ -9,7 +9,6 @@
   z-index: 110;
 
   &__icon {
-    width: 35px;
-    height: 35px;
+    @include icon-size(35px, 40px);
   }
 }

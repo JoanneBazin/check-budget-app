@@ -1,5 +1,14 @@
 @use "../abstracts" as *;
 
+.app-container {
+  margin: 0 auto;
+  max-width: 640px;
+  width: 100%;
+  position: relative;
+}
+
+// Flex
+
 .flex-between {
   @include flex-between;
 }

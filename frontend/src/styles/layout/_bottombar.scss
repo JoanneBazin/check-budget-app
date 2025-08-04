@@ -6,23 +6,26 @@
   bottom: 0;
   width: 100%;
   padding: 14px 0;
-  border-top: 1px solid $gray-500;
+  border-top: 1px solid $gray-200;
   background: $white;
+
+  @include desktop-up {
+    position: absolute;
+    border-radius: 0 0 $border-radius-md $border-radius-md;
+  }
 
   ul {
     display: flex;
     justify-content: space-around;
 
     a {
-      display: flex;
+      @include flex-center;
       flex-direction: column;
       gap: 5px;
-      align-items: center;
-      justify-content: center;
-      font-size: 11px;
+      @include font-responsive(xxs);
 
       &.active {
-        font-weight: 700;
+        font-weight: $font-weight-bold;
         color: $primary;
       }
     }

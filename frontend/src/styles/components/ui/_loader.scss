@@ -1,0 +1,41 @@
+@use "../../abstracts" as *;
+
+.loader {
+  &__layout {
+    width: 48px;
+    height: 48px;
+    display: inline-block;
+    position: relative;
+
+    &::after,
+    &::before {
+      content: "";
+      box-sizing: border-box;
+      width: 48px;
+      height: 48px;
+      border-radius: 50%;
+      border: 2px solid $primary;
+      position: absolute;
+      left: 0;
+      top: 0;
+      @include anim-loader;
+    }
+
+    &::after {
+      animation-delay: 1s;
+    }
+  }
+
+  &__datalist {
+    width: 6px;
+    height: 6px;
+    border-radius: $border-radius-rounded;
+    display: block;
+    margin: 15px auto;
+    position: relative;
+    color: $primary;
+    left: -100px;
+    box-sizing: border-box;
+    @include shadow-rolling;
+  }
+}

@@ -1,26 +1,60 @@
 @use "./variables" as *;
+@use "sass:map";
 
 // Responsive
 
 @mixin mobile-only {
-  @media (max-width: #{$breakpoint-sm - 1px}) {
+  @media (max-width: $breakpoint-sm) {
+    @content;
+  }
+}
+
+@mixin tablet-s {
+  @media (min-width: $breakpoint-xs) {
     @content;
   }
 }
 
 @mixin tablet-up {
-  @media (max-width: #{$breakpoint-md}) {
+  @media (min-width: $breakpoint-sm) {
     @content;
   }
 }
 @mixin desktop-up {
-  @media (max-width: #{$breakpoint-lg}) {
+  @media (min-width: $breakpoint-lg) {
     @content;
   }
 }
 
-// Layout
+@mixin icon-size($mobile, $tablet) {
+  height: $mobile;
+  width: $mobile;
 
+  @include tablet-up {
+    height: $tablet;
+    width: $tablet;
+  }
+}
+
+@mixin font-responsive($size) {
+  font-size: map.get(map.get($font-sizes, $size), base);
+
+  @include tablet-up {
+    font-size: map.get(map.get($font-sizes, $size), md);
+  }
+}
+
+@mixin padding-responsive($spacingY, $spacingX) {
+  padding: map.get(map.get($spacings, $spacingY), base)
+    map.get(map.get($spacings, $spacingX), base);
+
+  @include tablet-up {
+    padding: map.get(map.get($spacings, $spacingY), md)
+      map.get(map.get($spacings, $spacingX), md);
+  }
+}
+
+// Layout
 @mixin flex-center {
   display: flex;
   justify-content: center;
@@ -75,11 +109,12 @@
   background: none;
   border-radius: $border-radius-xs;
   font-family: inherit;
-  font-size: $font-size-sm;
   font-weight: $font-weight-medium;
   text-decoration: none;
   cursor: pointer;
   transition: all 0.2s ease-in-out;
+
+  @include font-responsive(sm);
 
   &:disabled {
     opacity: 0.5;
@@ -98,16 +133,79 @@
 
 @mixin input-base {
   width: 100%;
-  padding: $spacing-xxs $spacing-sm;
   border: 1px solid $gray-500;
   border-radius: $border-radius-xs;
   box-shadow: $shadow-sm;
   font-family: inherit;
-  font-size: $font-size-sm;
   transition: border-color 0.2s ease-in-out;
+  @include font-responsive(sm);
+
+  & {
+    @include padding-responsive(xxs, sm);
+  }
 
   &:focus {
     outline: none;
     border-color: $primary-light;
+  }
+}
+
+// Animations
+
+@mixin shadow-rolling($duration: 2s) {
+  animation: shadowRolling $duration linear infinite;
+
+  @keyframes shadowRolling {
+    0% {
+      box-shadow: 0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0),
+        0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+    }
+    12% {
+      box-shadow: 100px 0 $primary, 0px 0 rgba(255, 255, 255, 0),
+        0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+    }
+    25% {
+      box-shadow: 110px 0 $primary, 100px 0 $primary,
+        0px 0 rgba(255, 255, 255, 0), 0px 0 rgba(255, 255, 255, 0);
+    }
+    36% {
+      box-shadow: 120px 0 $primary, 110px 0 $primary, 100px 0 $primary,
+        0px 0 rgba(255, 255, 255, 0);
+    }
+    50% {
+      box-shadow: 130px 0 $primary, 120px 0 $primary, 110px 0 $primary,
+        100px 0 $primary;
+    }
+    62% {
+      box-shadow: 200px 0 rgba(255, 255, 255, 0), 130px 0 $primary,
+        120px 0 $primary, 110px 0 $primary;
+    }
+    75% {
+      box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0),
+        130px 0 $primary, 120px 0 $primary;
+    }
+    87% {
+      box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0),
+        200px 0 rgba(255, 255, 255, 0), 130px 0 $primary;
+    }
+    100% {
+      box-shadow: 200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0),
+        200px 0 rgba(255, 255, 255, 0), 200px 0 rgba(255, 255, 255, 0);
+    }
+  }
+}
+
+@mixin anim-loader($duration: 2s) {
+  animation: animloader $duration linear infinite;
+
+  @keyframes animloader {
+    0% {
+      transform: scale(0);
+      opacity: 1;
+    }
+    100% {
+      transform: scale(1);
+      opacity: 0;
+    }
   }
 }

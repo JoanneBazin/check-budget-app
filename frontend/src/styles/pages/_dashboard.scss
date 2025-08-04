@@ -1,7 +1,8 @@
 @use "../abstracts" as *;
 
 .budget-actions {
-  @include flex-center;
+  display: flex;
+  align-items: center;
   gap: $spacing-lg;
   margin: 50px 0;
 
@@ -15,6 +16,6 @@
   }
 
   &__text {
-    font-size: $font-size-sm;
+    @include font-responsive(sm);
   }
 }

@@ -1,9 +1,10 @@
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, ShoppingBag } from "lucide-react";
 import { DataListProps } from "@/types";
 import { BudgetEntry } from "@shared/schemas";
 
 export const DataList = <T extends BudgetEntry>({
   data,
+  emptyMessage,
   setSelectedEntry,
   edit = true,
 }: DataListProps<T>) => {
@@ -34,7 +35,10 @@ export const DataList = <T extends BudgetEntry>({
             </div>
           ))
         ) : (
-          <p className="empty-data-info">Pas encore de données saisies</p>
+          <div className="empty-data">
+            <ShoppingBag className="empty-data__icon" />
+            <p>{emptyMessage}</p>
+          </div>
         )}
       </div>
     </>

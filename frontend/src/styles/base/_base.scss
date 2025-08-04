@@ -11,9 +11,23 @@ body {
   padding: 0;
 }
 
-main {
+header {
+  position: fixed;
   width: 100%;
+  max-width: 639px;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 100;
+}
+
+main {
   padding: 60px 20px 75px 20px;
+  position: relative;
+  background: $white;
+  @include tablet-s {
+    padding: 60px 30px 75px 30px;
+  }
 }
 
 button {
@@ -28,4 +42,17 @@ form {
 
 input {
   @include input-base;
+}
+
+@media screen and (min-width: $breakpoint-lg) {
+  body {
+    background: $gray-100;
+  }
+
+  main {
+    box-shadow: $shadow-lg;
+    border-radius: $border-radius-md;
+    overflow: hidden;
+    min-height: 70vh;
+  }
 }

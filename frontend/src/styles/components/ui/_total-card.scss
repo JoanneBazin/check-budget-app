@@ -1,19 +1,27 @@
 @use "../../abstracts" as *;
 
 .total-card {
-  padding: $spacing-sm;
   width: 48%;
   border: 1px solid $black;
   border-radius: 16px;
+  @include padding-responsive(sm, sm);
 
   &__text {
     @include flex-between;
     font-family: $font-family-secondary;
-    font-size: 13px;
+
+    @include font-responsive(sm);
   }
 
   &__icon {
     margin-bottom: $spacing-sm;
+    @include tablet-up {
+      margin-bottom: $spacing-lg;
+    }
+
+    & {
+      @include icon-size(24px, 30px);
+    }
   }
 
   &.black {

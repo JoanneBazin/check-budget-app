@@ -108,7 +108,15 @@ export const MonthlyEntries = ({
 
       <div className="my-2xl">
         <BudgetDataCard title={title} color="black">
-          <DataList data={data} setSelectedEntry={setSelectedEntry} />
+          <DataList
+            data={data}
+            setSelectedEntry={setSelectedEntry}
+            emptyMessage={
+              type === "charges"
+                ? "Aucune charge déclarée"
+                : "Aucun revenu déclaré"
+            }
+          />
 
           <AddEntriesForm
             initialData={newEntries}

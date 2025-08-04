@@ -8,13 +8,13 @@ export const Banner = () => {
   const avatarLetter = user?.name.split("")[0];
 
   return (
-    <div className="banner-container">
-      <div className="avatar">
+    <div className="banner">
+      <div className="banner__avatar">
         <p>{avatarLetter}</p>
       </div>
       <div>
-        <p className="user-name">{user?.name}</p>
-        <h1 className="title">{pageTitle}</h1>
+        <p className="banner__user-name">{user?.name}</p>
+        <h1 className="banner__title">{pageTitle}</h1>
       </div>
     </div>
   );
