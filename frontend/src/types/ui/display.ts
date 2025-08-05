@@ -11,6 +11,9 @@ export interface TotalMonthlyEntriesProps {
 export interface DateDisplayProps {
   weekIndex: number;
   setIndex: (index: number) => void;
+  isCurrentBudget: boolean;
+  oldMonth?: number;
+  oldYear?: number;
 }
 
 export interface WeekProps {

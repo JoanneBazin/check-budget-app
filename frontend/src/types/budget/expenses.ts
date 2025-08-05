@@ -5,6 +5,10 @@ export interface WeeklyExpensesDisplayProps {
   weeklyBudget: number;
   expenses: ExpenseEntry[];
   edit?: boolean;
+  oldDate?: {
+    year: number;
+    month: number;
+  };
 }
 
 export interface AddExpensesProps {

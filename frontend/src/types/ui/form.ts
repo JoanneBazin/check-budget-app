@@ -34,7 +34,8 @@ export interface AddEntriesFormProps {
 
 export interface UpdateEntryFormProps<T extends BudgetEntry> {
   initialData: T;
-  errors: Record<string, string>;
+  validationErrors: Record<string, string>;
+  genericError: string | null;
   onSubmit: (entry: T) => void;
   onDelete: (entry: T) => void;
 }

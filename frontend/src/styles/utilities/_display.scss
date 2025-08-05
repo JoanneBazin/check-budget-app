@@ -15,6 +15,10 @@
 .flex-center {
   @include flex-center;
 }
+.flex-end {
+  display: flex;
+  justify-content: flex-end;
+}
 .flex-start {
   display: flex;
   align-items: flex-start;

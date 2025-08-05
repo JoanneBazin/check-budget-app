@@ -200,6 +200,47 @@ export const getMonthlyBudgetById = async (
   }
 };
 
+export const updateMonthlyBudgetStatus = async (
+  req: Request,
+  res: Response,
+  next: NextFunction
+) => {
+  const userId = getUserId(req, next);
+  if (!userId) return;
+
+  const monthlyBudgetId = getParamsId(req, next);
+  if (!monthlyBudgetId) return;
+
+  const { isCurrent } = req.body;
+
+  try {
+    if (isCurrent) {
+      await prisma.monthlyBudget.updateMany({
+        where: { userId },
+        data: { isCurrent: false },
+      });
+    }
+
+    const updatedBudget = await prisma.monthlyBudget.update({
+      where: { id: monthlyBudgetId, userId },
+      data: { isCurrent },
+      select: monthlyBudgetSelect,
+    });
+
+    return res.status(200).json(normalizeDecimalFields(updatedBudget));
+  } catch (error) {
+    if (isPrismaRecordNotFound(error)) {
+      return next(
+        new HttpError(
+          404,
+          "Budget non trouvé ou vous n'avez pas les droits d'accès."
+        )
+      );
+    }
+    return next(error);
+  }
+};
+
 export const deleteMonthlyBudget = async (
   req: Request,
   res: Response,

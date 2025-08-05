@@ -1,8 +1,4 @@
-import {
-  AddMonthlyEntriesProps,
-  DeleteMonthlyEntryProps,
-  UpdateMonthlyEntryProps,
-} from "@/types";
+import { updateMonthlyBudgetProps } from "@/types";
 import { MonthlyBudgetForm } from "@shared/schemas";
 
 export const fetchCurrentBudget = async () => {
@@ -22,6 +18,28 @@ export const fetchCurrentBudget = async () => {
   return response.json();
 };
 
+export const updateMonthlyBudgetStatus = async ({
+  budgetId,
+  isCurrent,
+}: updateMonthlyBudgetProps) => {
+  const response = await fetch(
+    `http://localhost:4000/api/monthly-budgets/${budgetId}`,
+    {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify({ isCurrent }),
+    }
+  );
+
+  if (!response.ok) {
+    const { error } = await response.json();
+    throw new Error(error || "Echec de la connexion");
+  }
+
+  return response.json();
+};
+
 export const createMonthlyBudget = async (budget: MonthlyBudgetForm) => {
   const response = await fetch("http://localhost:4000/api/monthly-budgets", {
     method: "POST",
@@ -36,97 +54,6 @@ export const createMonthlyBudget = async (budget: MonthlyBudgetForm) => {
   }
 
   return response.json();
-};
-
-export const addMonthlyEntries = async ({
-  type,
-  entries,
-  budgetId,
-}: AddMonthlyEntriesProps) => {
-  const response = await fetch(
-    `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}`,
-    {
-      method: "POST",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(entries),
-    }
-  );
-
-  if (!response.ok) {
-    const { error } = await response.json();
-    throw new Error(error || "Echec de la connexion");
-  }
-
-  const result = await response.json();
-
-  return {
-    updated:
-      type === "charges"
-        ? { charges: result.charges }
-        : { incomes: result.incomes },
-    remainingBudget: result.remainingBudget,
-    weeklyBudget: result.weeklyBudget,
-  };
-};
-
-export const updateMonthlyEntry = async ({
-  type,
-  entry,
-  budgetId,
-}: UpdateMonthlyEntryProps) => {
-  const response = await fetch(
-    `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}/${entry.id}`,
-    {
-      method: "PUT",
-      headers: { "Content-Type": "application/json" },
-      credentials: "include",
-      body: JSON.stringify(entry),
-    }
-  );
-
-  if (!response.ok) {
-    const { error } = await response.json();
-    throw new Error(error || "Echec de la connexion");
-  }
-
-  const result = await response.json();
-
-  return {
-    updated:
-      type === "charges"
-        ? { charge: result.updatedCharge }
-        : { income: result.updatedIncome },
-    remainingBudget: result.remainingBudget,
-    weeklyBudget: result.weeklyBudget,
-  };
-};
-
-export const deleteMonthlyEntry = async ({
-  type,
-  entryId,
-  budgetId,
-}: DeleteMonthlyEntryProps) => {
-  const response = await fetch(
-    `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}/${entryId}`,
-    {
-      method: "DELETE",
-      credentials: "include",
-    }
-  );
-
-  if (!response.ok) {
-    const { error } = await response.json();
-    throw new Error(error || "Echec de la connexion");
-  }
-
-  const result = await response.json();
-
-  return {
-    updated: type === "charges" ? { chargeId: entryId } : { incomeId: entryId },
-    remainingBudget: result.remainingBudget,
-    weeklyBudget: result.weeklyBudget,
-  };
 };
 
 export const getBudgetByDate = async (year: number, month: number) => {
@@ -164,6 +91,23 @@ export const fetchLastBudgets = async () => {
   );
 
   if (!response.ok) throw new Error("Historique non disponible");
+
+  return response.json();
+};
+
+export const deleteMonthlyBudget = async (budgetId: string) => {
+  const response = await fetch(
+    `http://localhost:4000/api/monthly-budgets/${budgetId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
+
+  if (!response.ok) {
+    const { error } = await response.json();
+    throw new Error(error || "Echec de la connexion");
+  }
 
   return response.json();
 };

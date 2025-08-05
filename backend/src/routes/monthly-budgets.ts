@@ -7,6 +7,7 @@ import {
   expenseEntrySchema,
   monthlyBudgetSchema,
   queryDateSchema,
+  updateCurrentStatusSchema,
 } from "@shared/schemas";
 import {
   checkBudgetAccess,
@@ -27,6 +28,7 @@ import {
   getLastBudgets,
   getMonthlyBudget,
   getMonthlyBudgetById,
+  updateMonthlyBudgetStatus,
   updateMonthlyCharge,
   updateMonthlyExpense,
   updateMonthlyIncome,
@@ -45,6 +47,12 @@ router.get("/", requireAuth, validateQuery(queryDateSchema), getMonthlyBudget);
 router.get("/current", requireAuth, getCurrentMonthlyBudget);
 router.get("/history", requireAuth, getLastBudgets);
 router.get("/:id", requireAuth, getMonthlyBudgetById);
+router.patch(
+  "/:id",
+  requireAuth,
+  validateBody(updateCurrentStatusSchema),
+  updateMonthlyBudgetStatus
+);
 router.delete("/:id", requireAuth, deleteMonthlyBudget);
 
 // Monthly incomes

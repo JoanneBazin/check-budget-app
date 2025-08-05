@@ -6,6 +6,8 @@ import { TotalMonthlyEntriesDisplay } from "@/components/ui";
 import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
 import { MonthlyBudget } from "@shared/schemas";
 import { TotalCard } from "@/components/ui/TotalCard";
+import { MonthlyBudgetOptions } from "../budget/MonthlyBudgetOptions";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
 
 type View = "app" | "charges" | "incomes";
 
@@ -14,6 +16,7 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
   const dateTitle = formatDateTitle(budget.year, budget.month);
   const title = dateTitle.charAt(0).toUpperCase() + dateTitle.slice(1);
   const [view, setView] = useState<View>("app");
+  const [budgetError, setBudgetError] = useState<string | null>(null);
 
   const totalCharges = budget.charges.reduce(
     (acc, entry) => acc + entry.amount,
@@ -51,10 +54,23 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
 
   return (
     <section>
-      <TotalMonthlyEntriesDisplay
-        type="budget"
-        total={budget.remainingBudget}
-      />
+      <div className="flex-between">
+        <TotalMonthlyEntriesDisplay
+          type="budget"
+          total={budget.remainingBudget}
+        />
+        <MonthlyBudgetOptions
+          isCurrent={true}
+          budgetId={budget.id}
+          onError={() =>
+            setBudgetError(
+              "Une erreur est survenue lors de la mise à jour du budget"
+            )
+          }
+        />
+      </div>
+
+      {budgetError && <ErrorMessage message={budgetError} />}
 
       <div className="flex-between my-xl">
         <TotalCard

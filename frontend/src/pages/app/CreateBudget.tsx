@@ -2,7 +2,6 @@ import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
 import { createMonthlyBudgetSchema, validateWithSchema } from "@shared/schemas";
 import { extractArrayErrors } from "@/lib/extractArrayErrors";
-import { useNavigate } from "react-router-dom";
 import { getWeeksInMonth } from "@/lib/getWeeksInMonth";
 import { useCreateBudgetMutation } from "@/hooks/queries/mutations";
 import { BudgetDataCard, MonthYearPicker } from "@/components/ui";
@@ -28,7 +27,6 @@ export const CreateBudget = () => {
     []
   );
   const { mutate, isPending, error: requestError } = useCreateBudgetMutation();
-  const navigate = useNavigate();
 
   useEffect(() => {
     setPageTitle("Ajouter un budget mensuel");
@@ -62,9 +60,7 @@ export const CreateBudget = () => {
       return;
     }
 
-    mutate(validation.data, {
-      onSuccess: () => navigate("/app"),
-    });
+    mutate(validation.data);
   };
 
   return (

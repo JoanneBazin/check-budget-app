@@ -24,6 +24,7 @@ import {
   NewBudgetEntry,
   UpdatedBudgetEntry,
 } from "@/types";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
 
 export const MonthlyEntries = ({
   type,
@@ -37,16 +38,27 @@ export const MonthlyEntries = ({
 
   const [selectedEntry, setSelectedEntry] = useState<BudgetEntry | null>(null);
   const [newEntries, setNewEntries] = useState<NewBudgetEntry[]>([]);
-  const [entriesError, setEntriesError] = useState<Record<string, string>[]>(
-    []
-  );
-  const [updatedError, setUpdatedError] = useState<Record<string, string>>({});
+
   const addMonthlyEntries = useAddMonthlyEntriesMutation();
   const updateMonthlyEntry = useUpdateMonthlyEntriesMutation();
   const deleteMonthlyEntry = useDeleteMonthlyEntriesMutation();
 
+  const [validationError, setValidationError] = useState<
+    Record<string, string>[]
+  >([]);
+  const [updateValidationError, setUpdateValidationError] = useState<
+    Record<string, string>
+  >({});
+  const genericAddError = addMonthlyEntries.isError;
+  const [genericUpdateError, setGenericUpdateError] = useState<string | null>(
+    null
+  );
+  const [genericDeleteError, setGenericDeleteError] = useState<string | null>(
+    null
+  );
+
   const handleAddEntries = () => {
-    setEntriesError([]);
+    setValidationError([]);
 
     const validation = validateArrayWithSchema(
       createBudgetEntrySchema,
@@ -54,7 +66,7 @@ export const MonthlyEntries = ({
     );
 
     if (!validation.success) {
-      setEntriesError(Object.values(validation.errors));
+      setValidationError(Object.values(validation.errors));
       return;
     }
 
@@ -69,12 +81,13 @@ export const MonthlyEntries = ({
   };
 
   const handleUpdateEntry = (updatedEntry: UpdatedBudgetEntry) => {
-    setUpdatedError({});
+    setUpdateValidationError({});
+    setGenericUpdateError(null);
 
     const validation = validateWithSchema(budgetEntrySchema, updatedEntry);
 
     if (!validation.success) {
-      setUpdatedError(validation.errors);
+      setUpdateValidationError(validation.errors);
       return;
     }
 
@@ -84,12 +97,19 @@ export const MonthlyEntries = ({
         entry: validation.data,
         budgetId,
       },
-      { onSuccess: () => setSelectedEntry(null) }
+      {
+        onSuccess: () => setSelectedEntry(null),
+        onError: () =>
+          setGenericUpdateError(
+            "Une erreur est survenue lors de la mise à jour"
+          ),
+      }
     );
   };
 
   const handleDeleteEntry = (deletedEntry: BudgetEntry) => {
-    setUpdatedError({});
+    setUpdateValidationError({});
+    setGenericDeleteError(null);
 
     deleteMonthlyEntry.mutate(
       {
@@ -97,7 +117,13 @@ export const MonthlyEntries = ({
         entryId: deletedEntry.id,
         budgetId,
       },
-      { onSuccess: () => setSelectedEntry(null) }
+      {
+        onSuccess: () => setSelectedEntry(null),
+        onError: () =>
+          setGenericDeleteError(
+            "Une erreur est survenue lors de la suppression"
+          ),
+      }
     );
   };
 
@@ -105,6 +131,10 @@ export const MonthlyEntries = ({
     <section>
       <BackArrow onBack={onBack} />
       <TotalMonthlyEntriesDisplay type={type} total={totalData} />
+
+      {genericAddError && (
+        <ErrorMessage message="Une erreur interne est survenue" />
+      )}
 
       <div className="my-2xl">
         <BudgetDataCard title={title} color="black">
@@ -120,12 +150,16 @@ export const MonthlyEntries = ({
 
           <AddEntriesForm
             initialData={newEntries}
-            errors={entriesError}
+            errors={validationError}
             onChange={setNewEntries}
             defaultInput={false}
           />
           {newEntries.length > 0 && (
-            <button onClick={handleAddEntries} className="submit-btn">
+            <button
+              onClick={handleAddEntries}
+              className="submit-btn"
+              disabled={addMonthlyEntries.isPending}
+            >
               Enregistrer
             </button>
           )}
@@ -140,7 +174,8 @@ export const MonthlyEntries = ({
         >
           <UpdateEntryForm
             initialData={selectedEntry}
-            errors={updatedError}
+            validationErrors={updateValidationError}
+            genericError={genericUpdateError || genericDeleteError}
             onSubmit={handleUpdateEntry}
             onDelete={handleDeleteEntry}
           />

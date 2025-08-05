@@ -5,6 +5,7 @@ import {
   Modal,
   TotalDataDisplay,
 } from "@/components/ui";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
 import {
   useAddFixedChargesMutation,
   useDeleteFixedChargeMutation,
@@ -30,17 +31,27 @@ export const FixedChargesDisplay = () => {
   const [newCharges, setNewCharges] = useState<NewBudgetEntry[]>([]);
 
   const [selectedEntry, setSelectedEntry] = useState<BudgetEntry | null>(null);
-  const [chargesError, setChargesError] = useState<Record<string, string>[]>(
-    []
-  );
-  const [updatedError, setUpdatedError] = useState<Record<string, string>>({});
 
   const addFixedCharges = useAddFixedChargesMutation();
   const updateFixedCharge = useUpdateFixedChargeMutation();
   const deleteFixedCharge = useDeleteFixedChargeMutation();
 
+  const [validationError, setValidationError] = useState<
+    Record<string, string>[]
+  >([]);
+  const [updateValidationError, setUpdateValidationError] = useState<
+    Record<string, string>
+  >({});
+  const genericAddError = addFixedCharges.isError;
+  const [genericUpdateError, setGenericUpdateError] = useState<string | null>(
+    null
+  );
+  const [genericDeleteError, setGenericDeleteError] = useState<string | null>(
+    null
+  );
+
   const handleAddCharges = () => {
-    setChargesError([]);
+    setValidationError([]);
 
     const validation = validateArrayWithSchema(
       createBudgetEntrySchema,
@@ -48,7 +59,7 @@ export const FixedChargesDisplay = () => {
     );
 
     if (!validation.success) {
-      setChargesError(Object.values(validation.errors));
+      setValidationError(Object.values(validation.errors));
       return;
     }
 
@@ -58,64 +69,80 @@ export const FixedChargesDisplay = () => {
   };
 
   const handleUpdateCharge = (updatedCharge: UpdatedBudgetEntry) => {
-    setUpdatedError({});
+    setUpdateValidationError({});
+    setGenericUpdateError(null);
 
     const validation = validateWithSchema(budgetEntrySchema, updatedCharge);
 
     if (!validation.success) {
-      setUpdatedError(validation.errors);
+      setUpdateValidationError(validation.errors);
       return;
     }
 
     updateFixedCharge.mutate(validation.data, {
       onSuccess: () => setSelectedEntry(null),
+      onError: () =>
+        setGenericUpdateError("Une erreur est survenue lors de la mise à jour"),
     });
   };
 
   const handleDeleteCharge = (deletedCharge: BudgetEntry) => {
-    setUpdatedError({});
+    setUpdateValidationError({});
+    setGenericDeleteError(null);
 
     deleteFixedCharge.mutate(deletedCharge.id, {
       onSuccess: () => setSelectedEntry(null),
+      onError: () =>
+        setGenericDeleteError("Une erreur est survenue lors de la suppression"),
     });
   };
 
   return (
-    <BudgetDataCard title="Mes charges fixes">
-      <DataList
-        data={fixedCharges}
-        setSelectedEntry={setSelectedEntry}
-        emptyMessage="Aucune charge fixe déclarée"
-      />
-
-      <AddEntriesForm
-        initialData={newCharges}
-        errors={chargesError}
-        onChange={setNewCharges}
-        defaultInput={false}
-      />
-      {newCharges.length > 0 && (
-        <button onClick={handleAddCharges} className="submit-btn">
-          Enregistrer
-        </button>
+    <>
+      {genericAddError && (
+        <ErrorMessage message="Une erreur interne est survenue" />
       )}
+      <BudgetDataCard title="Mes charges fixes">
+        <DataList
+          data={fixedCharges}
+          setSelectedEntry={setSelectedEntry}
+          emptyMessage="Aucune charge fixe déclarée"
+        />
 
-      <TotalDataDisplay total={totalCharges} />
+        <AddEntriesForm
+          initialData={newCharges}
+          errors={validationError}
+          onChange={setNewCharges}
+          defaultInput={false}
+        />
+        {newCharges.length > 0 && (
+          <button
+            onClick={handleAddCharges}
+            className="submit-btn"
+            disabled={addFixedCharges.isPending}
+          >
+            Enregistrer
+          </button>
+        )}
 
-      {selectedEntry && (
-        <Modal
-          isOpen={!!selectedEntry}
-          onClose={() => setSelectedEntry(null)}
-          title={`Mettre à jour les charges`}
-        >
-          <UpdateEntryForm
-            initialData={selectedEntry}
-            errors={updatedError}
-            onSubmit={handleUpdateCharge}
-            onDelete={handleDeleteCharge}
-          />
-        </Modal>
-      )}
-    </BudgetDataCard>
+        <TotalDataDisplay total={totalCharges} />
+
+        {selectedEntry && (
+          <Modal
+            isOpen={!!selectedEntry}
+            onClose={() => setSelectedEntry(null)}
+            title={`Mettre à jour les charges`}
+          >
+            <UpdateEntryForm
+              initialData={selectedEntry}
+              validationErrors={updateValidationError}
+              genericError={genericUpdateError || genericDeleteError}
+              onSubmit={handleUpdateCharge}
+              onDelete={handleDeleteCharge}
+            />
+          </Modal>
+        )}
+      </BudgetDataCard>
+    </>
   );
 };

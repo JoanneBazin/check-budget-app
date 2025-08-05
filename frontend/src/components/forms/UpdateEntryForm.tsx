@@ -2,10 +2,12 @@ import { Check, X } from "lucide-react";
 import { useState } from "react";
 import { UpdateEntryFormProps } from "@/types";
 import { BudgetEntry } from "@shared/schemas";
+import { ErrorMessage } from "../ui/ErrorMessage";
 
 export const UpdateEntryForm = <T extends BudgetEntry>({
   initialData,
-  errors,
+  validationErrors,
+  genericError,
   onSubmit,
   onDelete,
 }: UpdateEntryFormProps<T>) => {
@@ -14,6 +16,7 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
 
   return (
     <form>
+      {genericError && <ErrorMessage message={genericError} />}
       <div className="input-item">
         <div>
           <input
@@ -25,7 +28,9 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
               setUpdatedEntry({ ...updatedEntry, name: e.target.value })
             }
           />
-          {errors.name ? <p className="form-error">{errors.name}</p> : null}
+          {validationErrors.name ? (
+            <p className="form-error">{validationErrors.name}</p>
+          ) : null}
         </div>
         <div className="input-item__right">
           <div className="input-item__right__amount">
@@ -50,7 +55,7 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
               x
             </button>
           </div>
-          {errors.amount ? (
+          {validationErrors.amount ? (
             <p className="form-error">Montant invalide</p>
           ) : null}
         </div>

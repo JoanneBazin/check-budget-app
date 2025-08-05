@@ -24,12 +24,14 @@ import {
   UpdatedExpenseEntry,
   WeeklyExpensesDisplayProps,
 } from "@/types";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
 
 export const WeeklyExpensesDisplay = ({
   budgetId,
   weeklyBudget,
   expenses,
   edit = true,
+  oldDate,
 }: WeeklyExpensesDisplayProps) => {
   const [newExpenses, setNewExpenses] = useState<NewBudgetEntry[]>([]);
   const [weekIndex, setWeekIndex] = useState(0);
@@ -41,20 +43,31 @@ export const WeeklyExpensesDisplay = ({
     weeklyBudget - weeklyExpenses.reduce((acc, entry) => acc + entry.amount, 0);
 
   const [selectedEntry, setSelectedEntry] = useState<ExpenseEntry | null>(null);
-  const [expensesError, setExpensesError] = useState<Record<string, string>[]>(
-    []
-  );
-  const [updatedError, setUpdatedError] = useState<Record<string, string>>({});
+
   const addExpenses = useAddExpensesMutation();
   const updateExpense = useUpdateExpenseMutation();
   const deleteExpense = useDeleteExpenseMutation();
+
+  const [validationError, setValidationError] = useState<
+    Record<string, string>[]
+  >([]);
+  const [updateValidationError, setUpdateValidationError] = useState<
+    Record<string, string>
+  >({});
+  const genericAddError = addExpenses.isError;
+  const [genericUpdateError, setGenericUpdateError] = useState<string | null>(
+    null
+  );
+  const [genericDeleteError, setGenericDeleteError] = useState<string | null>(
+    null
+  );
 
   useEffect(() => {
     setNewExpenses([]);
   }, [weekIndex]);
 
   const handleAddExpenses = () => {
-    setExpensesError([]);
+    setValidationError([]);
 
     const newWeeklyExpenses = newExpenses.map((exp) => ({
       ...exp,
@@ -66,7 +79,7 @@ export const WeeklyExpensesDisplay = ({
       newWeeklyExpenses
     );
     if (!validation.success) {
-      setExpensesError(Object.values(validation.errors));
+      setValidationError(Object.values(validation.errors));
       return;
     }
 
@@ -77,83 +90,117 @@ export const WeeklyExpensesDisplay = ({
   };
 
   const handleUpdateExpense = (updatedExpense: UpdatedExpenseEntry) => {
-    setUpdatedError({});
+    setUpdateValidationError({});
+    setGenericUpdateError(null);
 
     const validation = validateWithSchema(expenseEntrySchema, updatedExpense);
 
     if (!validation.success) {
-      setUpdatedError(validation.errors);
+      setUpdateValidationError(validation.errors);
       return;
     }
 
     updateExpense.mutate(
       { expense: validation.data, budgetId },
-      { onSuccess: () => setSelectedEntry(null) }
+      {
+        onSuccess: () => setSelectedEntry(null),
+        onError: () =>
+          setGenericUpdateError(
+            "Une erreur est survenue lors de la mise à jour"
+          ),
+      }
     );
   };
 
   const handleDeleteExpense = (deletedExpense: ExpenseEntry) => {
-    setUpdatedError({});
+    setUpdateValidationError({});
+    setGenericDeleteError(null);
 
     deleteExpense.mutate(
       { expenseId: deletedExpense.id, budgetId },
-      { onSuccess: () => setSelectedEntry(null) }
+      {
+        onSuccess: () => setSelectedEntry(null),
+        onError: () =>
+          setGenericDeleteError(
+            "Une erreur est survenue lors de la suppression"
+          ),
+      }
     );
   };
 
   return (
-    <BudgetDataCard title="Dépenses">
-      <DateDisplay weekIndex={weekIndex} setIndex={setWeekIndex} />
+    <>
+      {genericAddError && (
+        <ErrorMessage message="Une erreur interne est survenue" />
+      )}
+      <BudgetDataCard title="Dépenses">
+        {edit ? (
+          <DateDisplay
+            weekIndex={weekIndex}
+            setIndex={setWeekIndex}
+            isCurrentBudget={true}
+          />
+        ) : (
+          <DateDisplay
+            weekIndex={weekIndex}
+            setIndex={setWeekIndex}
+            isCurrentBudget={false}
+            oldMonth={oldDate?.month}
+            oldYear={oldDate?.year}
+          />
+        )}
 
-      {edit ? (
-        <div>
+        {edit ? (
+          <div>
+            <DataList
+              data={weeklyExpenses}
+              setSelectedEntry={setSelectedEntry}
+              emptyMessage="Aucune dépense cette semaine"
+            />
+            <AddEntriesForm
+              initialData={newExpenses}
+              errors={validationError}
+              onChange={setNewExpenses}
+              defaultInput={false}
+            />
+            {newExpenses.length > 0 && (
+              <button
+                onClick={handleAddExpenses}
+                className="submit-btn"
+                disabled={addExpenses.isPending}
+              >
+                Enregistrer
+              </button>
+            )}
+          </div>
+        ) : (
           <DataList
             data={weeklyExpenses}
-            setSelectedEntry={setSelectedEntry}
             emptyMessage="Aucune dépense cette semaine"
+            edit={false}
           />
-          <AddEntriesForm
-            initialData={newExpenses}
-            errors={expensesError}
-            onChange={setNewExpenses}
-            defaultInput={false}
-          />
-          {newExpenses.length > 0 && (
-            <button
-              onClick={handleAddExpenses}
-              className="submit-btn"
-              disabled={addExpenses.isPending}
-            >
-              Enregistrer
-            </button>
-          )}
-        </div>
-      ) : (
-        <DataList
-          data={weeklyExpenses}
-          emptyMessage="Aucune dépense cette semaine"
-          edit={false}
-        />
-      )}
+        )}
 
-      <TotalDataDisplay
-        total={remainingWeeklyBudget}
-        title="Budget hebdomadaire"
-      />
-      {selectedEntry && (
-        <Modal
-          isOpen={!!selectedEntry}
-          onClose={() => setSelectedEntry(null)}
-          title={`Mettre à jour les dépenses`}
-        >
-          <UpdateEntryForm
-            initialData={selectedEntry}
-            errors={updatedError}
-            onSubmit={handleUpdateExpense}
-            onDelete={handleDeleteExpense}
-          />
-        </Modal>
-      )}
-    </BudgetDataCard>
+        <TotalDataDisplay
+          total={remainingWeeklyBudget}
+          title="Budget hebdomadaire"
+        />
+        {selectedEntry && (
+          <Modal
+            isOpen={!!selectedEntry}
+            onClose={() => setSelectedEntry(null)}
+            title={`Mettre à jour les dépenses`}
+          >
+            <UpdateEntryForm
+              initialData={selectedEntry}
+              validationErrors={updateValidationError}
+              genericError={genericUpdateError || genericDeleteError}
+              onSubmit={handleUpdateExpense}
+              onDelete={handleDeleteExpense}
+            />
+          </Modal>
+        )}
+      </BudgetDataCard>
+    </>
   );
 };

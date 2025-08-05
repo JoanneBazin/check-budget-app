@@ -5,6 +5,7 @@ import {
   Modal,
   TotalDataDisplay,
 } from "@/components/ui";
+import { ErrorMessage } from "@/components/ui/ErrorMessage";
 import {
   useAddFixedIncomesMutation,
   useDeleteFixedIncomeMutation,
@@ -30,17 +31,27 @@ export const FixedIncomesDisplay = () => {
   const [newIncomes, setNewIncomes] = useState<NewBudgetEntry[]>([]);
 
   const [selectedEntry, setSelectedEntry] = useState<BudgetEntry | null>(null);
-  const [incomesError, setIncomesError] = useState<Record<string, string>[]>(
-    []
-  );
-  const [updatedError, setUpdatedError] = useState<Record<string, string>>({});
 
   const addFixedIncomes = useAddFixedIncomesMutation();
   const updateFixedIncome = useUpdateFixedIncomeMutation();
   const deleteFixedIncome = useDeleteFixedIncomeMutation();
 
+  const [validationError, setValidationError] = useState<
+    Record<string, string>[]
+  >([]);
+  const [updateValidationError, setUpdateValidationError] = useState<
+    Record<string, string>
+  >({});
+  const genericAddError = addFixedIncomes.isError;
+  const [genericUpdateError, setGenericUpdateError] = useState<string | null>(
+    null
+  );
+  const [genericDeleteError, setGenericDeleteError] = useState<string | null>(
+    null
+  );
+
   const handleAddIncomes = () => {
-    setIncomesError([]);
+    setValidationError([]);
 
     const validation = validateArrayWithSchema(
       createBudgetEntrySchema,
@@ -48,7 +59,7 @@ export const FixedIncomesDisplay = () => {
     );
 
     if (!validation.success) {
-      setIncomesError(Object.values(validation.errors));
+      setValidationError(Object.values(validation.errors));
       return;
     }
 
@@ -58,64 +69,80 @@ export const FixedIncomesDisplay = () => {
   };
 
   const handleUpdateIncome = (updatedIncome: UpdatedBudgetEntry) => {
-    setUpdatedError({});
+    setUpdateValidationError({});
+    setGenericUpdateError(null);
 
     const validation = validateWithSchema(budgetEntrySchema, updatedIncome);
 
     if (!validation.success) {
-      setUpdatedError(validation.errors);
+      setUpdateValidationError(validation.errors);
       return;
     }
 
     updateFixedIncome.mutate(validation.data, {
       onSuccess: () => setSelectedEntry(null),
+      onError: () =>
+        setGenericUpdateError("Une erreur est survenue lors de la mise à jour"),
     });
   };
 
   const handleDeleteIncome = (deletedIncome: BudgetEntry) => {
-    setUpdatedError({});
+    setUpdateValidationError({});
+    setGenericDeleteError(null);
 
     deleteFixedIncome.mutate(deletedIncome.id, {
       onSuccess: () => setSelectedEntry(null),
+      onError: () =>
+        setGenericDeleteError("Une erreur est survenue lors de la suppression"),
     });
   };
 
   return (
-    <BudgetDataCard title="Mes revenus fixes">
-      <DataList
-        data={fixedIncomes}
-        setSelectedEntry={setSelectedEntry}
-        emptyMessage="Aucun revenu fixe déclaré"
-      />
-
-      <AddEntriesForm
-        initialData={newIncomes}
-        errors={incomesError}
-        onChange={setNewIncomes}
-        defaultInput={false}
-      />
-      {newIncomes.length > 0 && (
-        <button onClick={handleAddIncomes} className="submit-btn">
-          Enregistrer
-        </button>
+    <>
+      {genericAddError && (
+        <ErrorMessage message="Une erreur interne est survenue" />
       )}
+      <BudgetDataCard title="Mes revenus fixes">
+        <DataList
+          data={fixedIncomes}
+          setSelectedEntry={setSelectedEntry}
+          emptyMessage="Aucun revenu fixe déclaré"
+        />
 
-      <TotalDataDisplay total={totalIncomes} />
+        <AddEntriesForm
+          initialData={newIncomes}
+          errors={validationError}
+          onChange={setNewIncomes}
+          defaultInput={false}
+        />
+        {newIncomes.length > 0 && (
+          <button
+            onClick={handleAddIncomes}
+            className="submit-btn"
+            disabled={addFixedIncomes.isPending}
+          >
+            Enregistrer
+          </button>
+        )}
 
-      {selectedEntry && (
-        <Modal
-          isOpen={!!selectedEntry}
-          onClose={() => setSelectedEntry(null)}
-          title={`Mettre à jour les revenus`}
-        >
-          <UpdateEntryForm
-            initialData={selectedEntry}
-            errors={updatedError}
-            onSubmit={handleUpdateIncome}
-            onDelete={handleDeleteIncome}
-          />
-        </Modal>
-      )}
-    </BudgetDataCard>
+        <TotalDataDisplay total={totalIncomes} />
+
+        {selectedEntry && (
+          <Modal
+            isOpen={!!selectedEntry}
+            onClose={() => setSelectedEntry(null)}
+            title={`Mettre à jour les revenus`}
+          >
+            <UpdateEntryForm
+              initialData={selectedEntry}
+              validationErrors={updateValidationError}
+              genericError={genericUpdateError || genericDeleteError}
+              onSubmit={handleUpdateIncome}
+              onDelete={handleDeleteIncome}
+            />
+          </Modal>
+        )}
+      </BudgetDataCard>
+    </>
   );
 };

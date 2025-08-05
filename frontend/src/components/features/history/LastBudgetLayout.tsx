@@ -11,6 +11,7 @@ import { LastBudgetLayoutProps } from "@/types";
 import { MonthlyBudget } from "@shared/schemas";
 import { Loader } from "@/components/ui/Loader";
 import { ErrorMessage } from "@/components/ui/ErrorMessage";
+import { MonthlyBudgetOptions } from "../budget/MonthlyBudgetOptions";
 
 export const LastBudgetLayout = ({
   budgetId,
@@ -19,6 +20,7 @@ export const LastBudgetLayout = ({
   const [budget, setBudget] = useState<MonthlyBudget>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
+  const [mutationError, setMutationError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchLastBudget = async () => {
@@ -48,10 +50,22 @@ export const LastBudgetLayout = ({
       {error && <ErrorMessage message={error} />}
       {budget ? (
         <>
-          <TotalMonthlyEntriesDisplay
-            type={formatDateTitle(budget.year, budget.month)}
-            total={budget.remainingBudget ?? 0}
-          />
+          <div className="flex-between">
+            <TotalMonthlyEntriesDisplay
+              type={formatDateTitle(budget.year, budget.month)}
+              total={budget.remainingBudget ?? 0}
+            />
+            <MonthlyBudgetOptions
+              budgetId={budgetId}
+              isCurrent={false}
+              onError={() =>
+                setMutationError(
+                  "Une erreur est survenue lors de la mise à jour du budget"
+                )
+              }
+            />
+          </div>
+          {mutationError && <ErrorMessage message={mutationError} />}
 
           <div className="flex-start gap-sm my-md">
             <Collapse data={budget.charges} title="Charges" color="black" />
@@ -63,6 +77,7 @@ export const LastBudgetLayout = ({
             weeklyBudget={budget.weeklyBudget}
             expenses={budget.expenses}
             edit={false}
+            oldDate={{ year: budget.year, month: budget.month }}
           />
         </>
       ) : null}

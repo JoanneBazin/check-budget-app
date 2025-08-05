@@ -92,6 +92,10 @@ export const queryDateSchema = z.object({
   year: z.coerce.number().min(2025),
 });
 
+export const updateCurrentStatusSchema = z.object({
+  isCurrent: z.boolean(),
+});
+
 export type BudgetEntry = z.infer<typeof budgetEntrySchema>;
 export type BudgetEntryForm = z.infer<typeof createBudgetEntrySchema>;
 

@@ -1,9 +1,22 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { ChevronLeft, ChevronRight } from "lucide-react";
 import { DateDisplayProps } from "@/types";
+import { getWeeksInMonth } from "@/lib/getWeeksInMonth";
 
-export const DateDisplay = ({ weekIndex, setIndex }: DateDisplayProps) => {
-  const weeks = useBudgetStore((s) => s.weeksInMonth);
+export const DateDisplay = ({
+  weekIndex,
+  setIndex,
+  isCurrentBudget,
+  oldMonth,
+  oldYear,
+}: DateDisplayProps) => {
+  const weeks = isCurrentBudget
+    ? useBudgetStore((s) => s.weeksInMonth)
+    : oldYear !== undefined && oldMonth !== undefined
+    ? getWeeksInMonth(oldYear, oldMonth)
+    : undefined;
+
+  if (!weeks) return;
 
   return (
     <div className="week-selector">

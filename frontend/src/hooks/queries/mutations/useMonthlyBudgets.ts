@@ -1,22 +1,20 @@
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
-import { MonthlyBudget, MonthlyBudgetForm } from "@shared/schemas";
+import { MonthlyBudgetForm } from "@shared/schemas";
 import {
-  addMonthlyEntries,
   createMonthlyBudget,
-  deleteMonthlyEntry,
-  updateMonthlyEntry,
+  deleteMonthlyBudget,
+  updateMonthlyBudgetStatus,
 } from "@/lib/api/monthlyBudgets";
 
 import { hydrateBudgetStore } from "@/lib/hydrateBudgetStore";
-import {
-  AddMonthlyEntriesProps,
-  DeleteMonthlyEntryProps,
-  UpdateMonthlyEntryProps,
-} from "@/types";
+
+import { useNavigate } from "react-router-dom";
+import { updateMonthlyBudgetProps } from "@/types";
 
 export const useCreateBudgetMutation = () => {
   const queryClient = useQueryClient();
+  const navigate = useNavigate();
 
   return useMutation({
     mutationFn: (budget: MonthlyBudgetForm) => createMonthlyBudget(budget),
@@ -26,98 +24,54 @@ export const useCreateBudgetMutation = () => {
         queryClient.setQueryData(["currentBudget"], budget);
       }
       queryClient.invalidateQueries({ queryKey: ["history"] });
+      navigate("/app");
     },
   });
 };
 
-export const useAddMonthlyEntriesMutation = () => {
+export const useUpdateBudgetStatusMutation = () => {
   const queryClient = useQueryClient();
-  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
+  const { setCurrentBudget, setWeeksInMonth } = useBudgetStore.getState();
+  const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: ({ type, entries, budgetId }: AddMonthlyEntriesProps) =>
-      addMonthlyEntries({ type, entries, budgetId }),
-    onSuccess: ({ updated, remainingBudget, weeklyBudget }) => {
-      if (!currentBudget) return;
+    mutationFn: ({ budgetId, isCurrent }: updateMonthlyBudgetProps) =>
+      updateMonthlyBudgetStatus({ budgetId, isCurrent }),
+    onSuccess: (budget) => {
+      if (budget.isCurrent) {
+        hydrateBudgetStore(budget);
+        queryClient.setQueryData(["currentBudget"], budget);
+      } else {
+        setCurrentBudget(null);
+        setWeeksInMonth([]);
+        queryClient.invalidateQueries({ queryKey: ["currentBudget"] });
+      }
 
-      const updatedBudget = {
-        ...currentBudget,
-        charges: updated.charges
-          ? [...currentBudget.charges, ...updated.charges]
-          : [...currentBudget.charges],
-        incomes: updated.incomes
-          ? [...currentBudget.incomes, ...updated.incomes]
-          : [...currentBudget.incomes],
-        remainingBudget,
-        weeklyBudget,
-      };
-
-      setCurrentBudget(updatedBudget);
-      queryClient.setQueryData(["currentBudget"], updatedBudget);
+      queryClient.invalidateQueries({ queryKey: ["history"] });
+      navigate("/app");
     },
   });
 };
 
-export const useUpdateMonthlyEntriesMutation = () => {
+export const useDeleteMonthlyBudgetMutation = () => {
   const queryClient = useQueryClient();
-  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
+  const { currentBudget, setCurrentBudget, setWeeksInMonth } =
+    useBudgetStore.getState();
+  const navigate = useNavigate();
 
   return useMutation({
-    mutationFn: ({ type, entry, budgetId }: UpdateMonthlyEntryProps) =>
-      updateMonthlyEntry({ type, entry, budgetId }),
-    onSuccess: ({ updated, remainingBudget, weeklyBudget }) => {
+    mutationFn: (budgetId: string) => deleteMonthlyBudget(budgetId),
+    onSuccess: (_, budgetId) => {
       if (!currentBudget) return;
 
-      const updatedBudget = {
-        ...currentBudget,
-        charges: updated.charge
-          ? currentBudget.charges.map((charge) =>
-              charge.id === updated.charge.id ? updated.charge : charge
-            )
-          : currentBudget.charges,
-        incomes: updated.income
-          ? currentBudget.incomes.map((income) =>
-              income.id === updated.income.id ? updated.income : income
-            )
-          : currentBudget.incomes,
-        remainingBudget,
-        weeklyBudget,
-      };
-
-      setCurrentBudget(updatedBudget);
-      queryClient.setQueryData(["currentBudget"], updatedBudget);
-    },
-  });
-};
-
-export const useDeleteMonthlyEntriesMutation = () => {
-  const queryClient = useQueryClient();
-  const { currentBudget, setCurrentBudget } = useBudgetStore.getState();
-
-  return useMutation({
-    mutationFn: ({ type, entryId, budgetId }: DeleteMonthlyEntryProps) =>
-      deleteMonthlyEntry({ type, entryId, budgetId }),
-    onSuccess: ({ updated, remainingBudget, weeklyBudget }) => {
-      if (!currentBudget) return;
-
-      const updatedBudget = {
-        ...currentBudget,
-        charges: updated.chargeId
-          ? currentBudget.charges.filter(
-              (entry) => entry.id !== updated.chargeId
-            )
-          : currentBudget.charges,
-        incomes: updated.incomeId
-          ? currentBudget.incomes.filter(
-              (entry) => entry.id !== updated.incomeId
-            )
-          : currentBudget.incomes,
-        remainingBudget,
-        weeklyBudget,
-      };
-
-      setCurrentBudget(updatedBudget);
-      queryClient.setQueryData(["currentBudget"], updatedBudget);
+      if (currentBudget.id === budgetId) {
+        setCurrentBudget(null);
+        setWeeksInMonth([]);
+        queryClient.invalidateQueries({ queryKey: ["currentBudget"] });
+      } else {
+        queryClient.invalidateQueries({ queryKey: ["history"] });
+      }
+      navigate("/app");
     },
   });
 };

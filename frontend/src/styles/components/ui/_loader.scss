@@ -2,23 +2,23 @@
 
 .loader {
   &__layout {
-    width: 48px;
-    height: 48px;
     display: inline-block;
     position: relative;
+    @include icon-size(48px, 54px);
 
     &::after,
     &::before {
       content: "";
       box-sizing: border-box;
-      width: 48px;
-      height: 48px;
       border-radius: 50%;
       border: 2px solid $primary;
       position: absolute;
       left: 0;
       top: 0;
       @include anim-loader;
+      & {
+        @include icon-size(48px, 58px);
+      }
     }
 
     &::after {
@@ -27,8 +27,6 @@
   }
 
   &__datalist {
-    width: 6px;
-    height: 6px;
     border-radius: $border-radius-rounded;
     display: block;
     margin: 15px auto;
@@ -37,5 +35,8 @@
     left: -100px;
     box-sizing: border-box;
     @include shadow-rolling;
+    & {
+      @include icon-size(6px, 10px);
+    }
   }
 }
