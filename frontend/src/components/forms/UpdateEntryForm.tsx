@@ -28,7 +28,7 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
               setUpdatedEntry({ ...updatedEntry, name: e.target.value })
             }
           />
-          {validationErrors.name ? (
+          {validationErrors && validationErrors.name ? (
             <p className="form-error">{validationErrors.name}</p>
           ) : null}
         </div>
@@ -55,7 +55,7 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
               x
             </button>
           </div>
-          {validationErrors.amount ? (
+          {validationErrors && validationErrors.amount ? (
             <p className="form-error">Montant invalide</p>
           ) : null}
         </div>

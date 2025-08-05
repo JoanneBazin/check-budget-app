@@ -5,17 +5,13 @@ export const AddEntriesForm = ({
   initialData,
   errors,
   onChange,
-  defaultInput = true,
+  onResetErrors,
 }: AddEntriesFormProps) => {
   const [entries, setEntries] = useState<NewBudgetEntry[]>(initialData || []);
 
   useEffect(() => {
     setEntries(initialData || []);
   }, [initialData]);
-
-  useEffect(() => {
-    if (entries.length < 1 && defaultInput) addEntry();
-  }, []);
 
   const handleUpdate = (
     index: number,
@@ -30,18 +26,21 @@ export const AddEntriesForm = ({
           }
         : entry
     );
+    onResetErrors();
     setEntries(updatedEntries);
     onChange(updatedEntries);
   };
 
   const addEntry = () => {
     const updatedEntries = [...entries, { name: "", amount: "" }];
+    onResetErrors();
     setEntries(updatedEntries);
     onChange(updatedEntries);
   };
 
   const removeEntry = (entryIndex: number) => {
     const updatedEntries = entries.filter((_, index) => index !== entryIndex);
+    onResetErrors();
     setEntries(updatedEntries);
     onChange(updatedEntries);
   };
@@ -60,7 +59,7 @@ export const AddEntriesForm = ({
                 value={entry.name}
                 onChange={(e) => handleUpdate(index, "name", e.target.value)}
               />
-              {errors.length > 0 && errors[index].name ? (
+              {errors && errors[index] && errors[index].name ? (
                 <p className="form-error">{errors[index].name}</p>
               ) : null}
             </div>
@@ -88,7 +87,7 @@ export const AddEntriesForm = ({
                   x
                 </button>
               </div>
-              {errors.length > 0 && errors[index].amount ? (
+              {errors && errors[index] && errors[index].amount ? (
                 <p className="form-error">Montant invalide</p>
               ) : null}
             </div>

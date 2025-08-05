@@ -27,14 +27,14 @@ export interface UpdatedExpenseEntry {
 
 export interface AddEntriesFormProps {
   initialData?: NewBudgetEntry[];
-  errors: Record<string, string>[];
+  errors: Record<string, string>[] | null;
   onChange: (entries: NewBudgetEntry[]) => void;
-  defaultInput?: boolean;
+  onResetErrors: () => void;
 }
 
 export interface UpdateEntryFormProps<T extends BudgetEntry> {
   initialData: T;
-  validationErrors: Record<string, string>;
+  validationErrors: Record<string, string> | null;
   genericError: string | null;
   onSubmit: (entry: T) => void;
   onDelete: (entry: T) => void;

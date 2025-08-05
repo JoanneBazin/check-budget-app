@@ -20,12 +20,13 @@ export const CreateBudget = () => {
   const [monthlyIncomes, setMonthlyIncomes] =
     useState<NewBudgetEntry[]>(incomes);
   const [isCurrent, setIsCurrent] = useState(true);
-  const [incomesErrors, setIncomesErrors] = useState<Record<string, string>[]>(
-    []
-  );
-  const [chargesErrors, setChargesErrors] = useState<Record<string, string>[]>(
-    []
-  );
+
+  const [incomesErrors, setIncomesErrors] = useState<
+    Record<string, string>[] | null
+  >(null);
+  const [chargesErrors, setChargesErrors] = useState<
+    Record<string, string>[] | null
+  >(null);
   const { mutate, isPending, error: requestError } = useCreateBudgetMutation();
 
   useEffect(() => {
@@ -38,8 +39,8 @@ export const CreateBudget = () => {
   };
 
   const handleSubmit = () => {
-    setIncomesErrors([]);
-    setChargesErrors([]);
+    setIncomesErrors(null);
+    setChargesErrors(null);
 
     if (!year || !month) return;
 
@@ -69,12 +70,15 @@ export const CreateBudget = () => {
         <h2>Budget pour le mois de</h2>
         <MonthYearPicker onChange={handleDateChange} />
       </div>
-      {requestError && <p className="form-error">{requestError.message}</p>}
+      {requestError && (
+        <p className="form-error my-md">{requestError.message}</p>
+      )}
       <BudgetDataCard title="Revenus">
         <AddEntriesForm
           initialData={monthlyIncomes}
           errors={incomesErrors}
           onChange={setMonthlyIncomes}
+          onResetErrors={() => setIncomesErrors(null)}
         />
       </BudgetDataCard>
       <BudgetDataCard title="Charges">
@@ -82,6 +86,7 @@ export const CreateBudget = () => {
           initialData={monthlyCharges}
           errors={chargesErrors}
           onChange={setMonthlyCharges}
+          onResetErrors={() => setChargesErrors(null)}
         />
       </BudgetDataCard>
 

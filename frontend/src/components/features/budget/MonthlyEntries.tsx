@@ -44,11 +44,12 @@ export const MonthlyEntries = ({
   const deleteMonthlyEntry = useDeleteMonthlyEntriesMutation();
 
   const [validationError, setValidationError] = useState<
-    Record<string, string>[]
-  >([]);
-  const [updateValidationError, setUpdateValidationError] = useState<
-    Record<string, string>
-  >({});
+    Record<string, string>[] | null
+  >(null);
+  const [updateValidationError, setUpdateValidationError] = useState<Record<
+    string,
+    string
+  > | null>(null);
   const genericAddError = addMonthlyEntries.isError;
   const [genericUpdateError, setGenericUpdateError] = useState<string | null>(
     null
@@ -58,7 +59,7 @@ export const MonthlyEntries = ({
   );
 
   const handleAddEntries = () => {
-    setValidationError([]);
+    setValidationError(null);
 
     const validation = validateArrayWithSchema(
       createBudgetEntrySchema,
@@ -81,7 +82,7 @@ export const MonthlyEntries = ({
   };
 
   const handleUpdateEntry = (updatedEntry: UpdatedBudgetEntry) => {
-    setUpdateValidationError({});
+    setUpdateValidationError(null);
     setGenericUpdateError(null);
 
     const validation = validateWithSchema(budgetEntrySchema, updatedEntry);
@@ -108,7 +109,7 @@ export const MonthlyEntries = ({
   };
 
   const handleDeleteEntry = (deletedEntry: BudgetEntry) => {
-    setUpdateValidationError({});
+    setUpdateValidationError(null);
     setGenericDeleteError(null);
 
     deleteMonthlyEntry.mutate(
@@ -152,7 +153,7 @@ export const MonthlyEntries = ({
             initialData={newEntries}
             errors={validationError}
             onChange={setNewEntries}
-            defaultInput={false}
+            onResetErrors={() => setValidationError(null)}
           />
           {newEntries.length > 0 && (
             <button

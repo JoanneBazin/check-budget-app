@@ -37,11 +37,12 @@ export const FixedChargesDisplay = () => {
   const deleteFixedCharge = useDeleteFixedChargeMutation();
 
   const [validationError, setValidationError] = useState<
-    Record<string, string>[]
-  >([]);
-  const [updateValidationError, setUpdateValidationError] = useState<
-    Record<string, string>
-  >({});
+    Record<string, string>[] | null
+  >(null);
+  const [updateValidationError, setUpdateValidationError] = useState<Record<
+    string,
+    string
+  > | null>(null);
   const genericAddError = addFixedCharges.isError;
   const [genericUpdateError, setGenericUpdateError] = useState<string | null>(
     null
@@ -51,7 +52,7 @@ export const FixedChargesDisplay = () => {
   );
 
   const handleAddCharges = () => {
-    setValidationError([]);
+    setValidationError(null);
 
     const validation = validateArrayWithSchema(
       createBudgetEntrySchema,
@@ -69,7 +70,7 @@ export const FixedChargesDisplay = () => {
   };
 
   const handleUpdateCharge = (updatedCharge: UpdatedBudgetEntry) => {
-    setUpdateValidationError({});
+    setUpdateValidationError(null);
     setGenericUpdateError(null);
 
     const validation = validateWithSchema(budgetEntrySchema, updatedCharge);
@@ -87,7 +88,7 @@ export const FixedChargesDisplay = () => {
   };
 
   const handleDeleteCharge = (deletedCharge: BudgetEntry) => {
-    setUpdateValidationError({});
+    setUpdateValidationError(null);
     setGenericDeleteError(null);
 
     deleteFixedCharge.mutate(deletedCharge.id, {
@@ -113,7 +114,7 @@ export const FixedChargesDisplay = () => {
           initialData={newCharges}
           errors={validationError}
           onChange={setNewCharges}
-          defaultInput={false}
+          onResetErrors={() => setValidationError(null)}
         />
         {newCharges.length > 0 && (
           <button

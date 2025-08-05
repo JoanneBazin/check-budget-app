@@ -37,11 +37,12 @@ export const FixedIncomesDisplay = () => {
   const deleteFixedIncome = useDeleteFixedIncomeMutation();
 
   const [validationError, setValidationError] = useState<
-    Record<string, string>[]
-  >([]);
-  const [updateValidationError, setUpdateValidationError] = useState<
-    Record<string, string>
-  >({});
+    Record<string, string>[] | null
+  >(null);
+  const [updateValidationError, setUpdateValidationError] = useState<Record<
+    string,
+    string
+  > | null>(null);
   const genericAddError = addFixedIncomes.isError;
   const [genericUpdateError, setGenericUpdateError] = useState<string | null>(
     null
@@ -51,7 +52,7 @@ export const FixedIncomesDisplay = () => {
   );
 
   const handleAddIncomes = () => {
-    setValidationError([]);
+    setValidationError(null);
 
     const validation = validateArrayWithSchema(
       createBudgetEntrySchema,
@@ -69,7 +70,7 @@ export const FixedIncomesDisplay = () => {
   };
 
   const handleUpdateIncome = (updatedIncome: UpdatedBudgetEntry) => {
-    setUpdateValidationError({});
+    setUpdateValidationError(null);
     setGenericUpdateError(null);
 
     const validation = validateWithSchema(budgetEntrySchema, updatedIncome);
@@ -87,7 +88,7 @@ export const FixedIncomesDisplay = () => {
   };
 
   const handleDeleteIncome = (deletedIncome: BudgetEntry) => {
-    setUpdateValidationError({});
+    setUpdateValidationError(null);
     setGenericDeleteError(null);
 
     deleteFixedIncome.mutate(deletedIncome.id, {
@@ -113,7 +114,7 @@ export const FixedIncomesDisplay = () => {
           initialData={newIncomes}
           errors={validationError}
           onChange={setNewIncomes}
-          defaultInput={false}
+          onResetErrors={() => setValidationError(null)}
         />
         {newIncomes.length > 0 && (
           <button
