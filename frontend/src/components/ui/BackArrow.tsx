@@ -10,6 +10,8 @@ export const BackArrow = ({ destination, onBack }: BackArrowProps) => {
       navigate(destination);
     } else if (onBack) {
       onBack();
+    } else {
+      navigate(-1);
     }
   };
 

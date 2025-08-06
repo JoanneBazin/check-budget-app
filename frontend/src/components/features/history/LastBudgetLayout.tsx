@@ -1,11 +1,7 @@
 import { useEffect, useState } from "react";
 import { getBudgetById } from "@/lib/api/monthlyBudgets";
 import { formatDateTitle } from "@/lib/formatDateTitle";
-import {
-  BackArrow,
-  Collapse,
-  TotalMonthlyEntriesDisplay,
-} from "@/components/ui";
+import { Collapse, TotalMonthlyEntriesDisplay } from "@/components/ui";
 import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
 import { LastBudgetLayoutProps } from "@/types";
 import { MonthlyBudget } from "@shared/schemas";
@@ -13,10 +9,7 @@ import { Loader } from "@/components/ui/Loader";
 import { ErrorMessage } from "@/components/ui/ErrorMessage";
 import { MonthlyBudgetOptions } from "../budget/MonthlyBudgetOptions";
 
-export const LastBudgetLayout = ({
-  budgetId,
-  onBack,
-}: LastBudgetLayoutProps) => {
+export const LastBudgetLayout = ({ budgetId }: LastBudgetLayoutProps) => {
   const [budget, setBudget] = useState<MonthlyBudget>();
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
@@ -44,8 +37,7 @@ export const LastBudgetLayout = ({
   }, [budgetId]);
 
   return (
-    <section>
-      <BackArrow onBack={onBack} />
+    <div>
       {isLoading && <Loader type="layout" />}
       {error && <ErrorMessage message={error} />}
       {budget ? (
@@ -81,6 +73,6 @@ export const LastBudgetLayout = ({
           />
         </>
       ) : null}
-    </section>
+    </div>
   );
 };

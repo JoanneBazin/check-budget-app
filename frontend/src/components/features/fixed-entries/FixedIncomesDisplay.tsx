@@ -119,7 +119,7 @@ export const FixedIncomesDisplay = () => {
         {newIncomes.length > 0 && (
           <button
             onClick={handleAddIncomes}
-            className="submit-btn"
+            className="primary-btn"
             disabled={addFixedIncomes.isPending}
           >
             Enregistrer

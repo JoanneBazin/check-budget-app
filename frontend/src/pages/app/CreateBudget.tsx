@@ -106,7 +106,7 @@ export const CreateBudget = () => {
 
       <button
         onClick={handleSubmit}
-        className="submit-btn"
+        className="primary-btn"
         disabled={isPending}
       >
         Valider

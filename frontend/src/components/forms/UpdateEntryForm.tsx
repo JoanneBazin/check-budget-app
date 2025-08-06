@@ -83,7 +83,7 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
       <button
         type="button"
         onClick={() => onSubmit(updatedEntry)}
-        className="submit-btn"
+        className="primary-btn"
       >
         Modifier
       </button>

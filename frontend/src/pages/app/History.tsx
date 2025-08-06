@@ -4,10 +4,11 @@ import { getBudgetByDate } from "@/lib/api/monthlyBudgets";
 import { Search } from "lucide-react";
 import { LastBudgetLayout } from "@/components/features/history/LastBudgetLayout";
 import { useLastBudgetsQuery } from "@/hooks/queries";
-import { HistoryCard, MonthYearPicker } from "@/components/ui";
+import { BackArrow, HistoryCard, MonthYearPicker } from "@/components/ui";
 import { LastMonthlyBudget } from "@/types";
 import { Loader } from "@/components/ui/Loader";
 import { ErrorMessage } from "@/components/ui/ErrorMessage";
+import { AnimatedView } from "@/components/ui/AnimatedView";
 
 export const History = () => {
   const { data: lastBudgets, isPending, error } = useLastBudgetsQuery();
@@ -40,49 +41,52 @@ export const History = () => {
     }
   };
 
-  if (selectedBudget)
-    return (
-      <LastBudgetLayout
-        budgetId={selectedBudget}
-        onBack={() => setSelectedBudget(null)}
-      />
-    );
-
   return (
     <section>
-      <div className="date-picker-container">
-        <p>Rechercher par mois</p>
-        <MonthYearPicker onChange={handleDateChange} defaultInput={false} />
-      </div>
+      {selectedBudget ? (
+        <>
+          <BackArrow onBack={() => setSelectedBudget(null)} />
+          <AnimatedView view="last-budget">
+            <LastBudgetLayout budgetId={selectedBudget} />
+          </AnimatedView>
+        </>
+      ) : (
+        <>
+          <div className="date-picker-container">
+            <p>Rechercher par mois</p>
+            <MonthYearPicker onChange={handleDateChange} defaultInput={false} />
+          </div>
 
-      {searchError && (
-        <div className="search-error">
-          <Search size={18} />
-          <p className="search-error__text">{searchError}</p>
-        </div>
+          {searchError && (
+            <div className="search-error">
+              <Search size={18} />
+              <p className="search-error__text">{searchError}</p>
+            </div>
+          )}
+
+          {isSearchLoading && <Loader type="datalist" />}
+
+          {searchedBudget && (
+            <div className="selected-budget-card">
+              <HistoryCard data={searchedBudget} onSelect={setSelectedBudget} />
+            </div>
+          )}
+
+          {isPending && <Loader type="layout" />}
+          {error && <ErrorMessage message={error.message} />}
+
+          <div className="my-2xl">
+            {lastBudgets &&
+              lastBudgets.map((budget) => (
+                <HistoryCard
+                  key={budget.id}
+                  data={budget}
+                  onSelect={setSelectedBudget}
+                />
+              ))}
+          </div>
+        </>
       )}
-
-      {isSearchLoading && <Loader type="datalist" />}
-
-      {searchedBudget && (
-        <div className="selected-budget-card">
-          <HistoryCard data={searchedBudget} onSelect={setSelectedBudget} />
-        </div>
-      )}
-
-      {isPending && <Loader type="layout" />}
-      {error && <ErrorMessage message={error.message} />}
-
-      <div className="my-2xl">
-        {lastBudgets &&
-          lastBudgets.map((budget) => (
-            <HistoryCard
-              key={budget.id}
-              data={budget}
-              onSelect={setSelectedBudget}
-            />
-          ))}
-      </div>
     </section>
   );
 };

@@ -2,7 +2,6 @@ import { BudgetEntry, BudgetEntryForm } from "@shared/schemas";
 
 export interface MonthlyEntriesView {
   type: string;
-  onBack: () => void;
   data: BudgetEntry[];
   dateTitle: string;
   budgetId: string;

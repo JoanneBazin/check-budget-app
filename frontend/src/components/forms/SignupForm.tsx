@@ -38,7 +38,7 @@ export const SignupForm = () => {
           name="name"
           value={user.name}
           onChange={(e) => handleChange(e)}
-          placeholder="name"
+          placeholder="nom"
         />
         {errorMessages.name && (
           <p className="form-error">{errorMessages.name}</p>
@@ -64,14 +64,14 @@ export const SignupForm = () => {
           name="password"
           value={user.password}
           onChange={(e) => handleChange(e)}
-          placeholder="password"
+          placeholder="mot de passe"
         />
         {errorMessages.password && (
           <p className="form-error">{errorMessages.password}</p>
         )}
       </div>
 
-      <button type="submit" disabled={isPending} className="submit-btn">
+      <button type="submit" disabled={isPending} className="primary-btn">
         S'inscrire
       </button>
       {error && <p>{error.message}</p>}

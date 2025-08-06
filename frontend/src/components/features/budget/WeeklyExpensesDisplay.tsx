@@ -167,7 +167,7 @@ export const WeeklyExpensesDisplay = ({
             {newExpenses.length > 0 && (
               <button
                 onClick={handleAddExpenses}
-                className="submit-btn"
+                className="primary-btn"
                 disabled={addExpenses.isPending}
               >
                 Enregistrer

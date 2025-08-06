@@ -119,7 +119,7 @@ export const FixedChargesDisplay = () => {
         {newCharges.length > 0 && (
           <button
             onClick={handleAddCharges}
-            className="submit-btn"
+            className="primary-btn"
             disabled={addFixedCharges.isPending}
           >
             Enregistrer

@@ -15,9 +15,8 @@
     gap: 10px;
     background: $white;
     border: 1px solid $gray-200;
-    box-shadow: $shadow-sm;
     border-radius: $border-radius-xs;
-    @include padding-responsive(sm, md);
+    @include padding-responsive(md, md);
 
     & {
       @include tablet-up {

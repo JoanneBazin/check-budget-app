@@ -7,7 +7,6 @@ export interface LastMonthlyBudget {
 
 export interface LastBudgetLayoutProps {
   budgetId: string;
-  onBack: () => void;
 }
 
 export interface HistoryCardProps {

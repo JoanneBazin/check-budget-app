@@ -36,3 +36,12 @@ export interface TotalCardProps {
   totalData: number;
   setView: () => void;
 }
+
+export interface AnimatedViewProps {
+  view: string;
+  children: React.ReactNode;
+}
+export interface AnimatedMenuProps {
+  menu: string;
+  children: React.ReactNode;
+}

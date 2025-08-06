@@ -1,10 +1,13 @@
 import { Modal } from "@/components/ui";
+import { AnimatedDropdown } from "@/components/ui/AnimateDropdown";
 import {
   useDeleteMonthlyBudgetMutation,
   useUpdateBudgetStatusMutation,
 } from "@/hooks/queries/mutations";
+import { useClickOutside } from "@/hooks/useClickOutside";
 import { MonthlyBudgetOptionsProps } from "@/types";
 import { CalendarFold, Settings, Trash } from "lucide-react";
+import { AnimatePresence } from "motion/react";
 import { useState } from "react";
 
 export const MonthlyBudgetOptions = ({
@@ -13,6 +16,7 @@ export const MonthlyBudgetOptions = ({
   onError,
 }: MonthlyBudgetOptionsProps) => {
   const [isOptionsOpen, setIsOptionsOpen] = useState(false);
+  const dropdownRef = useClickOutside(() => setIsOptionsOpen(false));
   const [isModalOpen, setIsModalOpen] = useState(false);
 
   const updateBudgetStatus = useUpdateBudgetStatusMutation();
@@ -40,26 +44,34 @@ export const MonthlyBudgetOptions = ({
   };
 
   return (
-    <div className="budget-options">
-      <button onClick={() => setIsOptionsOpen(!isOptionsOpen)}>
+    <div className="budget-options" ref={dropdownRef}>
+      <button onClick={() => setIsOptionsOpen((prev) => !prev)}>
         <Settings className="budget-options__icon" />
       </button>
+      <AnimatePresence>
+        {isOptionsOpen && (
+          <AnimatedDropdown menu="options">
+            <div className="budget-options__content">
+              <button onClick={handleUpdateBudget}>
+                <CalendarFold size={14} className="mr-xxs" />
 
-      {isOptionsOpen && (
-        <div className="budget-options__content">
-          <button onClick={handleUpdateBudget}>
-            <CalendarFold size={14} className="mr-xxs" />
-
-            <span>
-              {isCurrent ? "Archiver le budget" : "Définir comme budget actif"}
-            </span>
-          </button>
-          <button className="red-error" onClick={() => setIsModalOpen(true)}>
-            <Trash size={14} className="mr-xxs" />
-            <span>Supprimer le budget</span>
-          </button>
-        </div>
-      )}
+                <span>
+                  {isCurrent
+                    ? "Archiver le budget"
+                    : "Définir comme budget actif"}
+                </span>
+              </button>
+              <button
+                className="red-error"
+                onClick={() => setIsModalOpen(true)}
+              >
+                <Trash size={14} className="mr-xxs" />
+                <span>Supprimer le budget</span>
+              </button>
+            </div>
+          </AnimatedDropdown>
+        )}
+      </AnimatePresence>
 
       <Modal
         isOpen={isModalOpen}
@@ -70,10 +82,13 @@ export const MonthlyBudgetOptions = ({
           Voulez-vous supprimer définitivement ce budget ?
         </p>
         <div className="flex-end my-md">
-          <button onClick={handleDeleteBudget} className="submit-btn">
+          <button onClick={handleDeleteBudget} className="primary-btn">
             Supprimer
           </button>
-          <button onClick={() => setIsModalOpen(false)} className="cancel-btn">
+          <button
+            onClick={() => setIsModalOpen(false)}
+            className="secondary-btn"
+          >
             Annuler
           </button>
         </div>

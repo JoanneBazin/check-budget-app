@@ -50,14 +50,14 @@ export const LoginForm = () => {
           name="password"
           value={user.password}
           onChange={(e) => handleChange(e)}
-          placeholder="password"
+          placeholder="mot de passe"
         />
         {errorMessages.password && (
           <p className="form-error">{errorMessages.password}</p>
         )}
       </div>
 
-      <button type="submit" disabled={isPending} className="submit-btn">
+      <button type="submit" disabled={isPending} className="primary-btn">
         Se connecter
       </button>
       {error && <p>{error.message}</p>}

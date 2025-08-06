@@ -5,7 +5,7 @@ import { Header } from "../components";
 export const ProfileLayout = () => {
   return (
     <div className="app-container">
-      <BackArrow destination="/app" />
+      <BackArrow />
       <Header />
 
       <main>

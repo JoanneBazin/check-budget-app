@@ -42,14 +42,15 @@
   @include font-responsive(xs);
 }
 
-.submit-btn {
+.primary-btn {
   @include button-variant($primary, $primary-dark, $white);
   padding: $spacing-xs $spacing-lg;
   margin: $spacing-sm 0;
   width: fit-content;
   align-self: flex-end;
 }
-.cancel-btn {
+
+.secondary-btn {
   @include button-variant($white, $gray-100, $black);
   border: 1px solid $gray-500;
   padding: $spacing-xs $spacing-lg;
@@ -67,5 +68,8 @@
 .auth-form {
   @include flex-center;
   gap: $spacing-md;
-  width: 50%;
+  width: 45%;
+  & > div {
+    width: 100%;
+  }
 }

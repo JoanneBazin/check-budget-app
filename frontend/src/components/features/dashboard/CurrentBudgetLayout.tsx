@@ -2,12 +2,13 @@ import { formatDateTitle } from "@/lib/formatDateTitle";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { useEffect, useState } from "react";
 import { MonthlyEntries } from "../budget/MonthlyEntries";
-import { TotalMonthlyEntriesDisplay } from "@/components/ui";
+import { BackArrow, TotalMonthlyEntriesDisplay } from "@/components/ui";
 import { WeeklyExpensesDisplay } from "../budget/WeeklyExpensesDisplay";
 import { MonthlyBudget } from "@shared/schemas";
 import { TotalCard } from "@/components/ui/TotalCard";
 import { MonthlyBudgetOptions } from "../budget/MonthlyBudgetOptions";
 import { ErrorMessage } from "@/components/ui/ErrorMessage";
+import { AnimatedView } from "@/components/ui/AnimatedView";
 
 type View = "app" | "charges" | "incomes";
 
@@ -31,25 +32,28 @@ export const CurrentBudgetLayout = ({ budget }: { budget: MonthlyBudget }) => {
     setPageTitle(title);
   }, []);
 
-  if (view === "charges")
+  if (view !== "app")
     return (
-      <MonthlyEntries
-        type="charges"
-        onBack={() => setView("app")}
-        data={budget.charges}
-        dateTitle={dateTitle}
-        budgetId={budget.id}
-      />
-    );
-  if (view === "incomes")
-    return (
-      <MonthlyEntries
-        type="revenus"
-        onBack={() => setView("app")}
-        data={budget.incomes}
-        dateTitle={dateTitle}
-        budgetId={budget.id}
-      />
+      <>
+        <BackArrow onBack={() => setView("app")} />
+        <AnimatedView view={view}>
+          {view === "charges" ? (
+            <MonthlyEntries
+              type="charges"
+              data={budget.charges}
+              dateTitle={dateTitle}
+              budgetId={budget.id}
+            />
+          ) : view === "incomes" ? (
+            <MonthlyEntries
+              type="revenus"
+              data={budget.incomes}
+              dateTitle={dateTitle}
+              budgetId={budget.id}
+            />
+          ) : null}
+        </AnimatedView>
+      </>
     );
 
   return (

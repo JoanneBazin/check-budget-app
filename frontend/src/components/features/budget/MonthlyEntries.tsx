@@ -12,7 +12,6 @@ import {
   useUpdateMonthlyEntriesMutation,
 } from "@/hooks/queries/mutations";
 import {
-  BackArrow,
   BudgetDataCard,
   DataList,
   Modal,
@@ -28,7 +27,6 @@ import { ErrorMessage } from "@/components/ui/ErrorMessage";
 
 export const MonthlyEntries = ({
   type,
-  onBack,
   data,
   dateTitle,
   budgetId,
@@ -130,7 +128,6 @@ export const MonthlyEntries = ({
 
   return (
     <section>
-      <BackArrow onBack={onBack} />
       <TotalMonthlyEntriesDisplay type={type} total={totalData} />
 
       {genericAddError && (
@@ -158,7 +155,7 @@ export const MonthlyEntries = ({
           {newEntries.length > 0 && (
             <button
               onClick={handleAddEntries}
-              className="submit-btn"
+              className="primary-btn"
               disabled={addMonthlyEntries.isPending}
             >
               Enregistrer
