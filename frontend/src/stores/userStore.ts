@@ -11,6 +11,7 @@ export const useUserStore = create<UserStore>()(
     }),
     {
       name: "user-storage",
+      partialize: (state): Pick<UserStore, "user"> => ({ user: state.user }),
     }
   )
 );

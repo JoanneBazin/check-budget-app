@@ -1,6 +1,10 @@
 @use "../../abstracts" as *;
 
 .loader {
+  margin: 20px auto;
+  width: 100%;
+  @include flex-center;
+
   &__layout {
     display: inline-block;
     position: relative;

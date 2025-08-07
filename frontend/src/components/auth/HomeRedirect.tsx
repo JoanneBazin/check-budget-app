@@ -1,13 +1,11 @@
-import { useSessionQuery } from "@/hooks/queries/useSessionQuery";
 import { Home } from "@/pages/public/Home";
 import { Navigate } from "react-router-dom";
-import { LoaderScreen } from "@/layouts/components";
+import { useUserStore } from "@/stores/userStore";
 
 export const HomeRedirect = () => {
-  const { data: user, isLoading, error } = useSessionQuery();
+  const user = useUserStore((s) => s.user);
 
-  if (isLoading) return <LoaderScreen />;
-  if (error || !user) return <Home />;
+  if (!user) return <Home />;
 
   return <Navigate to="/app" replace />;
 };

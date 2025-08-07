@@ -1,11 +1,8 @@
-import { useSessionQuery } from "@/hooks/queries/useSessionQuery";
 import { Navigate, Outlet } from "react-router-dom";
-import { LoaderScreen } from "@/layouts/components";
+import { useUserStore } from "@/stores/userStore";
 
 export const RequireGuest = () => {
-  const { data: user, isLoading } = useSessionQuery();
-
-  if (isLoading) return <LoaderScreen />;
+  const user = useUserStore((s) => s.user);
 
   return user ? <Navigate to="/app" replace /> : <Outlet />;
 };

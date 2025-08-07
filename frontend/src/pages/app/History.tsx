@@ -9,9 +9,11 @@ import { LastMonthlyBudget } from "@/types";
 import { Loader } from "@/components/ui/Loader";
 import { ErrorMessage } from "@/components/ui/ErrorMessage";
 import { AnimatedView } from "@/components/ui/AnimatedView";
+import { useOfflineStatus } from "@/hooks/useOfflineStatus";
 
 export const History = () => {
   const { data: lastBudgets, isPending, error } = useLastBudgetsQuery();
+  const { isOffline } = useOfflineStatus();
   const setPageTitle = useBudgetStore((s) => s.setPageTitle);
 
   const [selectedBudget, setSelectedBudget] = useState<string | null>(null);
@@ -40,6 +42,11 @@ export const History = () => {
       setIsSearchLoading(false);
     }
   };
+
+  if (isOffline)
+    return (
+      <ErrorMessage message="Vous êtes hors ligne. Veuillez vous reconnecter pour accéder à l'historique des budgets." />
+    );
 
   return (
     <section>
