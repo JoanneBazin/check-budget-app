@@ -54,6 +54,7 @@ export const AddEntriesForm = ({
               <input
                 type="text"
                 placeholder="Nom"
+                aria-label="Nom de la dépense"
                 name="name"
                 className="name-input"
                 value={entry.name}
@@ -71,6 +72,7 @@ export const AddEntriesForm = ({
                   <input
                     type="number"
                     placeholder="Montant"
+                    aria-label="Montant de la dépense"
                     name="amount"
                     value={entry.amount}
                     onChange={(e) =>

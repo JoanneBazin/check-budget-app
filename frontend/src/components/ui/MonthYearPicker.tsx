@@ -23,14 +23,20 @@ export const MonthYearPicker = ({
     }
   };
   return (
-    <DatePicker
-      selected={selectedDate}
-      onChange={handleChange}
-      dateFormat="MMMM yyyy"
-      showMonthYearPicker
-      showFullMonthYearPicker
-      locale={fr}
-      className="picker-input"
-    />
+    <>
+      <label htmlFor="date-picker" className="sr-only">
+        Sélectionner une date
+      </label>
+      <DatePicker
+        selected={selectedDate}
+        onChange={handleChange}
+        dateFormat="MMMM yyyy"
+        showMonthYearPicker
+        showFullMonthYearPicker
+        locale={fr}
+        className="picker-input"
+        id="date-picker"
+      />
+    </>
   );
 };

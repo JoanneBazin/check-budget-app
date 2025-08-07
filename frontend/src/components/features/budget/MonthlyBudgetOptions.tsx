@@ -45,7 +45,10 @@ export const MonthlyBudgetOptions = ({
 
   return (
     <div className="budget-options" ref={dropdownRef}>
-      <button onClick={() => setIsOptionsOpen((prev) => !prev)}>
+      <button
+        onClick={() => setIsOptionsOpen((prev) => !prev)}
+        aria-label="Options du budget"
+      >
         <Settings className="budget-options__icon" />
       </button>
       <AnimatePresence>

@@ -38,6 +38,7 @@ export const LoginForm = () => {
           value={user.email}
           onChange={(e) => handleChange(e)}
           placeholder="email"
+          aria-label="Email"
         />
         {errorMessages.email && (
           <p className="form-error">{errorMessages.email}</p>
@@ -51,6 +52,7 @@ export const LoginForm = () => {
           value={user.password}
           onChange={(e) => handleChange(e)}
           placeholder="mot de passe"
+          aria-label="Mot de passe"
         />
         {errorMessages.password && (
           <p className="form-error">{errorMessages.password}</p>

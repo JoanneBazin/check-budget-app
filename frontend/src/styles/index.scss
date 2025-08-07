@@ -43,7 +43,7 @@
 }
 
 .primary-btn {
-  @include button-variant($primary, $primary-dark, $white);
+  @include button-variant($primary, $primary-light, $black);
   padding: $spacing-xs $spacing-lg;
   margin: $spacing-sm 0;
   width: fit-content;

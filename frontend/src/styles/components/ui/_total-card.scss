@@ -2,8 +2,9 @@
 
 .total-card {
   width: 48%;
-  border: 1px solid $black;
+  border: 1px solid $gray-700;
   border-radius: 16px;
+  cursor: pointer;
   @include padding-responsive(sm, sm);
 
   &__text {

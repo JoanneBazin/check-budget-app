@@ -31,8 +31,12 @@
     }
 
     &__update {
-      color: $primary;
+      color: $primary-dark;
       @include font-responsive(xs);
+
+      &:hover {
+        color: $primary;
+      }
     }
   }
 }

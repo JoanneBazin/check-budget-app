@@ -22,6 +22,7 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
           <input
             type="text"
             placeholder="Nom"
+            aria-label="Nom de la dépense"
             name="name"
             value={updatedEntry.name}
             onChange={(e) =>
@@ -39,6 +40,7 @@ export const UpdateEntryForm = <T extends BudgetEntry>({
               <input
                 type="number"
                 placeholder="Montant"
+                aria-label="Montant de la dépense"
                 name="amount"
                 value={updatedEntry.amount}
                 onChange={(e) =>
