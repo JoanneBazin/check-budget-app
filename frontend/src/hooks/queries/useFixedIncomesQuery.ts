@@ -19,6 +19,8 @@ export const useFixedIncomesQuery = () => {
   });
 
   useEffect(() => {
+    if (!isOnline) return;
+
     if (query.data) {
       setFixedIncomes(query.data);
     }

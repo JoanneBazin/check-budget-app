@@ -3,8 +3,11 @@ import {
   DeleteExpenseProps,
   UpdateExpenseProps,
 } from "@/types";
+import { getCurrentOnlineStatus } from "../network";
 
 export const addExpenses = async ({ expenses, budgetId }: AddExpensesProps) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}/expenses`,
     {
@@ -27,6 +30,8 @@ export const updateExpense = async ({
   expense,
   budgetId,
 }: UpdateExpenseProps) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}/expenses/${expense.id}`,
     {
@@ -49,6 +54,8 @@ export const deleteExpense = async ({
   expenseId,
   budgetId,
 }: DeleteExpenseProps) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}/expenses/${expenseId}`,
     {

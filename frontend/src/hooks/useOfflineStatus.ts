@@ -1,7 +1,8 @@
+import { getCurrentOnlineStatus } from "@/lib/network";
 import { useEffect, useState } from "react";
 
 export const useOfflineStatus = () => {
-  const [isOnline, setIsOnline] = useState(navigator.onLine);
+  const [isOnline, setIsOnline] = useState(getCurrentOnlineStatus());
 
   useEffect(() => {
     const handleOnline = () => setIsOnline(true);

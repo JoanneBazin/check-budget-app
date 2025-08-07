@@ -1,4 +1,5 @@
 import { BudgetEntry, BudgetEntryForm } from "@shared/schemas";
+import { getCurrentOnlineStatus } from "../network";
 
 export const fetchFixedCharges = async () => {
   const response = await fetch("http://localhost:4000/api/fixed-charges", {
@@ -11,6 +12,8 @@ export const fetchFixedCharges = async () => {
 };
 
 export const addFixedCharges = async (charges: BudgetEntryForm[]) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(`http://localhost:4000/api/fixed-charges`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -27,6 +30,7 @@ export const addFixedCharges = async (charges: BudgetEntryForm[]) => {
 };
 
 export const updateFixedCharge = async (charge: BudgetEntry) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
   const response = await fetch(
     `http://localhost:4000/api/fixed-charges/${charge.id}`,
     {
@@ -46,6 +50,8 @@ export const updateFixedCharge = async (charge: BudgetEntry) => {
 };
 
 export const deleteFixedCharges = async (chargeId: string) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/fixed-incomes/${chargeId}`,
     {

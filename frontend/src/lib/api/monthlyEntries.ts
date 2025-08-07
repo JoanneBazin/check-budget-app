@@ -3,12 +3,15 @@ import {
   DeleteMonthlyEntryProps,
   UpdateMonthlyEntryProps,
 } from "@/types";
+import { getCurrentOnlineStatus } from "../network";
 
 export const addMonthlyEntries = async ({
   type,
   entries,
   budgetId,
 }: AddMonthlyEntriesProps) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}`,
     {
@@ -41,6 +44,8 @@ export const updateMonthlyEntry = async ({
   entry,
   budgetId,
 }: UpdateMonthlyEntryProps) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}/${entry.id}`,
     {
@@ -73,6 +78,8 @@ export const deleteMonthlyEntry = async ({
   entryId,
   budgetId,
 }: DeleteMonthlyEntryProps) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}/${entryId}`,
     {

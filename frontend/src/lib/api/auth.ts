@@ -2,8 +2,11 @@ import { LoginInput, SignupInput } from "@shared/schemas";
 import { User } from "@shared/types";
 import { useQueryClient } from "@tanstack/react-query";
 import { resetAppState } from "../resetAppState";
+import { getCurrentOnlineStatus } from "../network";
 
 export const login = async ({ email, password }: LoginInput): Promise<User> => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch("http://localhost:4000/api/auth/login", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -24,6 +27,7 @@ export const signup = async ({
   email,
   password,
 }: SignupInput): Promise<User> => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
   const response = await fetch("http://localhost:4000/api/auth/signup", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -40,6 +44,7 @@ export const signup = async ({
 };
 
 export const logout = async (): Promise<void> => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
   const response = await fetch("http://localhost:4000/api/auth/logout", {
     method: "POST",
     credentials: "include",

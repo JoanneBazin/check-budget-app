@@ -19,6 +19,8 @@ export const useFixedChargesQuery = () => {
   });
 
   useEffect(() => {
+    if (!isOnline) return;
+
     if (query.data) {
       setFixedCharges(query.data);
     }

@@ -18,6 +18,8 @@ export const useCurrentBudgetQuery = () => {
   });
 
   useEffect(() => {
+    if (!isOnline) return;
+
     if (query.isFetched) {
       const { setIsBudgetHydrated } = useBudgetStore.getState();
       if (query.data) {

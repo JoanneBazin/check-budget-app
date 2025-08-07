@@ -1,5 +1,6 @@
 import { updateMonthlyBudgetProps } from "@/types";
 import { MonthlyBudgetForm } from "@shared/schemas";
+import { getCurrentOnlineStatus } from "../network";
 
 export const fetchCurrentBudget = async () => {
   const response = await fetch(
@@ -22,6 +23,8 @@ export const updateMonthlyBudgetStatus = async ({
   budgetId,
   isCurrent,
 }: updateMonthlyBudgetProps) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}`,
     {
@@ -41,6 +44,8 @@ export const updateMonthlyBudgetStatus = async ({
 };
 
 export const createMonthlyBudget = async (budget: MonthlyBudgetForm) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch("http://localhost:4000/api/monthly-budgets", {
     method: "POST",
     headers: { "Content-Type": "application/json" },
@@ -57,6 +62,8 @@ export const createMonthlyBudget = async (budget: MonthlyBudgetForm) => {
 };
 
 export const getBudgetByDate = async (year: number, month: number) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets?month=${month}&year=${year}`,
     {
@@ -70,6 +77,8 @@ export const getBudgetByDate = async (year: number, month: number) => {
 };
 
 export const getBudgetById = async (budgetId: string) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}`,
     {
@@ -83,6 +92,8 @@ export const getBudgetById = async (budgetId: string) => {
 };
 
 export const fetchLastBudgets = async () => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     "http://localhost:4000/api/monthly-budgets/history",
     {
@@ -96,6 +107,8 @@ export const fetchLastBudgets = async () => {
 };
 
 export const deleteMonthlyBudget = async (budgetId: string) => {
+  if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
+
   const response = await fetch(
     `http://localhost:4000/api/monthly-budgets/${budgetId}`,
     {
