@@ -5,9 +5,10 @@ import {
 } from "@/hooks/queries";
 import { useBudgetStore } from "@/stores/budgetStore";
 import { Outlet } from "react-router-dom";
-import { Bottombar, Header, LoaderScreen } from "../components";
+import { Bottombar, Header, LoaderScreen, OfflineBanner } from "../components";
 import { Banner } from "@/components/ui";
 import { ErrorMessage } from "@/components/ui/ErrorMessage";
+import { useOfflineStatus } from "@/hooks/useOfflineStatus";
 
 export const PrivateAppLayout = () => {
   const { isLoading: isLoadingBudget, isError: isErrorBudget } =
@@ -18,6 +19,7 @@ export const PrivateAppLayout = () => {
     useFixedIncomesQuery();
   const isLoading = isLoadingBudget || isLoadingCharges || isLoadingIncomes;
   const isError = isErrorBudget || isErrorCharges || isErrorIncomes;
+  const { isOffline } = useOfflineStatus();
 
   const isHydrated = useBudgetStore((s) => s.isBudgetHydrated);
 
@@ -30,6 +32,7 @@ export const PrivateAppLayout = () => {
       <Header />
       <main>
         <Banner />
+        {isOffline && <OfflineBanner />}
         {isError && (
           <ErrorMessage message="Certains contenus n'ont pas pu être chargés" />
         )}

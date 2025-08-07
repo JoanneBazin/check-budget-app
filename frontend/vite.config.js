@@ -13,30 +13,32 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: "autoUpdate",
-      includeAssets: [
-        "favicon.ico",
-        "favicon.svg",
-        "robots.txt",
-        "apple-touch-icon.png",
-      ],
+      workbox: {
+        globPatterns: ["**/*.{js,css,html,png,svg,webp,ico,woff2}"],
+      },
+      includeAssets: ["favicon.ico", "apple-touch-icon.png"],
       manifest: {
-        name: "Check your budget",
-        short_name: "Budget",
+        name: "MoneyMood",
+        short_name: "MM",
         description: "A simple budget management app",
         theme_color: "#ffffff",
         background_color: "#ffffff",
         display: "standalone",
         start_url: "/",
+        scope: "/",
+        orientation: "portrait-primary",
         icons: [
           {
             src: "android-chrome-192x192.png",
             sizes: "192x192",
             type: "image/png",
+            purpose: "any maskable",
           },
           {
             src: "android-chrome-512x512.png",
             sizes: "512x512",
             type: "image/png",
+            purpose: "any maskable",
           },
           {
             src: "apple-touch-icon.png",
@@ -47,13 +49,7 @@ export default defineConfig({
       },
     }),
   ],
-  // css: {
-  //   preprocessorOptions: {
-  //     scss: {
-  //       additionalData: `@use "@/styles/abstracts" as *;`,
-  //     },
-  //   },
-  // },
+
   resolve: {
     alias: {
       "@": path.resolve(__dirname, "src"),

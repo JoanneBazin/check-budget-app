@@ -33,6 +33,7 @@ export const useBudgetStore = create<BudgetStore>()(
         weeksInMonth: state.weeksInMonth,
         fixedCharges: state.fixedCharges,
         fixedIncomes: state.fixedIncomes,
+        isBudgetHydrated: false,
       }),
     }
   )

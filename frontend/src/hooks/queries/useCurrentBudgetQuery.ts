@@ -4,12 +4,16 @@ import { useBudgetStore } from "@/stores/budgetStore";
 import { MonthlyBudget } from "@shared/schemas";
 import { useQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
+import { useOfflineStatus } from "../useOfflineStatus";
 
 export const useCurrentBudgetQuery = () => {
+  const { isOnline } = useOfflineStatus();
   const query = useQuery<MonthlyBudget>({
     queryKey: ["currentBudget"],
     queryFn: fetchCurrentBudget,
     retry: false,
+    enabled: isOnline,
+    refetchOnWindowFocus: isOnline,
     staleTime: 7 * 24 * 60 * 60 * 1000,
   });
 
