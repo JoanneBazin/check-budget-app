@@ -5,25 +5,23 @@ import fixedCharges from "./routes/fixed-charges";
 import monthlyBudgets from "./routes/monthly-budgets";
 import cookieParser from "cookie-parser";
 import { errorHandler } from "./middleware/errorHandler";
+import {
+  authLimiter,
+  generalLimiter,
+  setupCompression,
+  setupSecurity,
+} from "./middleware";
 
 const app = express();
 
 app.use(express.json());
 app.use(cookieParser());
 
-app.use((req, res, next) => {
-  res.setHeader("Access-Control-Allow-Origin", "http://localhost:5173");
-  res.setHeader("Access-Control-Allow-Credentials", "true");
-  res.setHeader(
-    "Access-Control-Allow-Headers",
-    "Origin, X-Requested-With, Content-Type, Accept, Authorization"
-  );
-  res.setHeader(
-    "Access-Control-Allow-Methods",
-    "GET, POST, PUT, DELETE, PATCH, OPTIONS"
-  );
-  next();
-});
+setupSecurity(app);
+app.use(setupCompression);
+
+app.use("/api", generalLimiter);
+app.use("/api/auth", authLimiter);
 
 app.use("/api/auth", authRoutes);
 app.use("/api/fixed-incomes", fixedIncomes);
