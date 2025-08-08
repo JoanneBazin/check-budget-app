@@ -77,7 +77,7 @@ export const SignupForm = () => {
       <button type="submit" disabled={isPending} className="primary-btn">
         S'inscrire
       </button>
-      {error && <p>{error.message}</p>}
+      {error && <p className="req-error">{error.message}</p>}
     </form>
   );
 };

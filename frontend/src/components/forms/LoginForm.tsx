@@ -62,7 +62,7 @@ export const LoginForm = () => {
       <button type="submit" disabled={isPending} className="primary-btn">
         Se connecter
       </button>
-      {error && <p>{error.message}</p>}
+      {error && <p className="req-error">{error.message}</p>}
     </form>
   );
 };
