@@ -6,6 +6,7 @@ export const AddEntriesForm = ({
   errors,
   onChange,
   onResetErrors,
+  type,
 }: AddEntriesFormProps) => {
   const [entries, setEntries] = useState<NewBudgetEntry[]>(initialData || []);
 
@@ -57,6 +58,7 @@ export const AddEntriesForm = ({
                 aria-label="Nom de la dépense"
                 name="name"
                 className="name-input"
+                data-testid={`${type}-name-input`}
                 value={entry.name}
                 onChange={(e) => handleUpdate(index, "name", e.target.value)}
               />
@@ -74,6 +76,7 @@ export const AddEntriesForm = ({
                     placeholder="Montant"
                     aria-label="Montant de la dépense"
                     name="amount"
+                    data-testid={`${type}-amount-input`}
                     value={entry.amount}
                     onChange={(e) =>
                       handleUpdate(index, "amount", e.target.value)
@@ -101,6 +104,7 @@ export const AddEntriesForm = ({
         onClick={addEntry}
         className="add-btn"
         aria-label="Ajouter une ligne"
+        data-testid={`add-${type}-input`}
       >
         +
       </button>

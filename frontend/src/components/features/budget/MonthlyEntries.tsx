@@ -151,6 +151,7 @@ export const MonthlyEntries = ({
             errors={validationError}
             onChange={setNewEntries}
             onResetErrors={() => setValidationError(null)}
+            type="entry"
           />
           {newEntries.length > 0 && (
             <button

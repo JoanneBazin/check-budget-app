@@ -60,7 +60,7 @@ export const Header = () => {
                         Déconnexion
                       </button>
                     </li>
-                    {error && <p>{error.message}</p>}
+                    {error && <p className="form-error">{error.message}</p>}
                   </ul>
                 </nav>
               </div>

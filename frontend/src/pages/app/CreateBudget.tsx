@@ -79,6 +79,7 @@ export const CreateBudget = () => {
           errors={incomesErrors}
           onChange={setMonthlyIncomes}
           onResetErrors={() => setIncomesErrors(null)}
+          type="income"
         />
       </BudgetDataCard>
       <BudgetDataCard title="Charges">
@@ -87,6 +88,7 @@ export const CreateBudget = () => {
           errors={chargesErrors}
           onChange={setMonthlyCharges}
           onResetErrors={() => setChargesErrors(null)}
+          type="charge"
         />
       </BudgetDataCard>
 
@@ -107,6 +109,7 @@ export const CreateBudget = () => {
       <button
         onClick={handleSubmit}
         className="primary-btn"
+        data-testid="submit-monthly-budget"
         disabled={isPending}
       >
         Valider

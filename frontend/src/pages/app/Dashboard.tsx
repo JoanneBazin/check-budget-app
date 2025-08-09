@@ -8,7 +8,7 @@ export const Dashboard = () => {
   return currentBudget ? (
     <CurrentBudgetLayout budget={currentBudget} />
   ) : (
-    <section>
+    <section data-testid="budget-actions-container">
       <div className="budget-actions">
         <Link to="/app/create" className="budget-actions__button">
           +

@@ -115,6 +115,7 @@ export const FixedChargesDisplay = () => {
           errors={validationError}
           onChange={setNewCharges}
           onResetErrors={() => setValidationError(null)}
+          type="charge"
         />
         {newCharges.length > 0 && (
           <button

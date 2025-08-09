@@ -30,6 +30,7 @@ export interface AddEntriesFormProps {
   errors: Record<string, string>[] | null;
   onChange: (entries: NewBudgetEntry[]) => void;
   onResetErrors: () => void;
+  type: string;
 }
 
 export interface UpdateEntryFormProps<T extends BudgetEntry> {

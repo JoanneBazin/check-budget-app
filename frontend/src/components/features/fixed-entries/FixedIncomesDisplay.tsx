@@ -115,6 +115,7 @@ export const FixedIncomesDisplay = () => {
           errors={validationError}
           onChange={setNewIncomes}
           onResetErrors={() => setValidationError(null)}
+          type="income"
         />
         {newIncomes.length > 0 && (
           <button
