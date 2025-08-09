@@ -4,6 +4,7 @@ import {
   UpdateMonthlyEntryProps,
 } from "@/types";
 import { getCurrentOnlineStatus } from "../network";
+import { CONFIG } from "@/config/constants";
 
 export const addMonthlyEntries = async ({
   type,
@@ -13,7 +14,7 @@ export const addMonthlyEntries = async ({
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
   const response = await fetch(
-    `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}`,
+    `${CONFIG.API_URL}/api/monthly-budgets/${budgetId}/${type}`,
     {
       method: "POST",
       headers: { "Content-Type": "application/json" },
@@ -47,7 +48,7 @@ export const updateMonthlyEntry = async ({
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
   const response = await fetch(
-    `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}/${entry.id}`,
+    `${CONFIG.API_URL}/api/monthly-budgets/${budgetId}/${type}/${entry.id}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -81,7 +82,7 @@ export const deleteMonthlyEntry = async ({
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
   const response = await fetch(
-    `http://localhost:4000/api/monthly-budgets/${budgetId}/${type}/${entryId}`,
+    `${CONFIG.API_URL}/api/monthly-budgets/${budgetId}/${type}/${entryId}`,
     {
       method: "DELETE",
       credentials: "include",
