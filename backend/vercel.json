@@ -1,5 +1,5 @@
 {
   "version": 2,
 
-  "routes": [{ "src": "/api/(.*)", "dest": "src/api/index.ts" }]
+  "routes": [{ "src": "/api/(.*)", "dest": "/dist/api/index.js" }]
 }
