@@ -4,7 +4,7 @@
     {
       "src": "src/api/index.ts",
       "use": "@vercel/node",
-      "config": { "includeFiles": "../shared/**" }
+      "config": { "includeFiles": "../shared/dist/**" }
     }
   ],
   "routes": [{ "src": "/api/(.*)", "dest": "src/api/index.ts" }]
