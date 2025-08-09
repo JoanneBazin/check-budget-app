@@ -1,6 +1,6 @@
-import { validateWithSchema } from "@shared/schemas";
+import { validateWithSchema } from "../../../shared/dist/schemas";
 import { NextFunction, Request, Response } from "express";
-import { HttpError } from "src/lib";
+import { HttpError } from "../lib";
 import z from "zod";
 
 export const validateQuery = (schema: z.ZodSchema) => {

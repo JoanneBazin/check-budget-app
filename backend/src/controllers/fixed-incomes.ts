@@ -7,7 +7,7 @@ import {
   isPrismaRecordNotFound,
   normalizeDecimalFields,
   prisma,
-} from "src/lib";
+} from "../lib";
 
 export const addFixedIncomes = async (
   req: Request,

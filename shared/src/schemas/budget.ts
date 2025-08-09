@@ -5,7 +5,7 @@ export const budgetEntrySchema = z.object({
   name: z
     .string()
     .trim()
-    .nonempty("Le nom est requis")
+    .min(1, "Le nom est requis")
     .max(50, "Le nom est trop long"),
 
   amount: z.preprocess(

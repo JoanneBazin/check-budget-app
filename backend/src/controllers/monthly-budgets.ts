@@ -9,8 +9,8 @@ import {
   monthlyBudgetSelect,
   normalizeDecimalFields,
   prisma,
-} from "src/lib";
-import { calculateRemainingBudget, calculateWeeklyBudget } from "src/services";
+} from "../lib";
+import { calculateRemainingBudget, calculateWeeklyBudget } from "../services";
 
 export const addMonthlyBudget = async (
   req: Request,

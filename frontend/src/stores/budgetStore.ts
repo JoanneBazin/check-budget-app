@@ -17,7 +17,7 @@ export const useBudgetStore = create<BudgetStore>()(
       setFixedCharges: (charges) => set({ fixedCharges: charges }),
       setFixedIncomes: (incomes) => set({ fixedIncomes: incomes }),
       setIsBudgetHydrated: (val) => set({ isBudgetHydrated: val }),
-      reset: () =>
+      reset: () => {
         set({
           pageTitle: "Gérer mes budgets",
           currentBudget: null,
@@ -25,6 +25,8 @@ export const useBudgetStore = create<BudgetStore>()(
           fixedCharges: [],
           fixedIncomes: [],
         }),
+          localStorage.removeItem("budget-storage");
+      },
     }),
     {
       name: "budget-storage",

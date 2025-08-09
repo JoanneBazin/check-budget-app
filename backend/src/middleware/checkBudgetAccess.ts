@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { getUserId, HttpError, prisma } from "src/lib";
+import { getUserId, HttpError, prisma } from "../lib";
 
 export const checkBudgetAccess = async (
   req: Request,

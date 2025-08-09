@@ -1,4 +1,4 @@
-import { HttpError, prisma } from "src/lib";
+import { HttpError, prisma } from "../lib";
 import {
   calculateRemainingBudget,
   calculateWeeklyBudget,

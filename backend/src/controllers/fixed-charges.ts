@@ -7,7 +7,7 @@ import {
   isPrismaRecordNotFound,
   normalizeDecimalFields,
   prisma,
-} from "src/lib";
+} from "../lib";
 
 export const addFixedCharges = async (
   req: Request,

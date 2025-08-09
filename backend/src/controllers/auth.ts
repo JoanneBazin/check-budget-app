@@ -1,5 +1,6 @@
 import { NextFunction, Request, Response } from "express";
-import { LoginInput, SignupInput } from "@shared/schemas";
+import { LoginInput, SignupInput } from "../../../shared/dist/schemas";
+
 import {
   createSession,
   hashPassword,
@@ -7,7 +8,7 @@ import {
   isPrismaUniqueConstraint,
   prisma,
   verifyPassword,
-} from "src/lib";
+} from "../lib";
 
 export const signup = async (
   req: Request<{}, {}, SignupInput>,

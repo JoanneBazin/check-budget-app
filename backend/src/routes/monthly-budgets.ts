@@ -5,16 +5,15 @@ import {
   createExpenseEntrySchema,
   createMonthlyBudgetSchema,
   expenseEntrySchema,
-  monthlyBudgetSchema,
   queryDateSchema,
   updateCurrentStatusSchema,
-} from "@shared/schemas";
+} from "../../../shared/dist/schemas";
 import {
   checkBudgetAccess,
   requireAuth,
   validateBody,
   validateQuery,
-} from "src/middleware";
+} from "../middleware";
 import {
   addMonthlyBudget,
   addMonthlyCharges,
@@ -32,7 +31,7 @@ import {
   updateMonthlyCharge,
   updateMonthlyExpense,
   updateMonthlyIncome,
-} from "src/controllers";
+} from "../controllers";
 
 const router = express.Router();
 

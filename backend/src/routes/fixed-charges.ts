@@ -1,12 +1,15 @@
 import express from "express";
-import { budgetEntrySchema, createBudgetEntrySchema } from "@shared/schemas";
-import { requireAuth, validateBody } from "src/middleware";
+import {
+  budgetEntrySchema,
+  createBudgetEntrySchema,
+} from "../../../shared/dist/schemas";
+import { requireAuth, validateBody } from "../middleware";
 import {
   addFixedCharges,
   deleteFixedCharge,
   getFixedCharges,
   updateFixedCharge,
-} from "src/controllers";
+} from "../controllers";
 
 const router = express.Router();
 

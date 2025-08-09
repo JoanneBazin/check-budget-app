@@ -8,8 +8,8 @@ import {
   isPrismaRecordNotFound,
   normalizeDecimalFields,
   prisma,
-} from "src/lib";
-import { updateMonthlyBudgetRemaining, updateWeeklyBudget } from "src/services";
+} from "../lib";
+import { updateMonthlyBudgetRemaining, updateWeeklyBudget } from "../services";
 
 export const addMonthlyIncomes = async (
   req: Request,
