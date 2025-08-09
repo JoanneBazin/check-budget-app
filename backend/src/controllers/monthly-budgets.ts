@@ -11,6 +11,7 @@ import {
   prisma,
 } from "../lib";
 import { calculateRemainingBudget, calculateWeeklyBudget } from "../services";
+import { Prisma } from "../generated/prisma";
 
 export const addMonthlyBudget = async (
   req: Request,
@@ -27,7 +28,7 @@ export const addMonthlyBudget = async (
 
   try {
     const monthlyBudget = await prisma.$transaction(
-      async (tx): Promise<any> => {
+      async (tx: Prisma.TransactionClient): Promise<any> => {
         const newBudget = await tx.monthlyBudget.create({
           data: {
             userId,
