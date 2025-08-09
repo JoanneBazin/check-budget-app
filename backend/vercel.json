@@ -1,13 +1,5 @@
 {
   "version": 2,
   "installCommand": "npm install && npm install ../shared",
-  "buildCommand": "npm run build --prefix ../shared && tsc",
-  "builds": [
-    {
-      "src": "src/api/index.ts",
-      "use": "@vercel/node"
-    }
-  ],
-
-  "routes": [{ "src": "/api/(.*)", "dest": "/src/api/index.ts" }]
+  "buildCommand": "npm run build --prefix ../shared && tsc"
 }
