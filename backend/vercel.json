@@ -4,7 +4,7 @@
   "buildCommand": "npm run build --prefix ../shared && tsc && cp -r src/generated dist/",
   "functions": {
     "api/[...slug].js": {
-      "runtime": "@vercel/node@3"
+      "runtime": "@vercel/node@20"
     }
   },
   "routes": [{ "src": "/api/(.*)", "dest": "/api/[...slug].js" }]
