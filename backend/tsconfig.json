@@ -15,6 +15,6 @@
       "@shared/*": ["../shared/dist/*"]
     }
   },
-  "include": ["src/**/*", "src/api"],
+  "include": ["src/**/*", "src/api", "src/generated/**/*"],
   "files": ["src/types/express.d.ts"]
 }
