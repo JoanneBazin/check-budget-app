@@ -1,6 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import { z } from "zod";
-import { validateInput } from "shared/dist/schemas";
+import { validateInput } from "shared";
 import { HttpError } from "../lib";
 
 export const validateBody = (schema: z.ZodSchema) => {

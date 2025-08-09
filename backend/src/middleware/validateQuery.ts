@@ -1,4 +1,4 @@
-import { validateWithSchema } from "shared/dist/schemas";
+import { validateWithSchema } from "shared";
 import { NextFunction, Request, Response } from "express";
 import { HttpError } from "../lib";
 import z from "zod";

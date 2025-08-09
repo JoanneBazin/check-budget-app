@@ -1,8 +1,5 @@
 import express from "express";
-import {
-  budgetEntrySchema,
-  createBudgetEntrySchema,
-} from "shared/dist/schemas";
+import { budgetEntrySchema, createBudgetEntrySchema } from "shared";
 import { requireAuth, validateBody } from "../middleware";
 import {
   addFixedCharges,

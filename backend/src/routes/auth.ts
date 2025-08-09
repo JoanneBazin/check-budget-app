@@ -1,5 +1,5 @@
 import express from "express";
-import { loginSchema, signupSchema } from "shared/dist/schemas";
+import { loginSchema, signupSchema } from "shared";
 import { requireAuth, validateBody } from "../middleware";
 import { getSession, login, logout, signup } from "../controllers";
 

@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import { LoginInput, SignupInput } from "shared/dist/schemas";
+import { LoginInput, SignupInput } from "shared";
 
 import {
   createSession,
