@@ -7,7 +7,7 @@ import {
   expenseEntrySchema,
   queryDateSchema,
   updateCurrentStatusSchema,
-} from "../../../shared/dist/schemas";
+} from "shared/dist/schemas";
 import {
   checkBudgetAccess,
   requireAuth,

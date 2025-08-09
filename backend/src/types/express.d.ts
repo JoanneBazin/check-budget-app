@@ -1,4 +1,4 @@
-import { User } from "../../../shared/dist/types";
+import { User } from "shared/dist/types";
 
 declare global {
   namespace Express {

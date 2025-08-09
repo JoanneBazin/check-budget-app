@@ -2,7 +2,7 @@ import express from "express";
 import {
   budgetEntrySchema,
   createBudgetEntrySchema,
-} from "../../../shared/dist/schemas";
+} from "shared/dist/schemas";
 import { requireAuth, validateBody } from "../middleware";
 import {
   addFixedIncomes,
