@@ -3,7 +3,7 @@ import { useUserStore } from "@/stores/userStore";
 import { QueryClient } from "@tanstack/react-query";
 
 export const resetAppState = (queryClient: QueryClient) => {
-  useUserStore.getState().setUser(null);
+  useUserStore.getState().clearUser();
   useBudgetStore.getState().reset();
 
   queryClient.removeQueries();
