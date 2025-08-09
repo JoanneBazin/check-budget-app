@@ -1,0 +1,9 @@
+{
+  "name": "moneymood-monorepo",
+  "private": true,
+  "workspaces": [
+    "shared",
+    "frontend",
+    "backend"
+  ]
+}
