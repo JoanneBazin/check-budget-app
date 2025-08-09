@@ -25,6 +25,10 @@ app.use(setupCompression);
 app.use("/api", generalLimiter);
 app.use("/api/auth", authLimiter);
 
+app.get("/api", (req, res) => {
+  res.json({ message: "API is working!" });
+});
+
 app.use("/api/auth", authRoutes);
 app.use("/api/fixed-incomes", fixedIncomes);
 app.use("/api/fixed-charges", fixedCharges);
