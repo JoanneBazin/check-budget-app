@@ -1,0 +1,5 @@
+../backend
+../shared/src
+../shared/node_modules
+node_modules
+.env.local
