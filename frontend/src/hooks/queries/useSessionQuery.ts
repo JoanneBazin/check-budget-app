@@ -15,7 +15,7 @@ export const useSessionQuery = () => {
     queryKey: ["session"],
     queryFn: fetchSession,
     enabled: isOnline,
-    refetchOnWindowFocus: isOnline,
+    refetchOnWindowFocus: false,
     retry: false,
     staleTime: 7 * 24 * 60 * 60 * 1000,
   });
@@ -23,15 +23,14 @@ export const useSessionQuery = () => {
   useEffect(() => {
     if (!isOnline) return;
 
-    if (query.error?.message === "Unauthorized" || query.data === null) {
-      resetAppState(queryClient);
-      return;
+    if (query.isFetched) {
+      if (query.data === null && user) {
+        resetAppState(queryClient);
+      } else if (query.data && !user) {
+        setUser(query.data);
+      }
     }
-
-    if (query.isFetched && query.data && !user) {
-      setUser(query.data);
-    }
-  }, [isOnline, query, user]);
+  }, [isOnline, query.isFetched, query.data, user]);
 
   return query;
 };

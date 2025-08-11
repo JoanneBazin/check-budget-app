@@ -1,7 +1,5 @@
 import { LoginInput, SignupInput } from "@shared/schemas";
 import { User } from "@shared/types";
-import { useQueryClient } from "@tanstack/react-query";
-import { resetAppState } from "../resetAppState";
 import { getCurrentOnlineStatus } from "../network";
 import { CONFIG } from "@/config/constants";
 
@@ -62,10 +60,12 @@ export const fetchSession = async () => {
     credentials: "include",
   });
 
-  if (!response.ok) throw new Error("Session invalide");
   if (response.status === 401) {
-    const queryClient = useQueryClient();
-    resetAppState(queryClient);
+    return null;
+  }
+
+  if (!response.ok) {
+    throw new Error(`Erreur HTTP ${response.status}`);
   }
 
   return response.json();
