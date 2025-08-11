@@ -3,5 +3,8 @@
   "installCommand": "npm install && npm install ../shared",
   "buildCommand": "npm run build --prefix ../shared && npm run build",
 
-  "routes": [{ "src": "/api/(.*)", "dest": "/api/[...slug].js" }]
+  "routes": [
+    { "src": "^/api/?$", "status": 404 },
+    { "src": "/api/(.*)", "dest": "/api/[...slug].js" }
+  ]
 }
