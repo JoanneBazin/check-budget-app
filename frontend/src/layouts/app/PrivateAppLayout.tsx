@@ -34,7 +34,7 @@ export const PrivateAppLayout = () => {
         <Banner />
         {isOffline && <OfflineBanner />}
         {isError && (
-          <ErrorMessage message="Certains contenus n'ont pas pu être chargés" />
+          <ErrorMessage message="Certains contenus n'ont pas pu être chargés." />
         )}
         <Outlet />
       </main>
