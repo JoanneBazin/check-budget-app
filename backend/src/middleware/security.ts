@@ -11,6 +11,10 @@ export const setupSecurity = (app: Application) => {
   app.use(
     cors({
       origin: (origin, callback) => {
+        console.log(`Orgin reçu : ${origin}`);
+        console.log("Origins autorisés:", allowedOrigins);
+        console.log("Match?", !origin || allowedOrigins.includes(origin));
+
         if (!origin || allowedOrigins.includes(origin)) {
           callback(null, true);
         } else {
