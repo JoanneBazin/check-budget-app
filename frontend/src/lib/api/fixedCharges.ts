@@ -1,8 +1,9 @@
 import { BudgetEntry, BudgetEntryForm } from "@shared/schemas";
 import { getCurrentOnlineStatus } from "../network";
+import { CONFIG } from "@/config/constants";
 
 export const fetchFixedCharges = async () => {
-  const response = await fetch(`/api/fixed-charges`, {
+  const response = await fetch(`${CONFIG.API_URL}/api/fixed-charges`, {
     credentials: "include",
   });
 
@@ -14,7 +15,7 @@ export const fetchFixedCharges = async () => {
 export const addFixedCharges = async (charges: BudgetEntryForm[]) => {
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
-  const response = await fetch(`/api/fixed-charges`, {
+  const response = await fetch(`${CONFIG.API_URL}/api/fixed-charges`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -31,12 +32,15 @@ export const addFixedCharges = async (charges: BudgetEntryForm[]) => {
 
 export const updateFixedCharge = async (charge: BudgetEntry) => {
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
-  const response = await fetch(`/api/fixed-charges/${charge.id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(charge),
-  });
+  const response = await fetch(
+    `${CONFIG.API_URL}/api/fixed-charges/${charge.id}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(charge),
+    }
+  );
 
   if (!response.ok) {
     const { error } = await response.json();
@@ -49,10 +53,13 @@ export const updateFixedCharge = async (charge: BudgetEntry) => {
 export const deleteFixedCharges = async (chargeId: string) => {
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
-  const response = await fetch(`/api/fixed-charges/${chargeId}`, {
-    method: "DELETE",
-    credentials: "include",
-  });
+  const response = await fetch(
+    `${CONFIG.API_URL}/api/fixed-charges/${chargeId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
 
   if (!response.ok) {
     const { error } = await response.json();

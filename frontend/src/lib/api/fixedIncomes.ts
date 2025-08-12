@@ -1,8 +1,9 @@
 import { BudgetEntry, BudgetEntryForm } from "@shared/schemas";
 import { getCurrentOnlineStatus } from "../network";
+import { CONFIG } from "@/config/constants";
 
 export const fetchFixedIncomes = async () => {
-  const response = await fetch(`/api/fixed-incomes`, {
+  const response = await fetch(`${CONFIG.API_URL}/api/fixed-incomes`, {
     credentials: "include",
   });
 
@@ -14,7 +15,7 @@ export const fetchFixedIncomes = async () => {
 export const addFixedIncomes = async (incomes: BudgetEntryForm[]) => {
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
-  const response = await fetch(`/api/fixed-incomes`, {
+  const response = await fetch(`${CONFIG.API_URL}/api/fixed-incomes`, {
     method: "POST",
     headers: { "Content-Type": "application/json" },
     credentials: "include",
@@ -32,12 +33,15 @@ export const addFixedIncomes = async (incomes: BudgetEntryForm[]) => {
 export const updateFixedIncome = async (income: BudgetEntry) => {
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
-  const response = await fetch(`/api/fixed-incomes/${income.id}`, {
-    method: "PUT",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(income),
-  });
+  const response = await fetch(
+    `${CONFIG.API_URL}/api/fixed-incomes/${income.id}`,
+    {
+      method: "PUT",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(income),
+    }
+  );
 
   if (!response.ok) {
     const { error } = await response.json();
@@ -49,10 +53,13 @@ export const updateFixedIncome = async (income: BudgetEntry) => {
 export const deleteFixedIncomes = async (incomeId: string) => {
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
-  const response = await fetch(`/api/fixed-incomes/${incomeId}`, {
-    method: "DELETE",
-    credentials: "include",
-  });
+  const response = await fetch(
+    `${CONFIG.API_URL}/api/fixed-incomes/${incomeId}`,
+    {
+      method: "DELETE",
+      credentials: "include",
+    }
+  );
 
   if (!response.ok) {
     const { error } = await response.json();

@@ -4,16 +4,20 @@ import {
   UpdateExpenseProps,
 } from "@/types";
 import { getCurrentOnlineStatus } from "../network";
+import { CONFIG } from "@/config/constants";
 
 export const addExpenses = async ({ expenses, budgetId }: AddExpensesProps) => {
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
-  const response = await fetch(`/api/monthly-budgets/${budgetId}/expenses`, {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    credentials: "include",
-    body: JSON.stringify(expenses),
-  });
+  const response = await fetch(
+    `${CONFIG.API_URL}/api/monthly-budgets/${budgetId}/expenses`,
+    {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      credentials: "include",
+      body: JSON.stringify(expenses),
+    }
+  );
 
   if (!response.ok) {
     const { error } = await response.json();
@@ -30,7 +34,7 @@ export const updateExpense = async ({
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
   const response = await fetch(
-    `/api/monthly-budgets/${budgetId}/expenses/${expense.id}`,
+    `${CONFIG.API_URL}/api/monthly-budgets/${budgetId}/expenses/${expense.id}`,
     {
       method: "PUT",
       headers: { "Content-Type": "application/json" },
@@ -54,7 +58,7 @@ export const deleteExpense = async ({
   if (!getCurrentOnlineStatus()) throw new Error("Vous êtes hors ligne");
 
   const response = await fetch(
-    `/api/monthly-budgets/${budgetId}/expenses/${expenseId}`,
+    `${CONFIG.API_URL}/api/monthly-budgets/${budgetId}/expenses/${expenseId}`,
     {
       method: "DELETE",
       credentials: "include",
