@@ -1,6 +1,7 @@
 import { prisma } from "./prismaClient";
 import bcrypt from "bcrypt";
 import crypto from "crypto";
+import { Response } from "express";
 
 export function generateSessionToken(): string {
   return crypto.randomBytes(32).toString("hex");
@@ -68,3 +69,12 @@ export async function cleanupExpiredSessions(): Promise<void> {
     },
   });
 }
+
+export const clearSessionCookie = (res: Response) => {
+  res.clearCookie("session", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+    path: "/",
+  });
+};
