@@ -22,6 +22,8 @@ export async function createSession(userId: string): Promise<string> {
 }
 
 export async function validateSession(sessionId: string) {
+  console.log(`SessionId ==> prisma : ${sessionId}`);
+
   const session = await prisma.session.findUnique({
     where: { id: sessionId },
     include: {
@@ -34,6 +36,7 @@ export async function validateSession(sessionId: string) {
       },
     },
   });
+  console.log(`Session from db : ${session}`);
 
   if (!session || session.expiresAt < new Date()) {
     if (session) {

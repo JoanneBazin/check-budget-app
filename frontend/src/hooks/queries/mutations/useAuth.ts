@@ -10,7 +10,7 @@ export const useLoginMutation = () => {
 
   return useMutation({
     mutationFn: ({ email, password }: LoginInput) => login({ email, password }),
-    onSuccess: async (user) => {
+    onSuccess: (user) => {
       setUser(user);
       queryClient.setQueryData(["session"], user);
     },
