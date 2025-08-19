@@ -77,4 +77,9 @@ export const clearSessionCookie = (res: Response) => {
     sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
     path: "/",
   });
+  res.clearCookie("session", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: process.env.NODE_ENV === "production" ? "none" : "strict",
+  });
 };
