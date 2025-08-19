@@ -1,5 +1,6 @@
 import { QueryCache, QueryClient } from "@tanstack/react-query";
 import { resetAppState } from "./resetAppState";
+import { ApiError } from "@/lib/ApiError";
 
 export const queryClient = new QueryClient({
   queryCache: new QueryCache({
